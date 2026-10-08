@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { HTML_LANG, type Lang } from '@/lib/i18n';
 import { stripLang, translationOf } from '@/lib/content';
+import { ogSlugFor } from '@/lib/og-slug';
 import type { CollectionKey } from 'astro:content';
 
 interface Props {
@@ -14,7 +15,6 @@ interface Props {
   collection?: string;
   /** Slug tanpa prefix bahasa, bila ada. */
   slug?: string;
-  image?: string;
   type?: 'website' | 'article';
 }
 
@@ -25,7 +25,6 @@ const {
   translationKey,
   collection,
   slug,
-  image,
   type = 'website',
 } = Astro.props;
 
@@ -33,7 +32,9 @@ const siteName = 'Jelajah Rembang';
 const fullTitle = title ? `${title} · ${siteName}` : siteName;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
-const ogImage = image ? new URL(image, Astro.site ?? Astro.url).href : undefined;
+// OG image selalu dihasilkan endpoint statis /og/<slug>.jpg (1200x630).
+const ogImage = new URL(`/og/${ogSlugFor(Astro.url.pathname)}.jpg`, Astro.site ?? Astro.url).href;
+const ogImageAlt = title ?? siteName;
 const alt: Lang = lang === 'id' ? 'en' : 'id';
 
 // --- hreflang: hanya bila pasangan terjemahan benar-benar ada ---
@@ -82,13 +83,16 @@ const selfHref = `${site}${Astro.url.pathname}`;
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description ?? ''} />
 <meta property="og:url" content={canonical} />
-{ogImage && <meta property="og:image" content={ogImage} />}
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={ogImageAlt} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description ?? ''} />
-{ogImage && <meta name="twitter:image" content={ogImage} />}
+<meta name="twitter:image" content={ogImage} />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

@@ -20,8 +20,9 @@ berisi perubahan yang siap di-commit (lihat §Git).
 | Destinasi ber-koordinat | **5** dari 10 |
 | `astro check` | **0 error / 0 warning / 0 hint** |
 | Impeccable design lint | **0 anti-pattern** |
-| Playwright smoke test | **12/12 lulus** |
-| Versi Cloudflare aktif | `08884b55-e0fb-44c8-9571-3e9cd6009b4e` |
+| Playwright smoke test | **13/13 lulus** |
+| Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
+| Versi Cloudflare aktif | `03a3427b-470b-4409-a925-add2aab7ef9d` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev
 **Repo:** https://github.com/zzdree/jelajah-rembang
@@ -64,18 +65,32 @@ petilasan-sunan-bonang, klenteng-cu-an-kiong, embung-lodan) belum ada koordinat 
 
 ### Prioritas menengah
 
-3. **OG image khusus per halaman.** Belum ada `og:image` di halaman tanpa cover (celah lama).
-   Bisa dibuat endpoint OG dinamis (`src/pages/og/[...].png.ts`) atau isi `image` di `BaseLayout`.
-4. **Custom domain** — masih `*.workers.dev`. Bila mau domain sendiri (mis. `jelajahrembang.id`),
+3. **Custom domain** — masih `*.workers.dev`. Bila mau domain sendiri (mis. `jelajahrembang.id`),
    ubah `site:` di `astro.config.mjs` + `public/robots.txt`, lalu deploy ulang.
 
 ### Prioritas rendah / opsional
 
-5. **Pagefind** (pencarian statis) — rencana fase 2, belum dipasang.
-6. **Submit sitemap** ke Google Search Console (`/sitemap-index.xml`).
-7. **Em dash di `sources:`** — ~12 berkas konten memakai `—` sebagai pemisah label sitasi
+4. **Pagefind** (pencarian statis) — rencana fase 2, belum dipasang.
+5. **Submit sitemap** ke Google Search Console (`/sitemap-index.xml`).
+6. **Em dash di `sources:`** — ~12 berkas konten memakai `—` sebagai pemisah label sitasi
    (mis. `Wikipedia — Topik`). Aturan "nol em dash" (AGENTS.md §6) menyasar prosa; ini metadata
    sitasi. Bila ingin konsisten penuh, ganti dengan `:` atau koma.
+
+---
+
+## OG image (SELESAI 9 Okt 2026)
+
+Tiap halaman kini punya gambar Open Graph 1200×630 sendiri, dirender **saat build**
+(satori → SVG → sharp → JPEG) oleh `src/lib/og.ts` + endpoint statis
+`src/pages/og/[...slug].ts`. Total **86 berkas** di `dist/og/` (~2,4 MB, ~23 KB/berkas).
+
+- Varian **foto-forward** untuk halaman ber-cover (foto di kanan, judul di kiri).
+- Varian **teks + motif batik** (garis SVG, bukan emoji) untuk halaman tanpa cover.
+- `BaseHead.astro` menebak URL dari `Astro.url.pathname` lewat `ogSlugFor()` (`src/lib/og-slug.ts`);
+  selalu mengeluarkan `og:image`, `og:image:width/height/alt`, dan `twitter:image`.
+- Slug: `beranda`, `kuliner/sate-srepeh`, `en/destinasi/makam-kartini`, dst. (1:1 dengan pathname).
+
+Regenerasi font (bila muka huruf berubah): `node scripts/build-fonts.mjs` (woff2 → TTF statis).
 
 ---
 
@@ -90,6 +105,8 @@ Di luar `src/` sehingga tak tersentuh Content Collections/lint.
 | `scripts/gen-galeri.mjs` | Hasilkan 12 berkas album galeri dari data + kredit asli. |
 | `scripts/apply-covers-coords.mjs` | Sisipkan `cover`/`coverAlt`/`coords` ke frontmatter (idempoten). |
 | `scripts/fix-dims.mjs` | Perbaiki `width`/`height` di `credits.json` dari berkas asli. |
+| `scripts/build-fonts.mjs` | Konversi woff2 → TTF statis untuk OG (`scripts/fonts/`). |
+| `scripts/README.md` | Penjelasan tiap skrip. |
 
 Jalankan unduhan: `NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/fetch-commons.mjs scripts/commons-manifest.json`
 
@@ -132,7 +149,7 @@ Worker lama `rembang-web` **sudah dihapus** (9 Okt 2026).
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run check     # 0 error
 node /home/zzdree/ANDREAS/impeccable/cli/bin/cli.js detect src/    # 0 anti-pattern
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run build      # 74 halaman
-NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 12/12
+NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 13/13
 ```
 
 ---
@@ -165,6 +182,13 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 12/12
    `(\d+)x(\d+), components` — jangan regex pertama (bisa menangkap density 1x1).
 
 10. **Rate limit Wikimedia.** Burst beberapa permintaan → HTTP 429. Jeda 9 s + backoff + `maxlag=5`.
+
+11. **satori & path font saat build.** `import.meta.url` menunjuk ke chunk di `dist/`, bukan
+    root proyek. Pakai `process.cwd()` untuk menemukan `scripts/fonts/`. Dan satori **menolak
+    variable font** (tabel `fvar` bikin opentype.js error); harus TTF statis (per-bobot).
+
+12. **`image` prop `BaseHead`/`BaseLayout` sudah dihapus.** OG kini selalu otomatis; jangan
+    tambah `image={...}` lagi.
 
 ---
 

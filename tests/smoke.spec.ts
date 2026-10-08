@@ -98,3 +98,20 @@ test.describe('404', () => {
     await expect(page.getByText('404')).toBeVisible();
   });
 });
+
+test.describe('OG image', () => {
+  test('beranda & detail memuat gambar OG 1200x630', async ({ page, request }) => {
+    await page.goto('/');
+    const home = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(home).toContain('/og/beranda.jpg');
+
+    await page.goto('/kuliner/sate-srepeh/');
+    const detail = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(detail).toContain('/og/kuliner/sate-srepeh.jpg');
+
+    // Tembak path di server preview lokal (bukan URL produksi absolut).
+    const res = await request.get(new URL(detail!).pathname);
+    expect(res.status()).toBe(200);
+    expect(res.headers()['content-type']).toContain('image/jpeg');
+  });
+});

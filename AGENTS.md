@@ -72,6 +72,11 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
 8. **Jangan mengarang fakta.** Angka statistik wajib bertahun; legenda disajikan
    sebagai legenda ("menurut cerita rakyat"), bukan fakta.
 
+9. **OG image dirender saat build.** `src/lib/og.ts` (satori + sharp) + endpoint
+   `src/pages/og/[...slug].ts` menghasilkan `/og/<slug>.jpg` untuk tiap halaman.
+   Font di `scripts/fonts/*.ttf` **harus TTF statis** (variable font gagal di satori).
+   `BaseHead.astro` menebak URL dari `Astro.url.pathname`; jangan hard-code.
+
 ---
 
 ## Struktur (peta cepat)
@@ -127,7 +132,7 @@ npm run build        # astro check + astro build → dist/
 npm run preview      # pratinjau hasil build
 npm run check        # typecheck (termasuk .astro)
 npm run lint:design  # 60 aturan anti-slop Impeccable (target 0)
-npm test             # smoke test Playwright (12 test)
+npm test             # smoke test Playwright (13 test)
 npm run format       # Prettier
 npm run deploy       # build + wrangler deploy
 ```
@@ -138,7 +143,7 @@ npm run deploy       # build + wrangler deploy
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run check    # 0 error
 node /home/zzdree/ANDREAS/impeccable/cli/bin/cli.js detect src/   # 0 anti-pattern
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run build     # 74 halaman
-NODE_OPTIONS='--dns-result-order=ipv4first' npm test          # 12/12 lulus
+NODE_OPTIONS='--dns-result-order=ipv4first' npm test          # 13/13 lulus
 ```
 
 **Bukti sebelum klaim.** Jangan bilang "sudah beres" tanpa menjalankan perintah di atas.
