@@ -6,8 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Diganti setelah domain final diputuskan. Wajib untuk canonical, hreflang, sitemap.
-  site: 'https://rembang-web.pages.dev',
+  // Ganti bila custom domain dipasang nanti. Wajib untuk canonical, hreflang, sitemap.
+  site: 'https://rembang-web.zzdree.workers.dev',
 
   // Situs 100% konten: setiap rute diprerender jadi HTML saat build.
   output: 'static',

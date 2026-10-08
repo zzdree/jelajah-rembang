@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rembang-web.pages.dev/sitemap-index.xml
+Sitemap: https://rembang-web.zzdree.workers.dev/sitemap-index.xml
