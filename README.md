@@ -1,8 +1,8 @@
-# Kabupaten Rembang — Profil Digital
+# Jelajah Rembang
 
 Situs profil daerah **Kabupaten Rembang**, Jawa Tengah: sejarah, budaya, kuliner, destinasi wisata, profil & geografi, galeri, dan peta interaktif. Bilingual (Indonesia + Inggris), statis, cepat.
 
-Live: `https://rembang-web.pages.dev`
+Live: `https://jelajah-rembang.zzdree.workers.dev`
 
 ---
 

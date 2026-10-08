@@ -29,7 +29,7 @@ const {
   type = 'website',
 } = Astro.props;
 
-const siteName = lang === 'id' ? 'Kabupaten Rembang' : 'Rembang Regency';
+const siteName = 'Jelajah Rembang';
 const fullTitle = title ? `${title} · ${siteName}` : siteName;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;

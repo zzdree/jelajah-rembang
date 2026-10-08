@@ -40,7 +40,7 @@ export function stripLocalePrefix(pathname: string): string {
 
 const dict = {
   id: {
-    'site.name': 'Kabupaten Rembang',
+    'site.name': 'Jelajah Rembang',
     'site.tagline': 'Sejarah, budaya, dan kuliner pesisir utara Jawa Tengah',
     'site.description':
       'Profil digital Kabupaten Rembang: sejarah Lasem, batik tulis, kuliner khas, dan destinasi wisata di gerbang timur Jawa Tengah.',
@@ -146,7 +146,7 @@ const dict = {
     'footer.rights': 'Situs tidak resmi. Dibuat untuk tujuan edukasi dan pelestarian budaya.',
   },
   en: {
-    'site.name': 'Rembang Regency',
+    'site.name': 'Jelajah Rembang',
     'site.tagline': 'History, culture, and cuisine of Java’s north coast',
     'site.description':
       'A digital profile of Rembang Regency: the history of Lasem, hand-drawn batik, signature cuisine, and destinations at the eastern gate of Central Java.',
