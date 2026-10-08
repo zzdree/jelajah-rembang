@@ -2,6 +2,8 @@
 translationKey: lontong-tuyuhan
 title: Lontong Tuyuhan
 summary: Triangular rice cake in a rich yellow coconut-milk broth, served with free-range chicken, tempeh, and offal, topped with fried shallots.
+cover: ../../../assets/galeri/kuliner-pesisir/lontong-tuyuhan-09.jpg
+coverAlt: "Lontong tuyuhan in a yellow coconut broth."
 type: makanan
 origin: Tuyuhan Village, Pancur District
 ingredients:

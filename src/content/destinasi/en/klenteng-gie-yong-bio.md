@@ -4,6 +4,7 @@ title: Gie Yong Bio Temple
 summary: A historic temple west of the Lasem river, part of the town's cluster of Chinese heritage buildings. Founded in the 18th century.
 kind: religi
 kecamatan: Lasem
+coords: [-6.6957, 111.4404]
 tags:
   - temple
   - chinese

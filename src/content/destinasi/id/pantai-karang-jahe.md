@@ -2,6 +2,8 @@
 translationKey: pantai-karang-jahe
 title: Pantai Karang Jahe
 summary: Pantai berpasir putih di pesisir utara Rembang, dengan air tenang, deretan pohon cemara, dan kawasan penanaman mangrove. Cocok untuk keluarga.
+cover: ../../../assets/galeri/pesisir-dan-pantai/pantai-karang-jahe.jpg
+coverAlt: "Pantai Karang Jahe dengan deretan pohon cemara."
 kind: pantai
 kecamatan: Rembang
 coords: [-6.6911, 111.4147]

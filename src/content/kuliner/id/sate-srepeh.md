@@ -1,7 +1,9 @@
 ---
 translationKey: sate-srepeh
 title: Sate Srepeh
-summary: Sate ayam kampung bersambal kacang encer berwarna merah, dibalut santan dan gula merah — disantap dengan lontong tahu di atas daun jati.
+summary: Sate ayam kampung bersambal kacang encer berwarna merah, dibalut santan dan gula merah, disantap dengan lontong tahu di atas daun jati.
+cover: ../../../assets/galeri/kuliner-pesisir/sate-srepeh.jpg
+coverAlt: "Sate srepeh khas Rembang."
 type: makanan
 origin: Kota Rembang
 ingredients:
@@ -28,7 +30,7 @@ Sate srepeh adalah hidangan yang paling sering disebut ketika orang bertanya apa
 
 ## Bumbu yang menentukan
 
-Perbedaan mendasar sate srepeh terletak pada bumbunya. Sate ayam pada umumnya memakai sambal kacang kental dengan bawang merah dan cabai. Sate srepeh memakai bumbu berbahan dasar **santan yang dimasak bersama cabai merah, garam, dan gula merah**, sehingga menghasilkan saus berwarna kemerahan dengan tekstur lebih encer. Rasanya pedas, gurih, dan sedikit manis — bukan manis kacang, melainkan manis gula yang menempel di lidah.
+Perbedaan mendasar sate srepeh terletak pada bumbunya. Sate ayam pada umumnya memakai sambal kacang kental dengan bawang merah dan cabai. Sate srepeh memakai bumbu berbahan dasar **santan yang dimasak bersama cabai merah, garam, dan gula merah**, sehingga menghasilkan saus berwarna kemerahan dengan tekstur lebih encer. Rasanya pedas, gurih, dan sedikit manis, bukan manis kacang, melainkan manis gula yang menempel di lidah.
 
 Dagingnya sendiri memakai **ayam kampung** yang dipotong pipih dan dibakar hingga harum, dengan tepi yang sedikit garing. Satu porsi umumnya berisi sepuluh tusuk: lima tusuk daging dan lima tusuk jeroan.
 

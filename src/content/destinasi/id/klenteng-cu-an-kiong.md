@@ -2,6 +2,8 @@
 translationKey: klenteng-cu-an-kiong
 title: Klenteng Cu An Kiong
 summary: Salah satu kelenteng tertua di Lasem, didirikan pada abad ke-16 di Kampung Soditan dan dipersembahkan untuk Mazu, dewi laut.
+cover: ../../../assets/galeri/lasem-tiongkok-kecil/cu-an-kiong-aula.jpg
+coverAlt: "Aula tengah Kelenteng Cu An Kiong, Lasem."
 kind: religi
 kecamatan: Lasem
 tags:

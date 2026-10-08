@@ -6,6 +6,7 @@ title: Pantai Caruban
 summary: Pantai di dekat Lasem yang dikenal karena senjanya dan sisa dinding Taman Sitaresmi. Perahu nelayan dan warung seafood menambah suasana.
 kind: pantai
 kecamatan: Lasem
+coords: [-6.6786, 111.4288]
 tags:
   - pantai
   - senja

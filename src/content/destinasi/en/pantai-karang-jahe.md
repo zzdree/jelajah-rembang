@@ -2,6 +2,8 @@
 translationKey: pantai-karang-jahe
 title: Karang Jahe Beach
 summary: A white-sand beach on Rembang's north coast, with calm water, rows of casuarina trees, and a mangrove-planting area. A good fit for families.
+cover: ../../../assets/galeri/pesisir-dan-pantai/pantai-karang-jahe.jpg
+coverAlt: "Karang Jahe beach with its rows of casuarina trees."
 kind: pantai
 kecamatan: Rembang
 coords: [-6.6911, 111.4147]

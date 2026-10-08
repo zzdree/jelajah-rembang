@@ -2,8 +2,11 @@
 translationKey: hutan-mangrove-rembang
 title: Rembang Mangrove Forest
 summary: A mangrove conservation and ecotourism area on the coast, with boardwalks, boat rides, and birdlife. It supports coastal protection and local fishers.
+cover: ../../../assets/galeri/pesisir-dan-pantai/hutan-mangrove.jpg
+coverAlt: "The Pasarbanggi mangrove forest on the Rembang coast."
 kind: hutan
 kecamatan: Rembang
+coords: [-6.6973, 111.3882]
 tags:
   - mangrove
   - ecotourism

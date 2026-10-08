@@ -2,6 +2,8 @@
 translationKey: wayang-potehi-dan-seni-pertunjukan
 title: "Wayang Potehi dan Seni Pertunjukan Lasem"
 summary: Dari wayang potehi yang berasal dari Tionghoa sampai laesan dan tari patholan, Lasem menyimpan panggung pertunjukan yang mempertemukan banyak tradisi.
+cover: ../../../assets/galeri/panggung-dan-warisan/potehi-01.jpg
+coverAlt: "Boneka wayang potehi, koleksi Museum Ganesya."
 category: pertunjukan
 tags:
   - wayang-potehi

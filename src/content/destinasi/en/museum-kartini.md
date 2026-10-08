@@ -2,6 +2,8 @@
 translationKey: museum-kartini
 title: R.A. Kartini Museum
 summary: A museum in the former Rembang Regent's residence, where Kartini lived after her marriage. It holds her letters, personal items, and legacy.
+cover: ../../../assets/galeri/napak-tilas-kartini/museum-kartini-pendopo.jpg
+coverAlt: "The pendopo of the Kartini Museum in Rembang."
 kind: museum
 kecamatan: Rembang
 coords: [-6.7064, 111.3503]

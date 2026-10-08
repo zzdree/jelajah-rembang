@@ -2,6 +2,8 @@
 translationKey: asal-usul-nama-rembang
 title: The Origin of the Name Rembang
 summary: 'A folk tale traces the name Rembang to eight Champa families, a mangrove tree, and a sacred ceremony called "ngrembang sakawit" in the 14th century.'
+cover: ../../../assets/galeri/pesisir-dan-pantai/pelabuhan-rembang-01.jpg
+coverAlt: "The port of Rembang on the north coast."
 era: Legenda
 year: Saka 1337 (around the 14th century)
 places:

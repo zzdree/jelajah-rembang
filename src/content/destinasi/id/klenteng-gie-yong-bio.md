@@ -4,6 +4,7 @@ title: Klenteng Gie Yong Bio
 summary: Kelenteng bersejarah di sisi barat Sungai Lasem, bagian dari gugusan warisan Tionghoa kota Lasem. Didirikan pada abad ke-18.
 kind: religi
 kecamatan: Lasem
+coords: [-6.6957, 111.4404]
 tags:
   - kelenteng
   - tionghoa

@@ -2,6 +2,8 @@
 translationKey: kopi-lelet
 title: "Kopi Lelet dan Tradisi Ngelelet"
 summary: Kopi kental bersusu di warung-warung Lasem punya kebiasaan unik. Sisa ampas dan susu di dasar gelas dipakai menggambar motif batik di atas rokok.
+cover: ../../../assets/galeri/kuliner-pesisir/warung-kopi-lelet.jpg
+coverAlt: "Warung Kopi Lelet di Lasem."
 category: warisan
 tags:
   - kopi

@@ -2,6 +2,8 @@
 translationKey: wayang-potehi-dan-seni-pertunjukan
 title: "Potehi Puppetry and the Performing Arts of Lasem"
 summary: From the Chinese-rooted wayang potehi to laesan and the patholan dance, Lasem keeps a stage where many traditions meet and share the same audience.
+cover: ../../../assets/galeri/panggung-dan-warisan/potehi-01.jpg
+coverAlt: "Wayang potehi puppets from the Ganesya Museum collection."
 category: pertunjukan
 tags:
   - wayang-potehi

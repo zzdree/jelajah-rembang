@@ -2,8 +2,11 @@
 translationKey: hutan-mangrove-rembang
 title: Hutan Mangrove Rembang
 summary: Kawasan konservasi dan ekowisata mangrove di pesisir Rembang, dengan jembatan kayu, perahu, dan burung pesisir. Menopang perlindungan pantai.
+cover: ../../../assets/galeri/pesisir-dan-pantai/hutan-mangrove.jpg
+coverAlt: "Hutan mangrove Pasarbanggi di pesisir Rembang."
 kind: hutan
 kecamatan: Rembang
+coords: [-6.6973, 111.3882]
 tags:
   - mangrove
   - ekowisata

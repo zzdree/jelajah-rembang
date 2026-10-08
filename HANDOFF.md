@@ -7,18 +7,21 @@
 
 ## Status: SELESAI & LIVE ✅
 
-Proyek dibangun penuh dalam satu sesi. Tidak ada pekerjaan yang setengah jalan.
-Working tree git **bersih**; semua sudah di-commit dan di-push ke `main`.
+Galeri terisi, cover & koordinat dilengkapi, worker lama dibersihkan. Working tree git
+berisi perubahan yang siap di-commit (lihat §Git).
 
 | Metrik | Nilai |
 |---|---|
 | Halaman terbangun | **74** |
 | Artikel konten | **54** (27 judul × 2 bahasa) |
-| Foto (Wikimedia Commons) | **15** |
-| `astro check` | **0 error** |
+| Album galeri | **6** (12 berkas id+en), **37 foto** |
+| Foto (Wikimedia Commons) | **52** berkas (51 entri `credits.json`) |
+| Judul ber-cover | **19** dari 27 |
+| Destinasi ber-koordinat | **5** dari 10 |
+| `astro check` | **0 error / 0 warning / 0 hint** |
 | Impeccable design lint | **0 anti-pattern** |
-| Playwright smoke test | **11/11 lulus** |
-| Commit terakhir | `ff9e092` refactor: ganti nama proyek menjadi Jelajah Rembang |
+| Playwright smoke test | **12/12 lulus** |
+| Versi Cloudflare aktif | `08884b55-e0fb-44c8-9571-3e9cd6009b4e` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev
 **Repo:** https://github.com/zzdree/jelajah-rembang
@@ -33,14 +36,20 @@ Working tree git **bersih**; semua sudah di-commit dan di-push ke `main`.
 | budaya | 5 | 5 | batik Lasem, klenteng+masjid, seni pertunjukan, tradisi laut, kopi lelet |
 | kuliner | 8 | 8 | sate srepeh, lontong tuyuhan, kelo mrico, mangut, urap latoh, dumbeg, legen, kaoya dudul |
 | destinasi | 10 | 10 | pantai, museum, religi, hutan, embung |
-| **galeri** | **0** | **0** | ⚠️ **KOSONG** — halaman `/galeri/` menampilkan keadaan kosong yang elegan |
+| **galeri** | **6** | **6** | ✅ album tematik: Lasem Tiongkok Kecil, Batik Tiga Negeri, Panggung dan Warisan, Napak Tilas R.A. Kartini, Pesisir dan Pantai, Kuliner Pesisir |
 
-**Cover foto terpasang pada 9 judul** (batik-tulis-lasem, klenteng-dan-masjid-lasem,
-lasem-tiongkok-kecil, kartini-dan-sunan-bonang, rembang-gerbang-timur, pantai-caruban,
-pantai-wates, petilasan-sunan-bonang, legen). Sisanya belum punya foto.
+**Judul ber-cover (19):** batik-tulis-lasem, klenteng-dan-masjid-lasem, lasem-tiongkok-kecil,
+kartini-dan-sunan-bonang, rembang-gerbang-timur, pantai-caruban, pantai-wates, petilasan-sunan-bonang,
+legen, kopi-lelet, wayang-potehi-dan-seni-pertunjukan, hutan-mangrove-rembang, klenteng-cu-an-kiong,
+makam-kartini, museum-kartini, pantai-karang-jahe, lontong-tuyuhan, sate-srepeh, asal-usul-nama-rembang.
 
-**Koordinat peta hanya 2 destinasi** (pantai-karang-jahe, museum-kartini) — sengaja,
-karena hanya itu yang koordinatnya yakin. Sisanya tidak dipasang pin agar tidak mengarang.
+**Belum ber-cover (8, sengaja):** tradisi-laut, klenteng-gie-yong-bio, embung-lodan, dumbeg,
+kaoya-dudul, kelo-mrico, mangut-manyung, urap-latoh. Tidak ada foto Commons yang benar-benar cocok;
+jangan pasang foto generik.
+
+**Koordinat peta (5 destinasi):** pantai-karang-jahe, museum-kartini, pantai-caruban,
+klenteng-gie-yong-bio, hutan-mangrove-rembang. Sisanya (makam-kartini, pantai-wates,
+petilasan-sunan-bonang, klenteng-cu-an-kiong, embung-lodan) belum ada koordinat yang yakin.
 
 ---
 
@@ -48,39 +57,41 @@ karena hanya itu yang koordinatnya yakin. Sisanya tidak dipasang pin agar tidak 
 
 ### Prioritas tinggi
 
-1. **Galeri masih kosong.** Koleksi `galeri` ada skemanya (`photos[]`) tapi belum ada
-   berkas. Cara mengisi: buat `src/content/galeri/id/{album}.md` + `en/{album}.md`
-   dengan `translationKey` sama dan array `photos: [{src, alt, caption?, credit?}]`.
-   Foto taruh di `src/assets/galeri/{album}/`. Unduh dari Wikimedia Commons
-   (lihat §Cara unduh foto di bawah) dan catat atribusi di `credits.json`.
-   Halaman `/galeri/` sudah siap menerima (lightbox `<dialog>` sudah jadi).
-
-2. **Cover foto untuk 18 judul yang belum punya.** Cari di Wikimedia Commons;
-   bila tidak ada yang layak, **jangan pakai foto generik** — biarkan tanpa cover
-   (kartu sudah menangani ketiadaan cover dengan baik).
-
-3. **Koordinat destinasi.** 8 destinasi belum ada `coords`. Isi **hanya bila yakin**
-   (mis. dari daftar resmi Jadesta/pemkab). Jangan mengarang. Setelah diisi, marker
-   peta otomatis muncul.
+1. **Cover 8 judul sisanya.** Hanya bila ada foto Commons yang benar-benar cocok. Jangan
+   pakai foto generik atau foto tempat lain.
+2. **Koordinat 5 destinasi sisanya.** Isi **hanya bila yakin** (daftar resmi Jadesta/pemkab,
+   atau OSM Nominatim). Jangan mengarang.
 
 ### Prioritas menengah
 
-4. **Worker lama `rembang-web.zzdree.workers.dev` masih hidup** dengan versi lama.
-   Hapus lewat dashboard Cloudflare → Workers & Pages → `rembang-web` → Delete.
-   (Butuh konfirmasi pengguna; jangan hapus tanpa izin.)
-
-5. **Custom domain** — pengguna memilih `*.workers.dev` dulu. Bila nanti mau domain
-   sendiri (mis. `jelajahrembang.id`), ubah `site:` di `astro.config.mjs`, `robots.txt`,
-   lalu deploy ulang.
-
-6. **OG image khusus per halaman.** Sekarang belum ada `og:image` di halaman tanpa cover.
-   Bisa dibuat endpoint OG dinamis (`src/pages/og/[...].png.ts`) bila diinginkan.
+3. **OG image khusus per halaman.** Belum ada `og:image` di halaman tanpa cover (celah lama).
+   Bisa dibuat endpoint OG dinamis (`src/pages/og/[...].png.ts`) atau isi `image` di `BaseLayout`.
+4. **Custom domain** — masih `*.workers.dev`. Bila mau domain sendiri (mis. `jelajahrembang.id`),
+   ubah `site:` di `astro.config.mjs` + `public/robots.txt`, lalu deploy ulang.
 
 ### Prioritas rendah / opsional
 
-7. **Pagefind** (pencarian statis) — rencana fase 2, belum dipasang.
-8. **Sebaran pin peta di `/peta/`** — tambah filter kategori bila destinasi bertambah banyak.
-9. **Sitemap** sudah otomatis; tinggal submit ke Google Search Console.
+5. **Pagefind** (pencarian statis) — rencana fase 2, belum dipasang.
+6. **Submit sitemap** ke Google Search Console (`/sitemap-index.xml`).
+7. **Em dash di `sources:`** — ~12 berkas konten memakai `—` sebagai pemisah label sitasi
+   (mis. `Wikipedia — Topik`). Aturan "nol em dash" (AGENTS.md §6) menyasar prosa; ini metadata
+   sitasi. Bila ingin konsisten penuh, ganti dengan `:` atau koma.
+
+---
+
+## Skrip bantu (baru, di `scripts/`)
+
+Di luar `src/` sehingga tak tersentuh Content Collections/lint.
+
+| Skrip | Fungsi |
+|---|---|
+| `scripts/commons-manifest.json` | Daftar berkas Commons → path lokal + judul. |
+| `scripts/fetch-commons.mjs` | Unduh foto (1600 px) via `curl -4`, resumable, append `credits.json`. |
+| `scripts/gen-galeri.mjs` | Hasilkan 12 berkas album galeri dari data + kredit asli. |
+| `scripts/apply-covers-coords.mjs` | Sisipkan `cover`/`coverAlt`/`coords` ke frontmatter (idempoten). |
+| `scripts/fix-dims.mjs` | Perbaiki `width`/`height` di `credits.json` dari berkas asli. |
+
+Jalankan unduhan: `NODE_OPTIONS='--dns-result-order=ipv4first' node scripts/fetch-commons.mjs scripts/commons-manifest.json`
 
 ---
 
@@ -92,28 +103,36 @@ karena hanya itu yang koordinatnya yakin. Sisanya tidak dipasang pin agar tidak 
 3. Isi frontmatter sesuai `src/content.config.ts`.
 4. `npm run build` → halaman indeks & detail otomatis terbentuk.
 
-### Menambah foto (Wikimedia Commons)
-1. Cari: `curl -4 -s -H "User-Agent: jelajah-rembang/0.1" "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=filetype:bitmap%20Rembang&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url|extmetadata|size"`
-2. Unduh `thumburl` (lebar ~1600) ke `src/assets/...`.
-3. Catat `artist`, `license`, `source` ke `src/assets/credits.json`.
-4. Pasang `cover: ../../assets/...` di frontmatter (path relatif dari berkas konten).
+### Menambah album galeri
+Berkas `src/content/galeri/{id,en}/<album>.md`; `photos: [{src, alt, caption?, credit?}]`.
+Nama berkas, `translationKey`, `order`, dan urutan `src` **identik** antar bahasa. Foto di
+`src/assets/galeri/<album>/`. Halaman `/galeri/` dan lightbox sudah menangani sisanya.
 
-> ⚠️ Node `fetch` diblokir di environment ini. Pakai **`curl`** untuk permintaan jaringan,
-> dan prefix `-4` (IPv4). Untuk wrangler/npm: `NODE_OPTIONS='--dns-result-order=ipv4first'`.
+### Menambah foto (Wikimedia Commons)
+Pakai `scripts/fetch-commons.mjs` (tambah entri ke manifest). Atau manual:
+1. `curl -4 -s -H "User-Agent: jelajah-rembang/0.1" "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File:NAMA&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=1600"`
+2. Unduh `thumburl` (buang query `?utm_…`) ke `src/assets/...`.
+3. Catat atribusi di `src/assets/credits.json` (dimensi dari `file <berkas>`, bukan `thumbwidth` API).
+4. Pasang `cover:`/`photos[].src` (path relatif dari berkas konten).
+
+> ⚠️ Node `fetch` diblokir di environment ini. Pakai **`curl -4`** untuk jaringan.
+> Untuk wrangler/npm: `NODE_OPTIONS='--dns-result-order=ipv4first'`.
+> Wikimedia membatasi laju: jeda ~9 s antar permintaan, batch judul ≤20.
 
 ### Deploy
 ```bash
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run build
 NODE_OPTIONS='--dns-result-order=ipv4first' CI=true WRANGLER_SEND_METRICS=false npx wrangler deploy
 ```
-Cloudflare: akun `b3646e9d901e18b382b3f961d2b98f69`. Worker: `jelajah-rembang`.
+Cloudflare: akun `b3646e9d901e18b382b3f961d2b98f69`. Worker aktif: `jelajah-rembang`.
+Worker lama `rembang-web` **sudah dihapus** (9 Okt 2026).
 
 ### Verifikasi sebelum klaim selesai
 ```bash
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run check     # 0 error
 node /home/zzdree/ANDREAS/impeccable/cli/bin/cli.js detect src/    # 0 anti-pattern
-NODE_OPTIONS='--dns-result-order=ipv4first' npm run build      # 74+ halaman
-NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 11/11
+NODE_OPTIONS='--dns-result-order=ipv4first' npm run build      # 74 halaman
+NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 12/12
 ```
 
 ---
@@ -139,10 +158,13 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 11/11
    lama menyajikan `dist` lama. Matikan dulu (`kill <pid>` pada port 4321) lalu start ulang.
 
 7. **`@astrojs/check` tidak mendukung TypeScript 7.** TypeScript di-pin ke `6.0.3`.
-   Jangan naikkan tanpa memeriksa peer-nya.
 
-8. **`BaseLayout` wajib membungkus setiap halaman.** Pernah lupa di `HomePage.astro`
-   → beranda kehilangan seluruh `<head>`. Bila `<title>` hilang, cek pembungkusan layout.
+8. **`BaseLayout` wajib membungkus setiap halaman.** Bila `<title>` hilang, cek pembungkusan layout.
+
+9. **`file` melaporkan density "1x1".** Saat membaca dimensi gambar dari `file`, cocokkan
+   `(\d+)x(\d+), components` — jangan regex pertama (bisa menangkap density 1x1).
+
+10. **Rate limit Wikimedia.** Burst beberapa permintaan → HTTP 429. Jeda 9 s + backoff + `maxlag=5`.
 
 ---
 
@@ -151,12 +173,13 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 11/11
 | Keputusan | Alasan |
 |---|---|
 | Astro, bukan Next.js | Situs 100% konten; Astro = HTML statis, nol JS default, paling cepat |
-| Cloudflare Workers static assets, bukan Pages | Panduan Cloudflare 2026 untuk proyek baru; perintah `wrangler deploy` sama |
-| Tanpa database | Tidak butuh; konten = berkas Markdown di repo |
+| Cloudflare Workers static assets, bukan Pages | Panduan Cloudflare 2026 untuk proyek baru |
+| Tanpa database | Konten = berkas Markdown di repo |
 | Tanpa framework UI | 3 island vanilla TS cukup; bundle tetap kecil |
-| Font Bodoni Moda/Hanken Grotesk/Martian Mono | **Fraunces ada di daftar larangan Impeccable**; tiga ini tidak |
+| Font Bodoni Moda/Hanken Grotesk/Martian Mono | Fraunces ada di daftar larangan Impeccable; tiga ini tidak |
 | Nama "Jelajah Rembang" | Dipilih pengguna; folder & repo sudah konsisten |
 | Foto Wikimedia Commons | Lisensi bebas + atribusi; mudah diganti foto asli nanti |
+| Galeri tematik-warisan (6 album) | Sejalan dengan posisi "arsip hidup", bukan galeri generik |
 
 ---
 

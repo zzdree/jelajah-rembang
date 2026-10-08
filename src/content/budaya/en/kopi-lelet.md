@@ -2,6 +2,8 @@
 translationKey: kopi-lelet
 title: "Kopi Lelet and the Ngelelet Tradition"
 summary: The thick, milky coffee of Lasem's old warungs comes with a habit of its own. The grounds and milk left in the glass are used to draw batik motifs on a cigarette.
+cover: ../../../assets/galeri/kuliner-pesisir/warung-kopi-lelet.jpg
+coverAlt: "A Kopi Lelet stall in Lasem."
 category: warisan
 tags:
   - coffee

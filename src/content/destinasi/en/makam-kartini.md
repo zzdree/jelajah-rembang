@@ -2,6 +2,8 @@
 translationKey: makam-kartini
 title: The Grave of R.A. Kartini
 summary: The grave of R.A. Kartini and her family in Bulu village, Rembang. A pilgrimage site, busiest on Kartini Day, 21 April.
+cover: ../../../assets/galeri/napak-tilas-kartini/makam-kartini-01.jpg
+coverAlt: "The grave of R.A. Kartini in Bulu village, Rembang."
 kind: museum
 kecamatan: Rembang
 tags:

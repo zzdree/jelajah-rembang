@@ -2,6 +2,8 @@
 translationKey: makam-kartini
 title: Makam R.A. Kartini
 summary: Makam R.A. Kartini dan keluarganya di Desa Bulu, Rembang. Menjadi tujuan ziarah, terutama pada Hari Kartini 21 April.
+cover: ../../../assets/galeri/napak-tilas-kartini/makam-kartini-01.jpg
+coverAlt: "Makam R.A. Kartini di Desa Bulu, Rembang."
 kind: museum
 kecamatan: Rembang
 tags:

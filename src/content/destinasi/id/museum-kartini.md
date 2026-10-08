@@ -2,6 +2,8 @@
 translationKey: museum-kartini
 title: Museum R.A. Kartini
 summary: Museum di bekas rumah dinas Bupati Rembang tempat Kartini hidup setelah menikah. Menyimpan surat, benda pribadi, dan jejak perjuangannya.
+cover: ../../../assets/galeri/napak-tilas-kartini/museum-kartini-pendopo.jpg
+coverAlt: "Pendopo Museum Kartini Rembang."
 kind: museum
 kecamatan: Rembang
 coords: [-6.7064, 111.3503]

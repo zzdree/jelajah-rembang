@@ -2,6 +2,8 @@
 translationKey: asal-usul-nama-rembang
 title: Asal-Usul Nama Rembang
 summary: 'Cerita rakyat menuturkan nama Rembang lahir dari delapan keluarga Champa, pohon bakau, dan upacara "ngrembang sakawit" pada abad ke-14.'
+cover: ../../../assets/galeri/pesisir-dan-pantai/pelabuhan-rembang-01.jpg
+coverAlt: "Pelabuhan Rembang di pesisir utara."
 era: Legenda
 year: Saka 1337 (sekitar abad ke-14)
 places:

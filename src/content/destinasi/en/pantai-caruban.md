@@ -6,6 +6,7 @@ title: Caruban Beach
 summary: A beach near Lasem known for its sunsets and the remains of the Taman Sitaresmi wall. Fishing boats and seafood stalls add to the scene.
 kind: pantai
 kecamatan: Lasem
+coords: [-6.6786, 111.4288]
 tags:
   - beach
   - sunset

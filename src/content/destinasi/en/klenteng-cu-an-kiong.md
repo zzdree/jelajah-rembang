@@ -2,6 +2,8 @@
 translationKey: klenteng-cu-an-kiong
 title: Cu An Kiong Temple
 summary: One of the oldest Chinese temples in Lasem, founded in the 16th century in the Soditan heritage kampong and dedicated to Mazu, goddess of the sea.
+cover: ../../../assets/galeri/lasem-tiongkok-kecil/cu-an-kiong-aula.jpg
+coverAlt: "The central hall of Cu An Kiong Temple, Lasem."
 kind: religi
 kecamatan: Lasem
 tags:

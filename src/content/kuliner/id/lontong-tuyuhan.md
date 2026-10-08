@@ -2,6 +2,8 @@
 translationKey: lontong-tuyuhan
 title: Lontong Tuyuhan
 summary: Lontong berbentuk segitiga dalam kuah santan kuning pekat, disajikan dengan ayam kampung, tempe, dan jeroan, lalu ditaburi bawang goreng.
+cover: ../../../assets/galeri/kuliner-pesisir/lontong-tuyuhan-09.jpg
+coverAlt: "Lontong tuyuhan dalam kuah santan kuning."
 type: makanan
 origin: Desa Tuyuhan, Kec. Pancur
 ingredients:

@@ -77,6 +77,18 @@ test.describe('Lightbox galeri', () => {
     await expect(page.locator('h1')).toContainText(/Galeri/i);
     expect(errors).toEqual([]);
   });
+
+  test('album tampil dan lightbox membuka gambar', async ({ page }) => {
+    await page.goto('/galeri/');
+    // Album terisi (bukan keadaan kosong)
+    await expect(page.locator('section h2').first()).toBeVisible();
+    const thumb = page.locator('[data-lightbox]').first();
+    await thumb.click();
+    const dialog = page.locator('#lightbox');
+    await expect(dialog).toHaveAttribute('open', '');
+    // Sumber gambar besar terpasang (bukan placeholder)
+    await expect(page.locator('#lb-img')).not.toHaveAttribute('src', /^data:image\/gif/);
+  });
 });
 
 test.describe('404', () => {
