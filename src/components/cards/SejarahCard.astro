@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+import { stripLang } from '@/lib/content';
+
+interface Props {
+  entry: CollectionEntry<'sejarah'>;
+  lang: Lang;
+}
+const { entry, lang } = Astro.props;
+const { title, summary, cover, coverAlt, era, year } = entry.data;
+const href = localizePath(`/sejarah/${stripLang(entry.id)}`, lang);
+---
+
+<a href={href} class="group grid gap-4 sm:grid-cols-[9rem_1fr] sm:gap-6">
+  <div class="flex flex-col gap-1 sm:pt-1">
+    {year && <span class="data-figure text-merah">{year}</span>}
+    {era && <span class="label-caps text-ink-soft">{era}</span>}
+  </div>
+  <div class="flex flex-col gap-3 border-l border-rule pl-5 transition-colors duration-200 group-hover:border-soga sm:pl-6">
+    {
+      cover && (
+        <div class="overflow-hidden rounded-card bg-paper-sunken">
+          <Image
+            src={cover}
+            alt={coverAlt ?? title}
+            widths={[400, 800]}
+            sizes="(min-width: 640px) 640px, 100vw"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        </div>
+      )
+    }
+    <h3 class="m-0 font-display text-xl font-semibold leading-snug text-ink">{title}</h3>
+    <p class="m-0 text-sm leading-relaxed text-ink-soft">{summary}</p>
+    <span class="inline-flex items-center gap-1 text-sm font-medium text-merah">
+      {t('common.readMore', lang)}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </span>
+  </div>
+</a>

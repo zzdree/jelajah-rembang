@@ -1,0 +1,16 @@
+---
+import BudayaDetailPage from '@/components/pages/BudayaDetailPage.astro';
+import { getCollection } from 'astro:content';
+import { stripLang } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('budaya', ({ data }) => !data.draft);
+  return entries
+    .filter((e) => e.id.startsWith('id/'))
+    .map((entry) => ({ params: { slug: stripLang(entry.id) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+
+<BudayaDetailPage lang="id" entry={entry} />

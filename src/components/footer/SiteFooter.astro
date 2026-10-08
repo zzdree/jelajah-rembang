@@ -1,0 +1,68 @@
+---
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const SECTIONS: { key: Parameters<typeof t>[0]; path: string }[] = [
+  { key: 'nav.sejarah', path: '/sejarah' },
+  { key: 'nav.budaya', path: '/budaya' },
+  { key: 'nav.kuliner', path: '/kuliner' },
+  { key: 'nav.destinasi', path: '/destinasi' },
+  { key: 'nav.profil', path: '/profil' },
+  { key: 'nav.galeri', path: '/galeri' },
+  { key: 'nav.peta', path: '/peta' },
+];
+
+const year = 2026;
+---
+
+<footer class="mt-section border-t border-rule bg-paper-sunken">
+  <div class="container-page grid gap-10 py-14 md:grid-cols-[1.6fr_1fr_1fr]">
+    <!-- Identitas & tentang -->
+    <div class="max-w-md">
+      <p class="font-display text-xl font-semibold text-ink">
+        {lang === 'id' ? 'Kabupaten Rembang' : 'Rembang Regency'}
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-ink-soft">{t('footer.aboutText', lang)}</p>
+      <p class="mt-4 text-xs leading-relaxed text-ink-soft">{t('footer.rights', lang)}</p>
+    </div>
+
+    <!-- Jelajahi -->
+    <nav aria-label={t('footer.sections', lang)}>
+      <h2 class="label-caps mb-4 text-ink-soft">{t('footer.sections', lang)}</h2>
+      <ul class="space-y-2.5">
+        {
+          SECTIONS.map(({ key, path }) => (
+            <li>
+              <a
+                href={localizePath(path, lang)}
+                class="text-sm text-ink-soft transition-colors hover:text-merah"
+              >
+                {t(key, lang)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Kredit -->
+    <div>
+      <h2 class="label-caps mb-4 text-ink-soft">{t('footer.credits', lang)}</h2>
+      <p class="text-sm leading-relaxed text-ink-soft">{t('footer.creditsNote', lang)}</p>
+      <a
+        href={localizePath('/kredit', lang)}
+        class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-merah transition-colors hover:text-merah-deep"
+      >
+        {t('footer.credits', lang)}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+      <p class="data-figure mt-4 text-xs text-ink-soft">© {year} · {lang === 'id' ? 'Rembang' : 'Rembang'}</p>
+    </div>
+  </div>
+</footer>

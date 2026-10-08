@@ -1,0 +1,20 @@
+---
+interface Props {
+  /** Judul seksi. */
+  title: string;
+  /** Deskripsi singkat opsional di bawah judul. */
+  lead?: string;
+  /** Tingkat heading untuk struktur dokumen yang benar. */
+  as?: 'h2' | 'h3';
+  id?: string;
+  align?: 'start' | 'center';
+}
+const { title, lead, as: Tag = 'h2', id, align = 'start' } = Astro.props;
+---
+
+<div class:list={['flex flex-col gap-2', align === 'center' && 'items-center text-center']}>
+  <Tag id={id} class="m-0 max-w-[24ch] text-balance">
+    {title}
+  </Tag>
+  {lead && <p class="measure-prose m-0 text-base text-ink-soft">{lead}</p>}
+</div>

@@ -1,0 +1,106 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { HTML_LANG, type Lang } from '@/lib/i18n';
+import { stripLang, translationOf } from '@/lib/content';
+import type { CollectionKey } from 'astro:content';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Kunci terjemahan untuk halaman ini, bila ada. */
+  translationKey?: string;
+  /** Segmen koleksi (mis. 'sejarah'), bila ada. */
+  collection?: string;
+  /** Slug tanpa prefix bahasa, bila ada. */
+  slug?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  lang,
+  title,
+  description,
+  translationKey,
+  collection,
+  slug,
+  image,
+  type = 'website',
+} = Astro.props;
+
+const siteName = lang === 'id' ? 'Kabupaten Rembang' : 'Rembang Regency';
+const fullTitle = title ? `${title} · ${siteName}` : siteName;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const ogImage = image ? new URL(image, Astro.site ?? Astro.url).href : undefined;
+const alt: Lang = lang === 'id' ? 'en' : 'id';
+
+// --- hreflang: hanya bila pasangan terjemahan benar-benar ada ---
+let altPath: string | undefined;
+
+if (collection && slug && translationKey) {
+  // Halaman detail: cari saudara terjemahan lewat translationKey.
+  const sibling = await translationOf(collection as CollectionKey, translationKey, alt);
+  if (sibling) altPath = getRelativeLocaleUrl(alt, `${collection}/${stripLang(sibling.id)}`);
+} else {
+  // Halaman indeks / statis / beranda: pasangan selalu ada di bahasa lain,
+  // dengan path yang sama tanpa prefix locale.
+  const neutral = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '').replace(/^\//, '');
+  altPath = getRelativeLocaleUrl(alt, neutral);
+}
+
+const selfHref = `${site}${Astro.url.pathname}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description ?? ''} />
+<link rel="canonical" href={canonical} />
+
+{
+  altPath && (
+    <>
+      <link rel="alternate" hreflang={HTML_LANG[lang]} href={selfHref} />
+      <link rel="alternate" hreflang={HTML_LANG[alt]} href={`${site}${altPath}`} />
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={lang === 'id' ? selfHref : `${site}${altPath}`}
+      />
+    </>
+  )
+}
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={HTML_LANG[lang].replace('-', '_')} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description ?? ''} />
+<meta property="og:url" content={canonical} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description ?? ''} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Tema: dipasang sebelum paint, tanpa FOUC -->
+<script is:inline>
+  (() => {
+    try {
+      const stored = localStorage.getItem('rembang-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = stored ?? (prefersDark ? 'dark' : 'light');
+    } catch {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>

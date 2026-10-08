@@ -1,0 +1,15 @@
+---
+import { t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-control focus:bg-merah focus:px-4 focus:py-2 focus:text-paper-raised focus:shadow-lg"
+>
+  {t('nav.skip', lang)}
+</a>

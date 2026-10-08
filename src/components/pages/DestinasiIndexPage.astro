@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import DestinasiCard from '@/components/cards/DestinasiCard.astro';
+import { getLocalized } from '@/lib/content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const entries = await getLocalized('destinasi', lang);
+
+const KINDS = ['pantai', 'religi', 'museum', 'alam', 'hutan', 'embung', 'pulau'] as const;
+const KIND_LABEL: Record<string, { id: string; en: string }> = {
+  pantai: { id: 'Pantai', en: 'Beaches' },
+  religi: { id: 'Wisata Religi', en: 'Religious Sites' },
+  museum: { id: 'Sejarah & Museum', en: 'History & Museums' },
+  alam: { id: 'Alam', en: 'Nature' },
+  hutan: { id: 'Hutan & Mangrove', en: 'Forest & Mangrove' },
+  embung: { id: 'Embung', en: 'Reservoirs' },
+  pulau: { id: 'Pulau', en: 'Islands' },
+};
+
+const groups = KINDS.map((kind) => ({ kind, items: entries.filter((e) => e.data.kind === kind) })).filter(
+  (g) => g.items.length > 0,
+);
+const withCoords = entries.filter((e) => e.data.coords).length;
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('destinasi.title', lang)}
+  description={t('destinasi.lead', lang)}
+  collection="destinasi"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('destinasi.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-10 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('destinasi.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('destinasi.lead', lang)}</p>
+    {
+      withCoords > 0 && (
+        <a
+          href={localizePath('/peta', lang)}
+          class="mt-7 inline-flex items-center gap-2 rounded-control border border-rule px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-soga"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" />
+            <path d="M9 4v14M15 6v14" />
+          </svg>
+          {t('destinasi.onMap', lang)}
+        </a>
+      )
+    }
+  </header>
+
+  <div class="container-page flex flex-col gap-16 pb-section">
+    {
+      groups.map((g) => (
+        <section>
+          <h2 class="m-0 mb-6 border-b border-rule pb-3 font-display text-2xl font-semibold text-ink">
+            {KIND_LABEL[g.kind]?.[lang] ?? g.kind}
+          </h2>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {g.items.map((entry) => (
+              <DestinasiCard entry={entry} lang={lang} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>

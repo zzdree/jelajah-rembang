@@ -1,0 +1,38 @@
+---
+import type { Lang } from '@/lib/i18n';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  lang: Lang;
+  items: Crumb[];
+}
+const { lang, items } = Astro.props;
+---
+
+<nav aria-label={lang === 'id' ? 'Remah' : 'Breadcrumb'} class="mb-8">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-soft">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2">
+          {item.href ? (
+            <a href={item.href} class="transition-colors hover:text-merah">
+              {item.label}
+            </a>
+          ) : (
+            <span aria-current="page" class="text-ink">
+              {item.label}
+            </span>
+          )}
+          {i < items.length - 1 && (
+            <span aria-hidden="true" class="text-rule">
+              /
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

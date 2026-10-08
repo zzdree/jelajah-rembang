@@ -1,0 +1,26 @@
+---
+interface Props {
+  size?: 'default' | 'lead';
+}
+const { size = 'default' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'measure-prose',
+    size === 'lead' ? 'text-lg text-ink-soft' : 'text-base text-ink',
+    '[&_p]:my-5 [&_p:first-child]:mt-0',
+    '[&_h2]:mt-12 [&_h2]:mb-3.5',
+    '[&_h3]:mt-8 [&_h3]:mb-2.5',
+    '[&_ul]:my-5 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-5 [&_ol]:list-decimal [&_ol]:pl-6',
+    '[&_li]:my-1.5 [&_li]:pl-1',
+    '[&_blockquote]:my-8 [&_blockquote]:border-l [&_blockquote]:border-soga [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-ink-soft',
+    '[&_img]:my-8 [&_img]:rounded-card',
+    '[&_a]:text-indigo [&_a]:underline',
+    '[&_strong]:font-semibold [&_strong]:text-ink',
+    '[&_hr]:my-10 [&_hr]:border-rule',
+    '[&_code]:rounded [&_code]:bg-paper-sunken [&_code]:px-1.5 [&_code]:py-0.5',
+  ]}
+>
+  <slot />
+</div>

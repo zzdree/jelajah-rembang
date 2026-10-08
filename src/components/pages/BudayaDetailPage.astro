@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import ArticleHeader from '@/components/ui/ArticleHeader.astro';
+import Prose from '@/components/ui/Prose.astro';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+import { stripLang } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+  entry: CollectionEntry<'budaya'>;
+}
+const { lang, entry } = Astro.props;
+const { title, summary, cover, coverAlt, category, sources, updated } = entry.data;
+const { Content } = await render(entry);
+
+const CATEGORY: Record<string, { id: string; en: string }> = {
+  batik: { id: 'Batik', en: 'Batik' },
+  pertunjukan: { id: 'Seni Pertunjukan', en: 'Performing Arts' },
+  tradisi: { id: 'Tradisi', en: 'Tradition' },
+  arsitektur: { id: 'Arsitektur', en: 'Architecture' },
+  warisan: { id: 'Warisan', en: 'Heritage' },
+};
+
+const meta = [{ label: t('common.category', lang), value: CATEGORY[category]?.[lang] ?? category }];
+const updatedLabel =
+  updated &&
+  new Intl.DateTimeFormat(lang === 'id' ? 'id-ID' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(updated);
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={summary}
+  type="article"
+  collection="budaya"
+  slug={stripLang(entry.id)}
+  translationKey={entry.data.translationKey}
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('budaya.title', lang), href: localizePath('/budaya', lang) },
+        { label: title },
+      ]}
+    />
+  </div>
+
+  <ArticleHeader title={title} lead={summary} cover={cover} coverAlt={coverAlt} meta={meta} motif="latohan" />
+
+  <div class="container-page py-section">
+    <Prose>
+      <Content />
+    </Prose>
+
+    {
+      sources.length > 0 && (
+        <aside class="measure-prose mt-14 border-t border-rule pt-6">
+          <h2 class="label-caps m-0 mb-3 text-ink-soft">{t('common.source', lang)}</h2>
+          <ul class="m-0 flex list-none flex-col gap-1.5 p-0">
+            {sources.map((s) => (
+              <li class="text-sm text-ink-soft">{s}</li>
+            ))}
+          </ul>
+          {updatedLabel && (
+            <p class="mt-4 text-xs text-ink-soft">
+              {t('common.updated', lang)}: {updatedLabel}
+            </p>
+          )}
+        </aside>
+      )
+    }
+
+    <div class="mt-12">
+      <a
+        href={localizePath('/budaya', lang)}
+        class="inline-flex items-center gap-2 text-sm font-semibold text-merah transition-colors hover:text-merah-deep"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M11 18l-6-6 6-6" />
+        </svg>
+        {t('common.backTo', lang)} {t('budaya.title', lang)}
+      </a>
+    </div>
+  </div>
+</BaseLayout>

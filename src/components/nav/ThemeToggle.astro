@@ -1,0 +1,76 @@
+---
+import { t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class="inline-flex items-center justify-center rounded-control border border-rule p-2 text-ink-soft transition-colors duration-150 hover:border-soga hover:text-ink"
+  aria-label={t('theme.toggle', lang)}
+  title={t('theme.toggle', lang)}
+>
+  <svg
+    data-theme-icon="light"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+    ></path>
+  </svg>
+  <svg
+    data-theme-icon="dark"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    style="display:none"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<script>
+  const KEY = 'rembang-theme';
+  const root = document.documentElement;
+
+  function apply(theme: 'light' | 'dark') {
+    root.dataset.theme = theme;
+    document.querySelectorAll<SVGElement>('[data-theme-icon]').forEach((el) => {
+      (el as SVGElement & { style: CSSStyleDeclaration }).style.display =
+        el.dataset.themeIcon === theme ? '' : 'none';
+    });
+  }
+
+  apply((root.dataset.theme as 'light' | 'dark') ?? 'light');
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try {
+        localStorage.setItem(KEY, next);
+      } catch {
+        /* localStorage bisa diblokir — abaikan */
+      }
+    });
+  });
+</script>

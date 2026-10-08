@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+import { stripLang } from '@/lib/content';
+
+interface Props {
+  entry: CollectionEntry<'budaya'>;
+  lang: Lang;
+  /** Warna tinta berdasarkan kategori. */
+  ink?: 'merah' | 'indigo' | 'soga';
+}
+const { entry, lang, ink = 'indigo' } = Astro.props;
+const { title, summary, cover, coverAlt, category } = entry.data;
+const href = localizePath(`/budaya/${stripLang(entry.id)}`, lang);
+
+const CATEGORY: Record<string, { id: string; en: string }> = {
+  batik: { id: 'Batik', en: 'Batik' },
+  pertunjukan: { id: 'Seni Pertunjukan', en: 'Performing Arts' },
+  tradisi: { id: 'Tradisi', en: 'Tradition' },
+  arsitektur: { id: 'Arsitektur', en: 'Architecture' },
+  warisan: { id: 'Warisan', en: 'Heritage' },
+};
+
+const INK_CLASS = {
+  merah: 'text-merah',
+  indigo: 'text-indigo',
+  soga: 'text-soga',
+} as const;
+---
+
+<a
+  href={href}
+  class="group flex flex-col gap-4 border-t border-rule pt-6 transition-colors duration-200 hover:border-soga"
+>
+  {
+    cover && (
+      <div class="overflow-hidden rounded-card bg-paper-sunken">
+        <Image
+          src={cover}
+          alt={coverAlt ?? title}
+          widths={[400, 800, 1200]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          loading="lazy"
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        />
+      </div>
+    )
+  }
+  <div class="flex flex-col gap-2">
+    <span class:list={['label-caps', INK_CLASS[ink]]}>{CATEGORY[category]?.[lang] ?? category}</span>
+    <h3 class="m-0 font-display text-2xl font-semibold leading-tight text-ink">{title}</h3>
+    <p class="m-0 text-sm leading-relaxed text-ink-soft">{summary}</p>
+    <span class="mt-1 inline-flex items-center gap-1 text-sm font-medium text-merah">
+      {t('common.readMore', lang)}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </span>
+  </div>
+</a>

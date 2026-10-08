@@ -1,0 +1,42 @@
+---
+import BaseHead from '@/components/seo/BaseHead.astro';
+import SiteHeader from '@/components/nav/SiteHeader.astro';
+import SiteFooter from '@/components/footer/SiteFooter.astro';
+import SkipLink from '@/components/nav/SkipLink.astro';
+import '@/styles/global.css';
+import { HTML_LANG, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  translationKey?: string;
+  collection?: string;
+  slug?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const { lang, title, description, ...head } = Astro.props;
+const metaDescription = description ?? t('site.description', lang);
+---
+
+<!doctype html>
+<html lang={HTML_LANG[lang]} data-theme="light">
+  <head>
+    <BaseHead
+      lang={lang}
+      title={title}
+      description={metaDescription}
+      {...head}
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-paper text-ink antialiased">
+    <SkipLink lang={lang} />
+    <SiteHeader lang={lang} />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} />
+  </body>
+</html>

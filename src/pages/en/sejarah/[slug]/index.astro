@@ -1,0 +1,16 @@
+---
+import SejarahDetailPage from '@/components/pages/SejarahDetailPage.astro';
+import { getCollection } from 'astro:content';
+import { stripLang } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('sejarah', ({ data }) => !data.draft);
+  return entries
+    .filter((e) => e.id.startsWith('en/'))
+    .map((entry) => ({ params: { slug: stripLang(entry.id) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+
+<SejarahDetailPage lang="en" entry={entry} />

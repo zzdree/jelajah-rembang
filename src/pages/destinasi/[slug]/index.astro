@@ -1,0 +1,16 @@
+---
+import DestinasiDetailPage from '@/components/pages/DestinasiDetailPage.astro';
+import { getCollection } from 'astro:content';
+import { stripLang } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('destinasi', ({ data }) => !data.draft);
+  return entries
+    .filter((e) => e.id.startsWith('id/'))
+    .map((entry) => ({ params: { slug: stripLang(entry.id) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+
+<DestinasiDetailPage lang="id" entry={entry} />

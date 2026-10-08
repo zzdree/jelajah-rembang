@@ -1,0 +1,146 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import { getLocalized } from '@/lib/content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const albums = await getLocalized('galeri', lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('galeri.title', lang)}
+  description={t('galeri.lead', lang)}
+  collection="galeri"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('galeri.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-12 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('galeri.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('galeri.lead', lang)}</p>
+  </header>
+
+  <div class="container-page pb-section">
+    {
+      albums.length === 0 ? (
+        <div class="rounded-card border border-rule bg-paper-sunken p-10 text-center">
+          <p class="m-0 mx-auto max-w-md text-base leading-relaxed text-ink-soft">
+            {lang === 'id'
+              ? 'Koleksi foto sedang dikurasi. Foto yang ditampilkan nantinya berasal dari Wikimedia Commons dengan lisensi bebas dan atribusi lengkap.'
+              : 'The photo collection is being curated. Images will come from Wikimedia Commons under free licences, with full attribution.'}
+          </p>
+        </div>
+      ) : (
+        <div class="flex flex-col gap-16">
+          {albums.map((album) => (
+            <section>
+              <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-3">
+                <h2 class="m-0 font-display text-2xl font-semibold text-ink">{album.data.title}</h2>
+                <span class="data-figure text-xs text-ink-soft">
+                  {((album.data.photos as unknown[]) ?? []).length} {t('common.photoCount', lang)}
+                </span>
+              </div>
+              {album.data.summary && (
+                <p class="measure-prose mb-8 text-sm leading-relaxed text-ink-soft">{album.data.summary}</p>
+              )}
+              <ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
+                {((album.data.photos as any[]) ?? []).map((photo) => (
+                  <li>
+                    <button
+                      type="button"
+                      class="group block w-full overflow-hidden rounded-card bg-paper-sunken"
+                      data-lightbox
+                      data-full={photo.src.src}
+                      data-caption={photo.caption ?? photo.alt}
+                      data-alt={photo.alt}
+                      aria-label={`${t('galeri.openImage', lang)}: ${photo.alt}`}
+                    >
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        widths={[300, 600]}
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                        loading="lazy"
+                        class="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<!-- Lightbox: <dialog> native memberi focus-trap, Esc, dan top-layer gratis -->
+<dialog
+  id="lightbox"
+  class="m-auto max-h-[92vh] w-[min(94vw,72rem)] rounded-card border border-rule bg-paper-raised p-0 backdrop:bg-ink/70"
+>
+  <div class="flex items-center justify-between border-b border-rule px-4 py-3">
+    <p id="lb-caption" class="m-0 truncate text-sm text-ink-soft"></p>
+    <button
+      type="button"
+      id="lb-close"
+      class="rounded-control border border-rule p-1.5 text-ink-soft transition-colors hover:border-soga hover:text-ink"
+      aria-label={t('galeri.close', lang)}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+  <img
+    id="lb-img"
+    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+    alt=""
+    class="max-h-[78vh] w-full object-contain bg-paper-sunken"
+  />
+</dialog>
+
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const img = document.getElementById('lb-img') as HTMLImageElement | null;
+  const cap = document.getElementById('lb-caption');
+  const closeBtn = document.getElementById('lb-close');
+  let lastFocus: HTMLElement | null = null;
+
+  if (dlg && img) {
+    document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        lastFocus = btn;
+        img.src = btn.dataset.full || '';
+        img.alt = btn.dataset.alt || '';
+        if (cap) cap.textContent = btn.dataset.caption || '';
+        dlg.showModal();
+      });
+    });
+
+    const close = () => {
+      dlg.close();
+      img.src = '';
+    };
+    closeBtn?.addEventListener('click', close);
+    // Klik di luar panel menutup
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) close();
+    });
+    dlg.addEventListener('close', () => lastFocus?.focus());
+  }
+</script>

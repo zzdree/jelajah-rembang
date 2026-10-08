@@ -1,0 +1,193 @@
+---
+/**
+ * Island peta: Leaflet dimuat hanya saat masuk viewport, dan hanya di halaman ini.
+ * Daftar teks di bawah adalah konten yang sebenarnya — peta hanyalah pengayaan.
+ */
+import 'leaflet/dist/leaflet.css';
+
+interface Point {
+  name: string;
+  coords: [number, number];
+  kind: string;
+  kecamatan: string;
+  href: string;
+}
+
+interface Props {
+  points: Point[];
+  lang: 'id' | 'en';
+  center?: [number, number];
+  zoom?: number;
+}
+const { points, lang, center = [-6.75, 111.35], zoom = 10 } = Astro.props;
+
+const KIND_LABEL: Record<string, { id: string; en: string; color: string }> = {
+  pantai: { id: 'Pantai', en: 'Beach', color: 'var(--merah-lasem)' },
+  museum: { id: 'Museum', en: 'Museum', color: 'var(--soga)' },
+  religi: { id: 'Religi', en: 'Religious', color: 'var(--indigo-lasem)' },
+  alam: { id: 'Alam', en: 'Nature', color: 'var(--soga)' },
+  pulau: { id: 'Pulau', en: 'Island', color: 'var(--merah-lasem)' },
+  embung: { id: 'Embung', en: 'Reservoir', color: 'var(--indigo-lasem)' },
+  hutan: { id: 'Hutan', en: 'Forest', color: 'var(--soga)' },
+};
+
+const legendKinds = [...new Set(points.map((p) => p.kind))];
+---
+
+<div class="grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:items-start">
+  <div
+    class="relative overflow-hidden rounded-card border border-rule bg-paper-sunken"
+    style="min-height:520px"
+  >
+    <div
+      id="rembang-map"
+      class="h-[520px] w-full"
+      data-points={JSON.stringify(points)}
+      data-center={JSON.stringify(center)}
+      data-zoom={String(zoom)}
+      data-loading={lang === 'id' ? 'Memuat peta…' : 'Loading map…'}
+      role="application"
+      aria-label={lang === 'id' ? 'Peta destinasi Kabupaten Rembang' : 'Map of destinations in Rembang Regency'}
+    >
+    </div>
+    <noscript>
+      <p class="p-4 text-sm text-ink-soft">
+        {
+          lang === 'id'
+            ? 'Peta memerlukan JavaScript. Daftar destinasi di samping tetap dapat dibaca.'
+            : 'The map requires JavaScript. The destination list beside it remains readable.'
+        }
+      </p>
+    </noscript>
+  </div>
+
+  <div>
+    <h2 class="label-caps m-0 mb-4 border-b border-rule pb-3 text-soga">{lang === 'id' ? 'Keterangan' : 'Legend'}</h2>
+    <ul class="m-0 mb-8 flex list-none flex-wrap gap-x-4 gap-y-2 p-0">
+      {
+        legendKinds.map((k) => (
+          <li class="flex items-center gap-2 text-sm text-ink-soft">
+            <span class="inline-block h-3 w-3 rounded-full" style={`background:${KIND_LABEL[k]?.color ?? 'var(--soga)'}`} aria-hidden="true" />
+            {KIND_LABEL[k]?.[lang] ?? k}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class="label-caps m-0 mb-4 border-b border-rule pb-3 text-soga">{lang === 'id' ? 'Daftar destinasi' : 'Destination list'}</h2>
+    <ul class="m-0 flex max-h-[400px] list-none flex-col gap-0 overflow-y-auto p-0">
+      {
+        points.map((p) => (
+          <li class="border-b border-rule">
+            <a href={p.href} class="flex items-baseline justify-between gap-3 py-2.5 text-sm transition-colors hover:text-merah">
+              <span class="text-ink">{p.name}</span>
+              <span class="data-figure shrink-0 text-xs text-ink-soft">{p.kecamatan}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  interface MapPoint {
+    name: string;
+    coords: [number, number];
+    kind: string;
+    kecamatan: string;
+    href: string;
+  }
+
+  const el = document.getElementById('rembang-map');
+  if (el) {
+    const points: MapPoint[] = JSON.parse(el.dataset.points || '[]');
+    const center: [number, number] = JSON.parse(el.dataset.center || '[-6.75,111.35]');
+    const zoom = Number(el.dataset.zoom || '10');
+
+    const KIND_COLOR: Record<string, string> = {
+      pantai: 'var(--merah-lasem)',
+      museum: 'var(--soga)',
+      religi: 'var(--indigo-lasem)',
+      alam: 'var(--soga)',
+      pulau: 'var(--merah-lasem)',
+      embung: 'var(--indigo-lasem)',
+      hutan: 'var(--soga)',
+    };
+
+    function pin(kind: string) {
+      const color = KIND_COLOR[kind] || 'var(--soga)';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="34" viewBox="0 0 26 34"><path d="M13 33C13 33 25 20.5 25 12.5A12 12 0 1 0 1 12.5C1 20.5 13 33 13 33Z" fill="${color}"/><circle cx="13" cy="12.5" r="4.5" fill="var(--paper-raised)"/></svg>`;
+      return window.L.divIcon({
+        html: svg,
+        className: 'rembang-pin',
+        iconSize: [26, 34],
+        iconAnchor: [13, 33],
+        popupAnchor: [0, -30],
+      });
+    }
+
+    const io = new IntersectionObserver(async (entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+
+      const L = (await import('leaflet')).default;
+      const map = L.map(el, { scrollWheelZoom: false, attributionControl: true }).setView(center, zoom);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      for (const p of points) {
+        L.marker(p.coords, { icon: pin(p.kind), title: p.name })
+          .addTo(map)
+          .bindPopup(
+            `<a href="${p.href}" style="font-weight:600;color:var(--merah-lasem);text-decoration:none">${p.name}</a><br><span style="font-size:0.8em;color:var(--ink-soft)">${p.kecamatan}</span>`,
+          );
+      }
+
+      if (points.length > 1) {
+        map.fitBounds(points.map((p) => p.coords), { padding: [40, 40], maxZoom: 12 });
+      }
+    });
+
+    io.observe(el);
+  }
+</script>
+
+<style>
+  .rembang-pin {
+    background: transparent;
+    border: none;
+  }
+  :global(.leaflet-container) {
+    font-family: var(--font-body);
+    background: var(--paper-sunken);
+  }
+  :global(.leaflet-popup-content-wrapper) {
+    background: var(--paper-raised);
+    color: var(--ink);
+    border-radius: var(--radius-control);
+    box-shadow: 0 10px 30px -12px oklch(24% 0.024 58 / 0.35);
+  }
+  :global(.leaflet-popup-tip) {
+    background: var(--paper-raised);
+  }
+  :global(.leaflet-bar a) {
+    background: var(--paper-raised);
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+  :global(.leaflet-bar a:hover) {
+    background: var(--paper-sunken);
+  }
+  :global(.leaflet-control-attribution) {
+    background: color-mix(in oklch, var(--paper-raised) 85%, transparent);
+    color: var(--ink-soft);
+    font-size: 0.625rem;
+  }
+  :global(.leaflet-control-attribution a) {
+    color: var(--indigo-lasem);
+  }
+</style>

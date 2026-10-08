@@ -1,0 +1,63 @@
+---
+/** Motif batik orisinal sebagai geometri garis SVG (terinspirasi kaidah kawung/truntum domain publik). */
+interface Props {
+  size?: number;
+  class?: string;
+  /** Aktifkan animasi "Canting Draw". */
+  draw?: boolean;
+  variant?: 'kawung' | 'truntum' | 'latohan';
+}
+const { size = 120, class: className, draw = false, variant = 'kawung' } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 120 120"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.25"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  class:list={[className, draw && 'canting-draw']}
+>
+  {
+    variant === 'kawung' && (
+      <g>
+        <ellipse cx="60" cy="34" rx="17" ry="24" style="--len:132;--delay:0ms" />
+        <ellipse cx="60" cy="86" rx="17" ry="24" style="--len:132;--delay:120ms" />
+        <ellipse cx="34" cy="60" rx="24" ry="17" style="--len:132;--delay:240ms" />
+        <ellipse cx="86" cy="60" rx="24" ry="17" style="--len:132;--delay:360ms" />
+        <circle cx="60" cy="60" r="4.5" style="--len:29;--delay:480ms" />
+        <circle cx="60" cy="60" r="42" stroke-opacity="0.35" style="--len:264;--delay:560ms" />
+      </g>
+    )
+  }
+  {
+    variant === 'truntum' && (
+      <g>
+        <path d="M60 18 L60 42 M60 78 L60 102 M18 60 L42 60 M78 60 L102 60" style="--len:24;--delay:0ms" />
+        <path
+          d="M60 42 C74 42 78 46 78 60 C78 74 74 78 60 78 C46 78 42 74 42 60 C42 46 46 42 60 42 Z"
+          style="--len:118;--delay:140ms"
+        />
+        <circle cx="60" cy="60" r="3" style="--len:19;--delay:280ms" />
+        <path d="M32 32 l8 8 M88 88 l-8 -8 M88 32 l-8 8 M32 88 l8 -8" style="--len:12;--delay:380ms" />
+      </g>
+    )
+  }
+  {
+    variant === 'latohan' && (
+      <g>
+        <path
+          d="M60 24 C78 40 78 60 60 76 C42 60 42 40 60 24 Z"
+          style="--len:132;--delay:0ms"
+        />
+        <path d="M60 76 L60 98" style="--len:22;--delay:140ms" />
+        <path d="M60 52 L44 40 M60 52 L76 40 M60 66 L46 58 M60 66 L74 58" style="--len:22;--delay:240ms" />
+        <path d="M40 20 h40 M40 100 h40" stroke-opacity="0.35" style="--len:40;--delay:340ms" />
+      </g>
+    )
+  }
+</svg>

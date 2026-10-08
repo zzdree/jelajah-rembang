@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import KulinerCard from '@/components/cards/KulinerCard.astro';
+import { getLocalized } from '@/lib/content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const entries = await getLocalized('kuliner', lang);
+
+const TYPE_LABEL: Record<string, { id: string; en: string }> = {
+  makanan: { id: 'Makanan', en: 'Dish' },
+  minuman: { id: 'Minuman', en: 'Drink' },
+  jajanan: { id: 'Jajanan', en: 'Snack' },
+};
+
+// Daftar padat mengutamakan gambar — tata letak berbeda dari seksi lain.
+const groups = ['makanan', 'minuman', 'jajanan']
+  .map((type) => ({ type, items: entries.filter((e) => e.data.type === type) }))
+  .filter((g) => g.items.length > 0);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('kuliner.title', lang)}
+  description={t('kuliner.lead', lang)}
+  collection="kuliner"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('kuliner.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-12 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('kuliner.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('kuliner.lead', lang)}</p>
+  </header>
+
+  <div class="container-page flex flex-col gap-16 pb-section">
+    {
+      groups.map((g) => (
+        <section>
+          <h2 class="label-caps m-0 mb-6 border-b border-rule pb-3 text-soga">
+            {TYPE_LABEL[g.type]?.[lang] ?? g.type}
+          </h2>
+          <div class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {g.items.map((entry) => (
+              <KulinerCard entry={entry} lang={lang} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import credits from '@/assets/credits.json';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const isId = lang === 'id';
+---
+
+<BaseLayout
+  lang={lang}
+  title={isId ? 'Kredit & Lisensi' : 'Credits & Licences'}
+  description={
+    isId
+      ? 'Sumber dan lisensi gambar yang digunakan di situs ini.'
+      : 'Sources and licences for the images used on this site.'
+  }
+  collection="kredit"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: isId ? 'Kredit' : 'Credits' },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-10 pt-4">
+    <h1 class="m-0 max-w-[20ch] text-balance">{isId ? 'Kredit & Lisensi' : 'Credits & Licences'}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">
+      {
+        isId
+          ? 'Gambar di situs ini berasal dari Wikimedia Commons dengan lisensi bebas. Setiap gambar mencantumkan pembuat, lisensi, dan tautan sumbernya. Bila Anda pemegang hak dan ingin gambar dihapus, silakan hubungi kami.'
+          : 'Images on this site come from Wikimedia Commons under free licences. Each lists its creator, licence, and source link. If you hold rights and would like an image removed, please get in touch.'
+      }
+    </p>
+  </header>
+
+  <div class="container-page pb-section">
+    <ul class="m-0 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        credits.map((c) => (
+          <li class="flex flex-col gap-2 border-t border-rule pt-4">
+            <span class="font-body text-base font-semibold text-ink">{c.title}</span>
+            <dl class="m-0 flex flex-col gap-1 text-sm text-ink-soft">
+              <div class="flex gap-2">
+                <dt class="shrink-0">{isId ? 'Pembuat' : 'Creator'}:</dt>
+                <dd class="m-0">{c.artist}</dd>
+              </div>
+              <div class="flex gap-2">
+                <dt class="shrink-0">{isId ? 'Lisensi' : 'Licence'}:</dt>
+                <dd class="m-0">
+                  {c.licenseUrl ? (
+                    <a href={c.licenseUrl} rel="noopener noreferrer" target="_blank" class="text-indigo underline">
+                      {c.license}
+                    </a>
+                  ) : (
+                    c.license
+                  )}
+                </dd>
+              </div>
+            </dl>
+            <a
+              href={c.source}
+              rel="noopener noreferrer"
+              target="_blank"
+              class="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-merah transition-colors hover:text-merah-deep"
+            >
+              Wikimedia Commons
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

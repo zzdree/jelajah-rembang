@@ -1,0 +1,16 @@
+---
+import KulinerDetailPage from '@/components/pages/KulinerDetailPage.astro';
+import { getCollection } from 'astro:content';
+import { stripLang } from '@/lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('kuliner', ({ data }) => !data.draft);
+  return entries
+    .filter((e) => e.id.startsWith('en/'))
+    .map((entry) => ({ params: { slug: stripLang(entry.id) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+
+<KulinerDetailPage lang="en" entry={entry} />

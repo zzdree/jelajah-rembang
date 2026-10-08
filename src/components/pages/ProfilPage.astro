@@ -1,0 +1,185 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import StatBlock from '@/components/ui/StatBlock.astro';
+import BatikMotif from '@/components/ui/BatikMotif.astro';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const isId = lang === 'id';
+
+const KECAMATAN = [
+  { name: 'Sumber', area: 76.73 },
+  { name: 'Bulu', area: 102.4 },
+  { name: 'Gunem', area: 80.2 },
+  { name: 'Sale', area: 107.14 },
+  { name: 'Sarang', area: 91.33 },
+  { name: 'Sedan', area: 79.64 },
+  { name: 'Pamotan', area: 81.56 },
+  { name: 'Sulang', area: 84.54 },
+  { name: 'Kaliori', area: 61.5 },
+  { name: 'Rembang', area: 58.81 },
+  { name: 'Pancur', area: 45.94 },
+  { name: 'Kragan', area: 61.66 },
+  { name: 'Sluke', area: 37.59 },
+  { name: 'Lasem', area: 45.04 },
+];
+
+const GEO = [
+  { label: isId ? 'Luas wilayah' : 'Total area', value: '1.036,70 km²', note: isId ? 'BPS Kab. Rembang' : 'BPS Rembang' },
+  { label: isId ? 'Garis pantai' : 'Coastline', value: '±62,5 km', note: isId ? 'Laut Jawa' : 'Java Sea' },
+  { label: isId ? 'Titik tertinggi' : 'Highest point', value: '806 m', note: isId ? 'Gunung Lasem' : 'Mount Lasem' },
+  { label: isId ? 'Puncak kedua' : 'Second peak', value: '679 m', note: isId ? 'Gunung Butak' : 'Mount Butak' },
+];
+
+const DEMO = [
+  { label: isId ? 'Jumlah penduduk' : 'Population', value: '669.145', note: isId ? 'Desember 2025' : 'December 2025' },
+  { label: isId ? 'Laki-laki' : 'Male', value: '335.857', note: '50,19%' },
+  { label: isId ? 'Perempuan' : 'Female', value: '333.288', note: '49,81%' },
+  { label: isId ? 'Kepadatan' : 'Density', value: '646', note: isId ? 'jiwa/km²' : 'people/km²' },
+  { label: isId ? 'Kecamatan' : 'Districts', value: '14', note: '287 + 7' },
+  { label: isId ? 'Usia produktif' : 'Working age', value: '463.728', note: '15–64' },
+];
+
+const ECONOMY = isId
+  ? [
+      { title: 'Perikanan & kelautan', body: 'Garis pantai ±62,5 km dengan Pelabuhan Perikanan Tasik Agung sebagai pusat aktivitas nelayan. Hasil dominan: layang, kembung, manyung, rajungan, cumi.' },
+      { title: 'Garam rakyat', body: 'Tambak garam di pesisir Lasem dan sekitarnya menjadi salah satu penyumbang pendapatan daerah dan identitas ekonomi pesisir.' },
+      { title: 'Batik tulis Lasem', body: 'Sekitar 80 pengrajin tersebar di seluruh kabupaten. Batik menjadi komoditas unggulan dan penyumbang PAD.' },
+      { title: 'Pertanian & perkebunan', body: 'Palawija (kedelai, kacang tanah, ubi kayu), hortikultura, serta buah unggulan: mangga, durian ceriwik, duku woro, kawis, dan siwalan.' },
+    ]
+  : [
+      { title: 'Fisheries and marine', body: 'A coastline of about 62.5 km with the Tasik Agung fishing port as the hub. Dominant catch: scad, mackerel, sea catfish, swimming crab, squid.' },
+      { title: 'Artisanal salt', body: 'Salt ponds along the Lasem coast and beyond are a source of regional revenue and a marker of the coastal economy.' },
+      { title: 'Lasem hand-drawn batik', body: 'Around 80 artisans across the regency. Batik is a flagship commodity and a contributor to regional income.' },
+      { title: 'Farming and plantations', body: 'Secondary crops (soybean, peanut, cassava), horticulture, and signature fruit: mango, ceriwik durian, duku woro, kawis, and siwalan palm.' },
+    ];
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('profil.title', lang)}
+  description={t('profil.lead', lang)}
+  collection="profil"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('profil.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-12 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('profil.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('profil.lead', lang)}</p>
+  </header>
+
+  <!-- Geografi -->
+  <section class="border-y border-rule bg-paper-sunken">
+    <div class="container-page section-rhythm">
+      <SectionHeading title={t('profil.geography', lang)} />
+      <p class="measure-prose mt-6 text-base leading-relaxed text-ink-soft">
+        {
+          isId
+            ? 'Kabupaten Rembang terletak di ujung timur laut Provinsi Jawa Tengah, berbatasan dengan Laut Jawa di utara, Kabupaten Tuban (Jawa Timur) di timur, Blora di selatan, dan Pati di barat. Wilayahnya menjadi gerbang timur Jawa Tengah dan dilalui Jalur Pantura. Bagian selatan berupa perbukitan kapur Pegunungan Kendeng Utara, sementara di utara berdiri Gunung Lasem.'
+            : 'Rembang Regency sits at the far north-east of Central Java, bordering the Java Sea to the north, Tuban (East Java) to the east, Blora to the south, and Pati to the west. It forms the eastern gate of Central Java, crossed by the north-coast highway. The south is limestone hill country of the northern Kendeng range, while Mount Lasem rises in the north.'
+        }
+      </p>
+      <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-4">
+        {GEO.map((s) => <StatBlock label={s.label} value={s.value} note={s.note} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Kependudukan -->
+  <section class="container-page section-rhythm">
+    <SectionHeading title={t('profil.demography', lang)} />
+    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-3 lg:grid-cols-6">
+      {DEMO.map((s) => <StatBlock label={s.label} value={s.value} note={s.note} />)}
+    </div>
+    <p class="mt-6 max-w-2xl text-sm leading-relaxed text-ink-soft">
+      {
+        isId
+          ? 'Sumber: Data Konsolidasi Bersih Kementerian Dalam Negeri, Semester 2 Tahun 2025. Mayoritas penduduk memeluk agama Islam, dengan pemeluk agama lain dan penghayat kepercayaan.'
+          : 'Source: Ministry of Home Affairs consolidated data, second semester 2025. Most residents are Muslim, alongside other faiths and traditional belief followers.'
+      }
+    </p>
+  </section>
+
+  <!-- 14 Kecamatan -->
+  <section class="border-y border-rule bg-paper-sunken">
+    <div class="container-page section-rhythm">
+      <SectionHeading title={t('profil.kecamatanTitle', lang)} />
+      <ul class="mt-10 grid grid-cols-1 gap-x-10 gap-y-0 p-0 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          KECAMATAN.map((k) => (
+            <li class="flex list-none items-baseline justify-between gap-4 border-b border-rule py-3">
+              <span class="text-base text-ink">{k.name}</span>
+              <span class="data-figure text-sm text-ink-soft">
+                {k.area.toLocaleString(lang === 'id' ? 'id-ID' : 'en-GB', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{' '}
+                km²
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Iklim -->
+  <section class="container-page section-rhythm">
+    <SectionHeading title={t('profil.climate', lang)} />
+    <div class="mt-8 grid gap-8 md:grid-cols-2">
+      <p class="m-0 text-base leading-relaxed text-ink-soft">
+        {
+          isId
+            ? 'Iklim tropis basah dan kering dengan dua musim. Musim penghujan berlangsung November hingga April, musim kemarau Mei hingga Oktober. Suhu berkisar 23°–34° C dengan kelembapan relatif 60%–90%.'
+            : 'A wet-and-dry tropical climate with two seasons. The rainy season runs from November to April, the dry season from May to October. Temperatures range from 23° to 34° C, with relative humidity of 60% to 90%.'
+        }
+      </p>
+      <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+        <StatBlock label={isId ? 'Suhu' : 'Temperature'} value="23–34°C" />
+        <StatBlock label={isId ? 'Kelembapan' : 'Humidity'} value="60–90%" />
+        <StatBlock label={isId ? 'Hujan' : 'Rainy season'} value="Nov–Apr" />
+        <StatBlock label={isId ? 'Kemarau' : 'Dry season'} value="Mei–Okt" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Potensi -->
+  <section class="border-t border-rule bg-paper-sunken">
+    <div class="container-page section-rhythm">
+      <div class="flex items-start justify-between gap-8">
+        <SectionHeading title={t('profil.economy', lang)} />
+        <div class="hidden text-soga/60 sm:block" aria-hidden="true">
+          <BatikMotif size={90} variant="truntum" />
+        </div>
+      </div>
+      <div class="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
+        {
+          ECONOMY.map((e) => (
+            <div class="border-t border-rule pt-5">
+              <h3 class="m-0 font-body text-lg font-semibold text-ink">{e.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{e.body}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-8 text-xs text-ink-soft">
+        {isId
+          ? 'Sumber: Profil Kependudukan Kabupaten Rembang 2025 dan Kabupaten Rembang Dalam Angka (BPS).'
+          : 'Sources: Rembang Regency Population Profile 2025 and Rembang Regency in Figures (BPS).'}
+      </p>
+    </div>
+  </section>
+</BaseLayout>

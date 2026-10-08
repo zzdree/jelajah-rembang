@@ -1,0 +1,39 @@
+---
+/**
+ * Toggle bahasa tanpa JavaScript: dua tautan biasa.
+ * `altHref` = URL halaman ini dalam bahasa lain.
+ */
+import { LANG_SHORT, otherLang, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+  altHref: string;
+}
+const { lang, altHref } = Astro.props;
+const target = otherLang(lang);
+---
+
+<a
+  href={altHref}
+  hreflang={target}
+  rel="alternate"
+  class="inline-flex items-center gap-1.5 rounded-control border border-rule px-2.5 py-1.5 text-sm font-medium text-ink-soft transition-colors duration-150 hover:border-soga hover:text-ink"
+  aria-label={t('lang.readIn', lang)}
+  title={t('lang.readIn', lang)}
+>
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"></path>
+  </svg>
+  <span aria-hidden="true">{LANG_SHORT[target]}</span>
+</a>

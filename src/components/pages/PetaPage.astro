@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import MapIsland from '@/components/peta/MapIsland.astro';
+import { getLocalized, stripLang } from '@/lib/content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const entries = await getLocalized('destinasi', lang);
+
+const points = entries
+  .filter((e) => e.data.coords)
+  .map((e) => ({
+    name: e.data.title,
+    coords: e.data.coords as [number, number],
+    kind: e.data.kind,
+    kecamatan: e.data.kecamatan,
+    href: localizePath(`/destinasi/${stripLang(e.id)}`, lang),
+  }));
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('peta.title', lang)}
+  description={t('peta.lead', lang)}
+  collection="peta"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('peta.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-10 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('peta.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('peta.lead', lang)}</p>
+  </header>
+
+  <div class="container-page pb-section">
+    {
+      points.length > 0 ? (
+        <MapIsland points={points} lang={lang} />
+      ) : (
+        <div class="rounded-card border border-rule bg-paper-sunken p-8">
+          <p class="m-0 text-base text-ink-soft">
+            {lang === 'id'
+              ? 'Koordinat destinasi sedang dilengkapi. Sementara itu, jelajahi daftar destinasi.'
+              : 'Destination coordinates are being completed. In the meantime, browse the destination list.'}
+          </p>
+          <a
+            href={localizePath('/destinasi', lang)}
+            class="mt-5 inline-flex items-center gap-2 rounded-control bg-merah px-4 py-2.5 text-sm font-semibold text-paper-raised transition-colors hover:bg-merah-deep"
+          >
+            {t('destinasi.title', lang)}
+          </a>
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

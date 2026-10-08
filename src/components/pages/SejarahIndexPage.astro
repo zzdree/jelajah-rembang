@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/nav/Breadcrumbs.astro';
+import SejarahCard from '@/components/cards/SejarahCard.astro';
+import { getLocalized } from '@/lib/content';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const entries = await getLocalized('sejarah', lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('sejarah.title', lang)}
+  description={t('sejarah.lead', lang)}
+  collection="sejarah"
+>
+  <div class="container-page pt-8">
+    <Breadcrumbs
+      lang={lang}
+      items={[
+        { label: t('nav.home', lang), href: localizePath('/', lang) },
+        { label: t('sejarah.title', lang) },
+      ]}
+    />
+  </div>
+
+  <header class="container-page pb-12 pt-4">
+    <h1 class="m-0 max-w-[18ch] text-balance">{t('sejarah.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('sejarah.lead', lang)}</p>
+  </header>
+
+  <div class="container-page pb-section">
+    <ol class="flex flex-col gap-14">
+      {
+        entries.map((entry) => (
+          <li class="list-none">
+            <SejarahCard entry={entry} lang={lang} />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>

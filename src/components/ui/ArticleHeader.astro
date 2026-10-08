@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BatikMotif from './BatikMotif.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  cover?: ImageMetadata;
+  coverAlt?: string;
+  /** Baris meta (era/tahun/kategori/kecamatan). */
+  meta?: { label: string; value: string }[];
+  motif?: 'kawung' | 'truntum' | 'latohan';
+}
+const { title, lead, cover, coverAlt, meta = [], motif = 'kawung' } = Astro.props;
+---
+
+<header class="border-b border-rule">
+  <div class="container-page pt-10 pb-10 sm:pt-14 sm:pb-14">
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
+      <div class="max-w-2xl">
+        <h1 class="m-0 text-balance">{title}</h1>
+        {lead && <p class="mt-5 text-lg leading-relaxed text-ink-soft">{lead}</p>}
+
+        {
+          meta.length > 0 && (
+            <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              {meta.map((m) => (
+                <div class="flex flex-col gap-0.5">
+                  <dt class="label-caps text-ink-soft">{m.label}</dt>
+                  <dd class="data-figure m-0 text-ink">{m.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      </div>
+
+      {
+        cover ? (
+          <div class="overflow-hidden rounded-card bg-paper-sunken">
+            <Image
+              src={cover}
+              alt={coverAlt ?? title}
+              widths={[480, 900, 1400]}
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              loading="eager"
+              fetchpriority="high"
+              class="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div class="hidden justify-end text-rule lg:flex" aria-hidden="true">
+            <BatikMotif size={220} variant={motif} />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</header>

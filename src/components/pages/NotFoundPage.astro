@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BatikMotif from '@/components/ui/BatikMotif.astro';
+import { localizePath, t, type Lang } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<BaseLayout lang={lang} title={t('common.notFound', lang)}>
+  <div class="container-page flex flex-col items-center justify-center py-24 text-center sm:py-32">
+    <div class="text-soga/60" aria-hidden="true">
+      <BatikMotif size={140} variant="truntum" />
+    </div>
+    <p class="data-figure mt-8 text-merah">404</p>
+    <h1 class="mt-3 font-display text-3xl font-semibold text-ink sm:text-4xl">
+      {t('common.notFound', lang)}
+    </h1>
+    <p class="measure-prose mt-4 text-base leading-relaxed text-ink-soft">
+      {t('common.notFoundBody', lang)}
+    </p>
+    <a
+      href={localizePath('/', lang)}
+      class="mt-8 inline-flex items-center gap-2 rounded-control bg-merah px-5 py-3 text-sm font-semibold text-paper-raised transition-colors duration-150 hover:bg-merah-deep"
+    >
+      {t('common.backHome', lang)}
+    </a>
+  </div>
+</BaseLayout>
