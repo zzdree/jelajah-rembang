@@ -24,10 +24,10 @@ ditolak pengguna sebagai "masih coklat". Sudah **di-commit & di-push** dan **di-
 | Playwright (seluruh suite) | **41 lulus** (smoke, kontras, interaksi, ketahanan) |
 | Kontras WCAG AA | **848 pasangan, 0 gagal** (6 halaman × terang/gelap) |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
-| Versi Cloudflare aktif | `dee20f5f-c6ed-43c6-a880-2af3ade18078` |
+| Versi Cloudflare aktif | `47693550-4063-4fb6-8049-3d04e8184f5f` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev (deploy 9 Okt 2026 memuat **seluruh**
-perubahan commit `424af36`, termasuk drop-cap artikel)
+perubahan commit `c99814b`: palet "Pesisir Segar", satu keluarga sans, tanpa coklat/emas)
 **Repo:** https://github.com/zzdree/jelajah-rembang
 
 Berkas uji: `tests/smoke.spec.ts` (asli), `tests/contrast.spec.ts` (kontras nyata dari
