@@ -4,31 +4,31 @@ name: Kain Tiga Negeri
 description: Sistem desain untuk situs profil Kabupaten Rembang — sehelai kain batik tulis Lasem di atas kertas pesisir yang hangat.
 
 colors:
-  # --- Tiga tinta (the three negeri) ---
-  merah-lasem: 'oklch(47% 0.155 26)'
-  merah-lasem-deep: 'oklch(40% 0.15 26)'
-  indigo-lasem: 'oklch(38% 0.088 258)'
-  soga: 'oklch(49% 0.07 62)'
+  # --- Tiga tinta (the three negeri) — revisi "Nyala Pesisir", 9 Okt 2026 ---
+  merah-lasem: 'oklch(52% 0.19 27)'
+  merah-lasem-deep: 'oklch(44% 0.175 27)'
+  indigo-lasem: 'oklch(41% 0.115 264)'
+  soga: 'oklch(53% 0.108 70)'
 
   # --- Permukaan terang ---
-  paper: 'oklch(96.5% 0.011 74)'
-  paper-raised: 'oklch(98.5% 0.007 74)'
-  paper-sunken: 'oklch(93% 0.014 72)'
-  ink: 'oklch(24% 0.024 58)'
-  ink-soft: 'oklch(43% 0.02 60)'
-  rule: 'oklch(86% 0.016 68)'
-  focus: 'oklch(55% 0.15 258)'
+  paper: 'oklch(97.5% 0.008 82)'
+  paper-raised: 'oklch(99% 0.004 82)'
+  paper-sunken: 'oklch(94.5% 0.011 80)'
+  ink: 'oklch(23% 0.022 56)'
+  ink-soft: 'oklch(44% 0.022 58)'
+  rule: 'oklch(88% 0.014 76)'
+  focus: 'oklch(55% 0.16 264)'
 
   # --- Permukaan gelap ("Malam Lasem") ---
-  paper-dark: 'oklch(16.5% 0.012 62)'
-  paper-dark-raised: 'oklch(21.5% 0.014 62)'
-  paper-dark-sunken: 'oklch(12.5% 0.01 62)'
-  ink-dark: 'oklch(93% 0.012 74)'
-  ink-soft-dark: 'oklch(72% 0.016 70)'
-  rule-dark: 'oklch(30% 0.014 62)'
-  merah-lasem-dark: 'oklch(67% 0.148 27)'
-  indigo-lasem-dark: 'oklch(70% 0.1 255)'
-  soga-dark: 'oklch(74% 0.082 66)'
+  paper-dark: 'oklch(15.5% 0.013 60)'
+  paper-dark-raised: 'oklch(20% 0.015 60)'
+  paper-dark-sunken: 'oklch(12% 0.011 60)'
+  ink-dark: 'oklch(94% 0.012 78)'
+  ink-soft-dark: 'oklch(74% 0.016 72)'
+  rule-dark: 'oklch(30% 0.016 62)'
+  merah-lasem-dark: 'oklch(70% 0.17 28)'
+  indigo-lasem-dark: 'oklch(74% 0.115 260)'
+  soga-dark: 'oklch(78% 0.11 74)'
 
 typography:
   display:
@@ -125,7 +125,7 @@ Lima gagasan yang mengikat seluruh keputusan visual:
 1. **Tiga tinta, satu dasar.** Merah Lasem (*getih pitik*), indigo wedel, dan soga kulit tingi adalah satu-satunya warna jenuh, dan mereka berperilaku seperti zat warna — muncul sebagai *tinta* di atas kertas, tidak pernah sebagai bidang besar atau gradasi.
 2. **Kertas pesisir hangat, bukan putih.** Dasar halaman adalah kertas yang hangat seperti pasir yang diputihkan matahari. Kartu adalah kertas yang sama, diangkat sedikit dan diberi garis rambut — bukan kotak putih di atas abu-abu.
 3. **Suara pers untuk sejarah.** Didone berkontras tinggi membawa judul — mengacu pada pers Jawa era Kartini dan surat-suratnya. Register editorial, hanya untuk tampilan.
-4. **Geometri kain adalah ornamen.** Motif batik (Latohan, Watu Pecah, kisi Lokchan) hadir sebagai **geometri garis yang digambar sendiri** — SVG, garis, dan satu momen gerak — tidak pernah sebagai tekstur foto atau "latar pola batik" yang diulang di belakang teks.
+4. **Geometri kain adalah ornamen.** Motif batik (Latohan, Watu Pecah, kisi Lokchan) hadir sebagai **geometri garis yang digambar sendiri** — SVG, garis, dan gerak — tidak pernah sebagai tekstur foto atau "latar pola batik" yang diulang di belakang teks.
 5. **Tionghoa–Jawa adalah isi, bukan kostum.** Tanpa palet "restoran Tionghoa" merah-emas, tanpa emoji naga, tanpa kaligrafi palsu. Sinkretisme tampil dalam *struktur* — klenteng ↔ masjid ↔ wihara dalam satu rute, Cheng Ho bersebelahan dengan Sunan Bonang dalam garis waktu.
 
 Mode pengunjung: **Read** (utama) untuk semua artikel; **Experience** untuk galeri dan peta.
@@ -140,21 +140,28 @@ Semua warna dinyatakan dalam OKLCH. Tidak ada `#000` atau `#fff` di mana pun —
 
 | Token | Nilai (terang) | Nilai (gelap) | Peran |
 |---|---|---|---|
-| `merah-lasem` | `oklch(47% 0.155 26)` | `oklch(67% 0.148 27)` | **Aksi utama & identitas.** Tombol utama, item nav aktif, pin peta kategori pantai. |
-| `indigo-lasem` | `oklch(38% 0.088 258)` | `oklch(70% 0.1 255)` | **Identitas & data.** Judul seksi, tautan, pin religi, fokus ring. |
-| `soga` | `oklch(49% 0.07 62)` | `oklch(74% 0.082 66)` | **Aksen ketiga.** Garis, label kecil, pin kategori alam. |
+| `merah-lasem` | `oklch(52% 0.19 27)` | `oklch(70% 0.17 28)` | **Aksi utama & identitas.** Tombol utama, item nav aktif, pin peta kategori pantai. |
+| `indigo-lasem` | `oklch(41% 0.115 264)` | `oklch(74% 0.115 260)` | **Identitas & data.** Judul seksi, tautan, pin religi, fokus ring. |
+| `soga` | `oklch(53% 0.108 70)` | `oklch(78% 0.11 74)` | **Aksen ketiga.** Garis, label kecil, pin kategori alam. |
+
+> **Revisi "Nyala Pesisir" (9 Okt 2026).** Kroma & kecerahan tiga tinta dinaikkan agar
+> terbaca jernih, bukan kusam. Merah Lasem jadi merah sungguhan (`#be2323`), bukan maroon
+> kecoklatan; kertas digeser lebih netral hangat (kroma turun dari 0.011 ke 0.008) supaya
+> tidak terlihat kekuningan berlumpur. Semua pasangan teks/latar **dihitung** dan lolos
+> WCAG AA: `merah` 5,65:1 · `indigo` 8,36:1 · `soga` 5,03:1 · `ink-soft` 7,27:1 di atas
+> kertas; teks tombol di atas merah 5,90:1.
 
 ### Permukaan & teks
 
 | Peran | Terang | Gelap |
 |---|---|---|
-| `--paper` (dasar halaman) | `oklch(96.5% 0.011 74)` | `oklch(16.5% 0.012 62)` |
-| `--paper-raised` (kartu) | `oklch(98.5% 0.007 74)` | `oklch(21.5% 0.014 62)` |
-| `--paper-sunken` (inset, kroma peta) | `oklch(93% 0.014 72)` | `oklch(12.5% 0.01 62)` |
-| `--ink` (teks utama) | `oklch(24% 0.024 58)` | `oklch(93% 0.012 74)` |
-| `--ink-soft` (teks sekunder) | `oklch(43% 0.02 60)` | `oklch(72% 0.016 70)` |
-| `--rule` (garis rambut) | `oklch(86% 0.016 68)` | `oklch(30% 0.014 62)` |
-| `--focus` (cincin fokus) | `oklch(55% 0.15 258)` | `oklch(70% 0.1 255)` |
+| `--paper` (dasar halaman) | `oklch(97.5% 0.008 82)` | `oklch(15.5% 0.013 60)` |
+| `--paper-raised` (kartu) | `oklch(99% 0.004 82)` | `oklch(20% 0.015 60)` |
+| `--paper-sunken` (inset, kroma peta) | `oklch(94.5% 0.011 80)` | `oklch(12% 0.011 60)` |
+| `--ink` (teks utama) | `oklch(23% 0.022 56)` | `oklch(94% 0.012 78)` |
+| `--ink-soft` (teks sekunder) | `oklch(44% 0.022 58)` | `oklch(74% 0.016 72)` |
+| `--rule` (garis rambut) | `oklch(88% 0.014 76)` | `oklch(30% 0.016 62)` |
+| `--focus` (cincin fokus) | `oklch(55% 0.16 264)` | `oklch(74% 0.115 260)` |
 
 ### Aturan pakai
 
@@ -203,6 +210,27 @@ Disiplin yang ditegakkan:
 - Grid memakai `minmax()` dan `auto-fit`, bukan kolom kaku.
 - Setiap halaman indeks memakai tata letak yang **berbeda secara struktural**: sejarah = garis waktu vertikal; budaya = dua kolom berkode tinta; kuliner = daftar padat mengutamakan gambar; destinasi = hibrida peta + kartu. Tidak pernah satu grid kartu identik untuk semua.
 
+## Motion — "Nyala Pesisir"
+
+Dial situs ini: **ENERGY 3 / RHYTHM 3 / MOTION 3.** Gerak adalah bagian dari identitas
+(pesisir yang bekerja, canting yang menari), bukan hiasan. Tapi setiap animasi punya
+tujuan yang bisa ditulis satu baris, dan **semua mati total di bawah `prefers-reduced-motion`**.
+
+| Gerak | Tujuan (R-31) | Implementasi |
+|---|---|---|
+| **Reveal saat scroll** | Menuntun mata mengikuti urutan baca; mencegah "tembok teks" | `[data-reveal]` + IntersectionObserver; stagger via `--i` |
+| **Stagger berjenjang** | Menyatakan hierarki dalam satu kelompok (kartu, stat) | `transition-delay: calc(var(--i) * 90ms)` |
+| **Underline tumbuh** | Menandai judul halaman sebagai titik masuk | `[data-underline]::after` skala-X dari kiri |
+| **Canting Draw** | Momen khas: motif batik menggambar dirinya sekali | `stroke-dashoffset` 1100ms |
+| **Float lembut** | Satu aksen hidup di hero; motif terasa bernapas | `float-soft` 7s, **hanya di hero** |
+| **Pita kecamatan** | Memperkenalkan 14 kecamatan sebagai konten nyata, bukan ornamen | `marquee` 38s, jeda saat hover |
+| **Transisi halaman** | Menjaga kontinuitas antar navigasi (Astro View Transitions) | `::view-transition-*` |
+
+Dosis & pagar: gerak **tidak** untuk semua elemen (hero berbicara, elemen pendukung tenang);
+tanpa loop tak berujung selain pita & float yang disengaja; **nol** bounce/elastic (kurva
+`--ease-out-expo` / `--ease-out-quint` saja). Tanpa JavaScript, seluruh konten tampil
+apa adanya (kelas `.js` tidak ada → tidak ada elemen tersembunyi).
+
 ## Elevation & Depth
 
 Kedalaman dideklarasikan sekali.
@@ -237,7 +265,7 @@ Kedalaman dideklarasikan sekali.
 - Gunakan langkah tonal + garis rambut untuk memisahkan permukaan.
 - Beri lebih banyak ruang di atas judul daripada di bawah.
 - Tema permukaan browser: `::selection`, `caret-color`, scrollbar, `:focus-visible`.
-- Biarkan satu momen gerak ("Canting Draw") menjadi satu-satunya animasi di situs.
+- Biarkan gerak mengikuti sistem di bagian **Motion** (ENERGY 3 / RHYTHM 3 / MOTION 3), bukan ditumpuk tanpa alasan.
 
 **Jangan:**
 

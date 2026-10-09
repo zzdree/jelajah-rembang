@@ -12,6 +12,7 @@ interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
+const isId = lang === 'id';
 
 const [sejarah, budaya, kuliner, destinasi] = await Promise.all([
   getLocalized('sejarah', lang),
@@ -59,10 +60,16 @@ const SECTION_LINKS = [
 ];
 
 const FACTS = [
-  { label: lang === 'id' ? 'Luas wilayah' : 'Area', value: '1.036,70 km²', note: lang === 'id' ? 'BPS, 2025' : 'BPS, 2025' },
-  { label: lang === 'id' ? 'Penduduk' : 'Population', value: '669.145', note: lang === 'id' ? 'Desember 2025' : 'December 2025' },
-  { label: lang === 'id' ? 'Kecamatan' : 'Districts', value: '14', note: '287 + 7' },
-  { label: lang === 'id' ? 'Garis pantai' : 'Coastline', value: '±62,5 km', note: lang === 'id' ? 'Laut Jawa' : 'Java Sea' },
+  { label: isId ? 'Luas wilayah' : 'Area', value: '1.036,70 km²', note: 'BPS, 2025' },
+  { label: isId ? 'Penduduk' : 'Population', value: '669.145', note: isId ? 'Desember 2025' : 'December 2025' },
+  { label: isId ? 'Kecamatan' : 'Districts', value: '14', note: '287 + 7' },
+  { label: isId ? 'Garis pantai' : 'Coastline', value: '±62,5 km', note: isId ? 'Laut Jawa' : 'Java Sea' },
+];
+
+// 14 kecamatan — konten nyata dari halaman Profil, bukan ornamen.
+const KECAMATAN = [
+  'Sumber', 'Bulu', 'Gunem', 'Sale', 'Sarang', 'Sedan', 'Pamotan',
+  'Sulang', 'Kaliori', 'Rembang', 'Pancur', 'Kragan', 'Sluke', 'Lasem',
 ];
 ---
 
@@ -73,149 +80,191 @@ const FACTS = [
 >
   <!-- ============ HERO ============ -->
   <section class="relative overflow-hidden border-b border-rule">
-  <div class="container-page grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.5fr_1fr] lg:items-center lg:gap-20">
-    <div class="max-w-2xl">
-      <p class="label-caps text-merah">
-        {lang === 'id' ? 'Jawa Tengah · Pantura' : 'Central Java · North Coast'}
-      </p>
-      <h1 class="mt-4 font-display text-[clamp(3rem,9vw,6rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-ink">
-        {t('home.heroTitle', lang)}
-      </h1>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
-        {t('home.heroLead', lang)}
-      </p>
-      <div class="mt-9 flex flex-wrap gap-3">
-        <a
-          href={localizePath('/sejarah', lang)}
-          class="inline-flex items-center gap-2 rounded-control bg-merah px-5 py-3 text-sm font-semibold text-paper-raised transition-colors duration-150 hover:bg-merah-deep"
+    <!-- Kisi canting: motif identitas, bukan latar penuh (R-07) -->
+    <div class="canting-rule absolute inset-x-0 top-0" aria-hidden="true"></div>
+
+    <div class="container-page grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.55fr_1fr] lg:items-center lg:gap-20">
+      <div class="max-w-2xl">
+        <p class="label-caps flex items-center gap-3 text-merah" data-reveal="fade">
+          <span class="inline-block h-px w-10 bg-merah"></span>
+          {isId ? 'Jawa Tengah · Pantura' : 'Central Java · North Coast'}
+        </p>
+        <h1
+          class="mt-5 font-display text-[clamp(3rem,9vw,6.5rem)] font-semibold leading-[0.93] tracking-[-0.03em] text-ink"
+          data-reveal
         >
-          {t('home.exploreSejarah', lang)}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </a>
-        <a
-          href={localizePath('/kuliner', lang)}
-          class="inline-flex items-center gap-2 rounded-control border border-rule px-5 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:border-soga"
+          <span data-underline>{t('home.heroTitle', lang)}</span>
+        </h1>
+        <p
+          class="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
+          data-reveal
+          style="--i:1"
         >
-          {t('home.exploreKuliner', lang)}
-        </a>
-      </div>
-    </div>
-
-    <!-- Motif batik: momen gerak tunggal -->
-    <div class="relative hidden justify-center lg:flex" aria-hidden="true">
-      <div class="text-merah/85">
-        <BatikMotif size={320} draw variant="kawung" />
-      </div>
-      <div class="absolute -bottom-6 -left-4 text-soga/70">
-        <BatikMotif size={130} draw variant="latohan" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAKTA SINGKAT ============ -->
-<section class="border-b border-rule bg-paper-sunken">
-  <div class="container-page grid grid-cols-2 gap-x-8 gap-y-6 py-10 md:grid-cols-4">
-    {FACTS.map((f) => <StatBlock label={f.label} value={f.value} note={f.note} />)}
-  </div>
-</section>
-
-<!-- ============ SEKSI ============ -->
-<section class="container-page section-rhythm">
-  <SectionHeading title={t('home.sectionsTitle', lang)} />
-
-  <div class="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2">
-    {
-      SECTION_LINKS.map((s) => (
-        <a href={localizePath(s.path, lang)} class="group grid grid-cols-[auto_1fr] items-start gap-5">
-          <div class:list={['shrink-0 transition-transform duration-500 group-hover:rotate-[8deg] motion-reduce:transition-none motion-reduce:group-hover:rotate-0', s.ink]}>
-            <BatikMotif size={72} variant={s.motif} />
-          </div>
-          <div class="flex flex-col gap-2 border-t border-rule pt-4 transition-colors duration-200 group-hover:border-soga">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="m-0 font-display text-2xl font-semibold text-ink">{t(s.key, lang)}</h3>
-              <span class="data-figure text-xs text-ink-soft">{s.count}</span>
-            </div>
-            <p class="m-0 text-sm leading-relaxed text-ink-soft">{s.blurb}</p>
-          </div>
-        </a>
-      ))
-    }
-  </div>
-</section>
-
-<!-- ============ KULINER UNGGULAN ============ -->
-{
-  featuredKuliner.length > 0 && (
-    <section class="border-y border-rule bg-paper-sunken">
-      <div class="container-page section-rhythm">
-        <div class="flex flex-wrap items-end justify-between gap-4">
-          <SectionHeading title={t('home.featuredKuliner', lang)} as="h2" />
+          {t('home.heroLead', lang)}
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3" data-reveal style="--i:2">
+          <a
+            href={localizePath('/sejarah', lang)}
+            class="group inline-flex items-center gap-2 rounded-control bg-merah px-5 py-3 text-sm font-semibold text-paper-raised transition-colors duration-150 hover:bg-merah-deep"
+          >
+            {t('home.exploreSejarah', lang)}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
           <a
             href={localizePath('/kuliner', lang)}
+            class="inline-flex items-center gap-2 rounded-control border border-rule px-5 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:border-soga hover:text-merah"
+          >
+            {t('home.exploreKuliner', lang)}
+          </a>
+        </div>
+      </div>
+
+      <!-- Motif batik: momen gerak utama -->
+      <div class="relative hidden justify-center lg:flex" aria-hidden="true">
+        <div class="float-soft text-merah/85">
+          <BatikMotif size={340} draw variant="kawung" />
+        </div>
+        <div class="absolute -bottom-8 -left-6 text-soga/70">
+          <BatikMotif size={140} draw variant="latohan" />
+        </div>
+        <div class="absolute -right-4 top-2 text-indigo/60">
+          <BatikMotif size={96} draw variant="truntum" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Pita kecamatan: motif geografis yang bergerak -->
+    <div class="marquee overflow-hidden border-t border-rule bg-paper-sunken py-4">
+      <div class="marquee-track" aria-hidden="true">
+        {
+          [...KECAMATAN, ...KECAMATAN].map((k) => (
+            <span class="data-figure mx-5 inline-flex items-center gap-5 text-sm text-ink-soft">
+              {k}
+              <span class="inline-block h-1 w-1 rounded-full bg-soga"></span>
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAKTA SINGKAT ============ -->
+  <section class="border-b border-rule bg-paper-sunken">
+    <div class="container-page grid grid-cols-2 gap-x-8 gap-y-6 py-10 md:grid-cols-4">
+      {FACTS.map((f, i) => <div data-reveal style={`--i:${i}`}><StatBlock label={f.label} value={f.value} note={f.note} /></div>)}
+    </div>
+  </section>
+
+  <!-- ============ SEKSI ============ -->
+  <section class="container-page section-rhythm">
+    <div data-reveal>
+      <SectionHeading title={t('home.sectionsTitle', lang)} />
+    </div>
+
+    <div class="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2">
+      {
+        SECTION_LINKS.map((s, i) => (
+          <a
+            href={localizePath(s.path, lang)}
+            class="group grid grid-cols-[auto_1fr] items-start gap-5"
+            data-reveal
+            style={`--i:${i}`}
+          >
+            <div class:list={['shrink-0 transition-transform duration-500 group-hover:rotate-[8deg] motion-reduce:transition-none motion-reduce:group-hover:rotate-0', s.ink]}>
+              <BatikMotif size={72} variant={s.motif} />
+            </div>
+            <div class="flex flex-col gap-2 border-t border-rule pt-4 transition-colors duration-200 group-hover:border-soga">
+              <div class="flex items-baseline justify-between gap-3">
+                <h3 class="m-0 font-display text-2xl font-semibold text-ink">{t(s.key, lang)}</h3>
+                <span class="data-figure text-xs text-ink-soft">{s.count}</span>
+              </div>
+              <p class="m-0 text-sm leading-relaxed text-ink-soft">{s.blurb}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ KULINER UNGGULAN ============ -->
+  {
+    featuredKuliner.length > 0 && (
+      <section class="border-y border-rule bg-paper-sunken">
+        <div class="container-page section-rhythm">
+          <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
+            <SectionHeading title={t('home.featuredKuliner', lang)} as="h2" />
+            <a
+              href={localizePath('/kuliner', lang)}
+              class="text-sm font-semibold text-merah transition-colors hover:text-merah-deep"
+            >
+              {t('common.viewAll', lang)} →
+            </a>
+          </div>
+          <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredKuliner.map((entry, i) => (
+              <div data-reveal style={`--i:${i}`}>
+                <KulinerCard entry={entry} lang={lang} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ============ DESTINASI UNGGULAN ============ -->
+  {
+    featuredDestinasi.length > 0 && (
+      <section class="container-page section-rhythm">
+        <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
+          <SectionHeading title={t('home.featuredDestinasi', lang)} as="h2" />
+          <a
+            href={localizePath('/destinasi', lang)}
             class="text-sm font-semibold text-merah transition-colors hover:text-merah-deep"
           >
             {t('common.viewAll', lang)} →
           </a>
         </div>
         <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredKuliner.map((entry) => <KulinerCard entry={entry} lang={lang} />)}
+          {featuredDestinasi.map((entry, i) => (
+            <div data-reveal style={`--i:${i}`}>
+              <DestinasiCard entry={entry} lang={lang} />
+            </div>
+          ))}
         </div>
-      </div>
-    </section>
-  )
-}
+      </section>
+    )
+  }
 
-<!-- ============ DESTINASI UNGGULAN ============ -->
-{
-  featuredDestinasi.length > 0 && (
-    <section class="container-page section-rhythm">
-      <div class="flex flex-wrap items-end justify-between gap-4">
-        <SectionHeading title={t('home.featuredDestinasi', lang)} as="h2" />
+  <!-- ============ AJAKAN PETA ============ -->
+  <section class="border-t border-rule bg-paper-sunken">
+    <div class="container-page grid gap-8 py-16 md:grid-cols-[1.2fr_1fr] md:items-center md:gap-16">
+      <div data-reveal>
+        <h2 class="m-0 font-display text-3xl font-semibold text-ink">{t('home.mapTitle', lang)}</h2>
+        <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-soft">{t('home.mapLead', lang)}</p>
         <a
-          href={localizePath('/destinasi', lang)}
-          class="text-sm font-semibold text-merah transition-colors hover:text-merah-deep"
+          href={localizePath('/peta', lang)}
+          class="mt-7 inline-flex items-center gap-2 rounded-control bg-merah px-5 py-3 text-sm font-semibold text-paper-raised transition-colors duration-150 hover:bg-merah-deep"
         >
-          {t('common.viewAll', lang)} →
+          {t('nav.peta', lang)}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </a>
       </div>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredDestinasi.map((entry) => <DestinasiCard entry={entry} lang={lang} />)}
-      </div>
-    </section>
-  )
-}
-
-<!-- ============ AJAKAN PETA ============ -->
-<section class="border-t border-rule bg-paper-sunken">
-  <div class="container-page grid gap-8 py-16 md:grid-cols-[1.2fr_1fr] md:items-center md:gap-16">
-    <div>
-      <h2 class="m-0 font-display text-3xl font-semibold text-ink">{t('home.mapTitle', lang)}</h2>
-      <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-soft">{t('home.mapLead', lang)}</p>
-      <a
-        href={localizePath('/peta', lang)}
-        class="mt-7 inline-flex items-center gap-2 rounded-control bg-merah px-5 py-3 text-sm font-semibold text-paper-raised transition-colors duration-150 hover:bg-merah-deep"
-      >
-        {t('nav.peta', lang)}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" />
+      <div class="text-soga/60" aria-hidden="true" data-reveal="fade">
+        <svg viewBox="0 0 400 260" class="h-auto w-full" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 150 C80 120 130 170 190 140 C250 110 310 150 380 120" stroke-opacity="0.7" />
+          <path d="M20 175 C90 150 140 195 200 168 C260 142 320 178 380 150" stroke-opacity="0.4" />
+          <circle cx="120" cy="150" r="4" />
+          <circle cx="210" cy="132" r="4" />
+          <circle cx="300" cy="146" r="4" />
+          <circle cx="250" cy="185" r="4" />
+          <circle cx="170" cy="90" r="4" />
         </svg>
-      </a>
+      </div>
     </div>
-    <div class="text-soga/60" aria-hidden="true">
-      <svg viewBox="0 0 400 260" class="h-auto w-full" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 150 C80 120 130 170 190 140 C250 110 310 150 380 120" stroke-opacity="0.7" />
-        <path d="M20 175 C90 150 140 195 200 168 C260 142 320 178 380 150" stroke-opacity="0.4" />
-        <circle cx="120" cy="150" r="4" />
-        <circle cx="210" cy="132" r="4" />
-        <circle cx="300" cy="146" r="4" />
-        <circle cx="250" cy="185" r="4" />
-        <circle cx="170" cy="90" r="4" />
-      </svg>
-    </div>
-  </div>
-</section>
-
+  </section>
 </BaseLayout>

@@ -22,10 +22,31 @@ berisi perubahan yang siap di-commit (lihat §Git).
 | Impeccable design lint | **0 anti-pattern** |
 | Playwright smoke test | **13/13 lulus** |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
-| Versi Cloudflare aktif | `03a3427b-470b-4409-a925-add2aab7ef9d` |
+| Versi Cloudflare aktif | `31cf7996-ff72-438c-8311-a9a2eb419199` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev
 **Repo:** https://github.com/zzdree/jelajah-rembang
+
+---
+
+## Redesign "Nyala Pesisir" (SELESAI 9 Okt 2026)
+
+Palet & gerak diperbarui atas permintaan pengguna ("warna masih aneh, mau lebih menarik
+dan banyak animasi"). Dikerjakan dengan skill **antislop** + **ui-ux-pro-max**.
+
+- **Palet baru:** tiga tinta dinaikkan kroma/kecerahan agar jernih. Merah Lasem jadi
+  `oklch(52% 0.19 27)` (`#be2323`), indigo `oklch(41% 0.115 264)`, soga `oklch(53% 0.108 70)`.
+  Kertas lebih netral hangat (kroma 0.008). **Semua kontras WCAG AA dihitung** (lihat DESIGN.md).
+- **Dial:** ENERGY 3 / RHYTHM 3 / MOTION 3 (dulu MOTION 1).
+- **Sistem gerak** (`src/styles/global.css`): `[data-reveal]` (scroll reveal + stagger `--i`),
+  `[data-underline]` (judul), `.canting-draw` (motif), `.float-soft` (hero), `.marquee-track`
+  (pita 14 kecamatan), dan **Astro View Transitions** (`<ClientRouter />` di BaseLayout).
+- **Pita kecamatan** di hero: memperkenalkan 14 kecamatan sebagai konten nyata (bukan ornamen).
+- Pengendali reveal: `<script>` di `BaseLayout.astro` (IntersectionObserver + `astro:page-load`).
+- **Tanpa JS** → kelas `.js` tidak ada → semua konten tampil (tidak ada yang tersembunyi).
+- **`prefers-reduced-motion`** → semua animasi mati, konten langsung terlihat (terverifikasi).
+- `ui-ux-pro-max` menyarankan "Aurora UI / sky-blue"; **ditolak** karena itu default AI slop
+  yang melawan identitas batik Lasem.
 
 ---
 

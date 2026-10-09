@@ -8,23 +8,26 @@
 /* ==========================================================================
    Kain Tiga Negeri — token sistem desain
    Sumber kebenaran: DESIGN.md. Ubah di sana lebih dulu, lalu di sini.
+   Palet "Nyala Pesisir" (revisi 9 Okt 2026): tiga tinta dinaikkan kroma &
+   kecerahan agar jernih (bukan kusam); kertas digeser lebih netral hangat.
+   Semua pasangan teks/latar lolos WCAG AA (dihitung, lihat DESIGN.md).
    ========================================================================== */
 
 :root {
-  /* --- Tiga tinta --- */
-  --merah-lasem: oklch(47% 0.155 26);
-  --merah-lasem-deep: oklch(40% 0.15 26);
-  --indigo-lasem: oklch(38% 0.088 258);
-  --soga: oklch(49% 0.07 62);
+  /* --- Tiga tinta (peran jenuh) --- */
+  --merah-lasem: oklch(52% 0.19 27); /* #be2323 */
+  --merah-lasem-deep: oklch(44% 0.175 27);
+  --indigo-lasem: oklch(41% 0.115 264); /* #294688 */
+  --soga: oklch(53% 0.108 70); /* #935f13 */
 
   /* --- Permukaan & teks (terang) --- */
-  --paper: oklch(96.5% 0.011 74);
-  --paper-raised: oklch(98.5% 0.007 74);
-  --paper-sunken: oklch(93% 0.014 72);
-  --ink: oklch(24% 0.024 58);
-  --ink-soft: oklch(43% 0.02 60);
-  --rule: oklch(86% 0.016 68);
-  --focus: oklch(55% 0.15 258);
+  --paper: oklch(97.5% 0.008 82); /* #f9f6f1 */
+  --paper-raised: oklch(99% 0.004 82);
+  --paper-sunken: oklch(94.5% 0.011 80);
+  --ink: oklch(23% 0.022 56); /* #251a13 */
+  --ink-soft: oklch(44% 0.022 58);
+  --rule: oklch(88% 0.014 76);
+  --focus: oklch(55% 0.16 264);
 
   /* --- Skala & irama --- */
   --radius-control: 8px;
@@ -39,23 +42,27 @@
 
   /* --- Gerak --- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 620ms;
 
   color-scheme: light;
 }
 
 [data-theme='dark'] {
-  --merah-lasem: oklch(67% 0.148 27);
-  --merah-lasem-deep: oklch(74% 0.14 27);
-  --indigo-lasem: oklch(70% 0.1 255);
-  --soga: oklch(74% 0.082 66);
+  --merah-lasem: oklch(70% 0.17 28); /* #f66e60 */
+  --merah-lasem-deep: oklch(78% 0.15 28);
+  --indigo-lasem: oklch(74% 0.115 260); /* #80abf3 */
+  --soga: oklch(78% 0.11 74); /* #e1ad63 */
 
-  --paper: oklch(16.5% 0.012 62);
-  --paper-raised: oklch(21.5% 0.014 62);
-  --paper-sunken: oklch(12.5% 0.01 62);
-  --ink: oklch(93% 0.012 74);
-  --ink-soft: oklch(72% 0.016 70);
-  --rule: oklch(30% 0.014 62);
-  --focus: oklch(70% 0.1 255);
+  --paper: oklch(15.5% 0.013 60); /* #100b07 */
+  --paper-raised: oklch(20% 0.015 60);
+  --paper-sunken: oklch(12% 0.011 60);
+  --ink: oklch(94% 0.012 78);
+  --ink-soft: oklch(74% 0.016 72);
+  --rule: oklch(30% 0.016 62);
+  --focus: oklch(74% 0.115 260);
 
   color-scheme: dark;
 }
@@ -189,7 +196,7 @@
 
   /* --- Permukaan browser, di-tema dari palet --- */
   ::selection {
-    background: color-mix(in oklch, var(--merah-lasem) 20%, transparent);
+    background: color-mix(in oklch, var(--merah-lasem) 24%, transparent);
     color: var(--ink);
   }
 
@@ -270,10 +277,88 @@
 }
 
 /* ==========================================================================
-   Momen gerak tunggal — "Canting Draw"
-   Sebuah kisi batik menggambar dirinya sekali saat hero tampil.
+   Motif identitas — "Kisi Canting"
+   Kisi diagonal tipis yang meniru tarikan canting di atas kain. Dipakai
+   sebagai penanda seksi & penggaris, BUKAN latar penuh halaman (R-07).
    ========================================================================== */
 
+.canting-rule {
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklch, var(--soga) 55%, transparent) 0 1.5px,
+    transparent 1.5px 9px
+  );
+}
+
+/* ==========================================================================
+   Sistem gerak — ENERGY 3 / RHYTHM 3 / MOTION 3
+   Semua animasi mati total di bawah prefers-reduced-motion (R-19).
+   Tanpa JavaScript (kelas `.js` tidak ada), konten tampil apa adanya (R-27).
+   ========================================================================== */
+
+/* --- Scroll reveal + stagger --- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  will-change: opacity, transform;
+}
+
+.js [data-reveal='fade'] {
+  transform: none;
+}
+
+.js [data-reveal='clip'] {
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    clip-path 900ms var(--ease-out-quint),
+    opacity var(--dur) var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.js [data-reveal='scale'] {
+  transform: scale(0.94);
+  transition:
+    opacity var(--dur) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-quint);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* --- Judul: garis aksen tumbuh dari kiri --- */
+.js [data-underline] {
+  position: relative;
+  display: inline-block;
+}
+
+.js [data-underline]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.08em;
+  height: 0.08em;
+  width: 100%;
+  background: var(--merah-lasem);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 780ms var(--ease-out-quint) 220ms;
+}
+
+.js [data-underline].is-visible::after {
+  transform: scaleX(1);
+}
+
+/* --- Hero: motif batik menggambar dirinya --- */
 @keyframes canting-draw {
   to {
     stroke-dashoffset: 0;
@@ -282,18 +367,95 @@
 
 .canting-draw path,
 .canting-draw line,
-.canting-draw circle {
+.canting-draw circle,
+.canting-draw ellipse {
   stroke-dasharray: var(--len, 1200);
   stroke-dashoffset: var(--len, 1200);
   animation: canting-draw 1100ms var(--ease-out-expo) forwards;
   animation-delay: var(--delay, 0ms);
 }
 
+/* --- Mengapung lembut (aksen tunggal di hero) --- */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-soft {
+  animation: float-soft 7s var(--ease-out-quint) infinite;
+}
+
+/* --- Pita kecamatan (motif geografis, konten nyata) --- */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 38s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* --- Transisi halaman (Astro View Transitions) --- */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-out 240ms var(--ease-out-expo) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 420ms var(--ease-out-expo) both;
+  }
+  @keyframes vt-out {
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes vt-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+/* --- Hormati preferensi gerak minimal --- */
 @media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+
+  .js [data-underline]::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+
   .canting-draw path,
   .canting-draw line,
-  .canting-draw circle {
+  .canting-draw circle,
+  .canting-draw ellipse {
     animation: none;
     stroke-dashoffset: 0;
+  }
+
+  .float-soft,
+  .marquee-track {
+    animation: none;
   }
 }

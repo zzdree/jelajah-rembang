@@ -96,9 +96,11 @@ const selfHref = `${site}${Astro.url.pathname}`;
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-<!-- Tema: dipasang sebelum paint, tanpa FOUC -->
+<!-- Tema + penanda JS: dipasang sebelum paint, tanpa FOUC -->
 <script is:inline>
   (() => {
+    // Kelas `.js` mengaktifkan animasi reveal. Tanpa JS, konten tampil apa adanya.
+    document.documentElement.classList.add('js');
     try {
       const stored = localStorage.getItem('rembang-theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;

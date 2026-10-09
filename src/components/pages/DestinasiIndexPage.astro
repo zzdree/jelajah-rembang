@@ -45,13 +45,15 @@ const withCoords = entries.filter((e) => e.data.coords).length;
   </div>
 
   <header class="container-page pb-10 pt-4">
-    <h1 class="m-0 max-w-[18ch] text-balance">{t('destinasi.title', lang)}</h1>
-    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('destinasi.lead', lang)}</p>
+    <h1 class="m-0 max-w-[18ch] text-balance" data-reveal data-underline>{t('destinasi.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft" data-reveal style="--i:1">{t('destinasi.lead', lang)}</p>
     {
       withCoords > 0 && (
         <a
           href={localizePath('/peta', lang)}
           class="mt-7 inline-flex items-center gap-2 rounded-control border border-rule px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-soga"
+          data-reveal
+          style="--i:2"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" />
@@ -67,12 +69,14 @@ const withCoords = entries.filter((e) => e.data.coords).length;
     {
       groups.map((g) => (
         <section>
-          <h2 class="m-0 mb-6 border-b border-rule pb-3 font-display text-2xl font-semibold text-ink">
+          <h2 class="m-0 mb-6 border-b border-rule pb-3 font-display text-2xl font-semibold text-ink" data-reveal>
             {KIND_LABEL[g.kind]?.[lang] ?? g.kind}
           </h2>
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {g.items.map((entry) => (
-              <DestinasiCard entry={entry} lang={lang} />
+            {g.items.map((entry, i) => (
+              <div data-reveal style={`--i:${i}`}>
+                <DestinasiCard entry={entry} lang={lang} />
+              </div>
             ))}
           </div>
         </section>

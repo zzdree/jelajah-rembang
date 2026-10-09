@@ -29,7 +29,7 @@ Bilingual: **Indonesia** (root) + **Inggris** (`/en/`).
 | TypeScript strict | ❌ JavaScript polos |
 | Content Collections (Markdown) | ❌ D1, database, CMS, API routes |
 | Cloudflare Workers **static assets** | ❌ SSR, adapter Cloudflare, server runtime |
-| 3 island vanilla TS | ❌ framework UI klien |
+| 4 island vanilla TS (peta, lightbox, tema, reveal) | ❌ framework UI klien |
 
 **Situs ini 100% statis.** Tidak ada server, tidak ada database, tidak ada autentikasi.
 Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tidak perlu.
@@ -76,6 +76,12 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
    `src/pages/og/[...slug].ts` menghasilkan `/og/<slug>.jpg` untuk tiap halaman.
    Font di `scripts/fonts/*.ttf` **harus TTF statis** (variable font gagal di satori).
    `BaseHead.astro` menebak URL dari `Astro.url.pathname`; jangan hard-code.
+
+10. **Gerak punya sistem sendiri (MOTION 3).** Animasi memakai kelas `[data-reveal]`,
+    `[data-underline]`, `.canting-draw`, `.float-soft`, `.marquee-track` dari `global.css`,
+    digerakkan `<script>` di `BaseLayout.astro`. Kelas `.js` (dipasang di `BaseHead`) mengaktifkan
+    reveal; **tanpa JS konten tetap tampil**. **Semua animasi wajib mati di
+    `prefers-reduced-motion`.** Detail & alasan tiap gerak ada di DESIGN.md §Motion.
 
 ---
 

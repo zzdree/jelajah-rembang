@@ -29,8 +29,8 @@ const albums = await getLocalized('galeri', lang);
   </div>
 
   <header class="container-page pb-12 pt-4">
-    <h1 class="m-0 max-w-[18ch] text-balance">{t('galeri.title', lang)}</h1>
-    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft">{t('galeri.lead', lang)}</p>
+    <h1 class="m-0 max-w-[18ch] text-balance" data-reveal data-underline>{t('galeri.title', lang)}</h1>
+    <p class="measure-prose mt-5 text-lg leading-relaxed text-ink-soft" data-reveal style="--i:1">{t('galeri.lead', lang)}</p>
   </header>
 
   <div class="container-page pb-section">
@@ -46,7 +46,7 @@ const albums = await getLocalized('galeri', lang);
       ) : (
         <div class="flex flex-col gap-16">
           {albums.map((album) => (
-            <section>
+            <section data-reveal>
               <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-3">
                 <h2 class="m-0 font-display text-2xl font-semibold text-ink">{album.data.title}</h2>
                 <span class="data-figure text-xs text-ink-soft">
@@ -57,8 +57,8 @@ const albums = await getLocalized('galeri', lang);
                 <p class="measure-prose mb-8 text-sm leading-relaxed text-ink-soft">{album.data.summary}</p>
               )}
               <ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
-                {((album.data.photos as any[]) ?? []).map((photo) => (
-                  <li>
+                {((album.data.photos as any[]) ?? []).map((photo, i) => (
+                  <li data-reveal="scale" style={`--i:${i % 8}`}>
                     <button
                       type="button"
                       class="group block w-full overflow-hidden rounded-card bg-paper-sunken"
