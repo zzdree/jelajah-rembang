@@ -14,12 +14,12 @@ Live: `https://jelajah-rembang.zzdree.workers.dev`
 | Styling | **Tailwind CSS v4** via `@tailwindcss/vite` (token di `@theme`) |
 | Bahasa | TypeScript strict |
 | Konten | Astro Content Collections (Markdown/MDX) |
-| Font | Self-hosted via `@fontsource-variable` (Bodoni Moda, Hanken Grotesk, Martian Mono) |
+| Font | Self-hosted via `@fontsource-variable` (Hanken Grotesk, Martian Mono) |
 | Peta | Leaflet 1.9 + OpenStreetMap (tanpa API key) |
 | Deploy | Cloudflare (static assets) |
 | Uji | Playwright (smoke), `astro check`, Impeccable design linter |
 
-**Tidak ada** framework UI klien (React/Vue). Interaktivitas hanya tiga island kecil: peta Leaflet, lightbox `<dialog>`, dan toggle tema.
+**Tidak ada** framework UI klien (React/Vue). Interaktivitas hanya empat island kecil: peta Leaflet, lightbox `<dialog>`, toggle tema, dan pengendali reveal/counter/parallax.
 
 ---
 
@@ -46,7 +46,7 @@ src/
 │   └── pages/               # badan halaman (dipakai ulang id & en)
 ├── layouts/BaseLayout.astro
 ├── lib/{i18n,content}.ts
-├── styles/global.css        # token desain "Kain Tiga Negeri"
+├── styles/global.css        # token desain "Tinta & Tanah"
 └── pages/                   # rute id (root) + en/ (prefix)
 ```
 
@@ -90,17 +90,19 @@ Menambah artikel:
 
 ---
 
-## Sistem desain — "Kain Tiga Negeri"
+## Sistem desain — "Tinta & Tanah"
 
-Berakar pada **Batik Tiga Negeri** Lasem: merah Lasem (*getih pitik*), indigo wedel, soga.
-Tema terang (kertas pesisir) dan gelap ("Malam Lasem"). Tiga muka huruf: **Bodoni Moda** (display),
-**Hanken Grotesk** (body/UI), **Martian Mono** (data).
+Flat minimalism / Swiss: **satu aksen terracotta** (`#c2410c`) di atas netral near-black,
+kertas putih bersih. Tema terang (kertas) dan gelap (arang) dari token yang sama. Satu keluarga
+grotesk: **Hanken Grotesk** untuk display **dan** body, **Martian Mono** untuk data.
 
 Sumber kebenaran token: **`DESIGN.md`** (frontmatter YAML + prosa). Konteks produk: **`PRODUCT.md`**.
 
-Aturan inti: tanpa Inter/font sistem, tanpa teks abu di atas warna, tanpa `#000`/`#fff` murni,
+Aturan inti: tanpa Inter/font sistem, tanpa teks abu di atas warna, tanpa `#000` murni
+(putih murni `#ffffff` **diperbolehkan** sebagai kertas flat), tanpa glassmorphism/bayangan kartu,
 tanpa kartu bersarang, tanpa grid kartu identik, kontras body ≥4.5:1, measure 65–75ch,
-satu momen gerak ("Canting Draw").
+sistem gerak **MOTION 3** (reveal, stagger, mask judul, underline, counter angka, parallax hero,
+pita kecamatan, transisi halaman) yang semuanya mati di `prefers-reduced-motion`.
 
 ---
 

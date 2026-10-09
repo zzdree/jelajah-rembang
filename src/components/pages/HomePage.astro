@@ -61,8 +61,8 @@ const SECTION_LINKS = [
 
 const FACTS = [
   { label: isId ? 'Luas wilayah' : 'Area', value: '1.036,70 km²', note: 'BPS, 2025' },
-  { label: isId ? 'Penduduk' : 'Population', value: '669.145', note: isId ? 'Desember 2025' : 'December 2025' },
-  { label: isId ? 'Kecamatan' : 'Districts', value: '14', note: '287 + 7' },
+  { label: isId ? 'Penduduk' : 'Population', value: '669.145', note: isId ? 'Desember 2025' : 'December 2025', count: 669145 },
+  { label: isId ? 'Kecamatan' : 'Districts', value: '14', note: '287 + 7', count: 14 },
   { label: isId ? 'Garis pantai' : 'Coastline', value: '±62,5 km', note: isId ? 'Laut Jawa' : 'Java Sea' },
 ];
 
@@ -90,10 +90,11 @@ const KECAMATAN = [
           {isId ? 'Jawa Tengah · Pantura' : 'Central Java · North Coast'}
         </p>
         <h1
-          class="mt-5 font-display text-[clamp(3rem,9vw,6.5rem)] font-semibold leading-[0.93] tracking-[-0.03em] text-ink"
-          data-reveal
+          class="mt-5 font-display text-[clamp(3rem,9vw,6.5rem)] font-bold leading-[0.93] tracking-[-0.03em] text-ink"
         >
-          <span data-underline>{t('home.heroTitle', lang)}</span>
+          <span class="block" data-reveal="clip" style="--i:0">
+            <span data-reveal-clip-inner>{t('home.heroTitle', lang)}</span>
+          </span>
         </h1>
         <p
           class="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl"
@@ -114,23 +115,25 @@ const KECAMATAN = [
           </a>
           <a
             href={localizePath('/kuliner', lang)}
-            class="inline-flex items-center gap-2 rounded-control border border-rule px-5 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:border-soga hover:text-merah"
+            class="inline-flex items-center gap-2 rounded-control border border-rule px-5 py-3 text-sm font-semibold text-ink transition-colors duration-150 hover:border-ink hover:text-merah"
           >
             {t('home.exploreKuliner', lang)}
           </a>
         </div>
       </div>
 
-      <!-- Motif batik: momen gerak utama -->
+      <!-- Motif batik: momen gerak utama + parallax halus -->
       <div class="relative hidden justify-center lg:flex" aria-hidden="true">
-        <div class="float-soft text-merah/85">
-          <BatikMotif size={340} draw variant="kawung" />
-        </div>
-        <div class="absolute -bottom-8 -left-6 text-soga/70">
-          <BatikMotif size={140} draw variant="latohan" />
-        </div>
-        <div class="absolute -right-4 top-2 text-indigo/60">
-          <BatikMotif size={96} draw variant="truntum" />
+        <div class="relative" data-parallax>
+          <div class="float-soft text-merah/85">
+            <BatikMotif size={340} draw variant="kawung" />
+          </div>
+          <div class="absolute -bottom-8 -left-6 text-soga/70">
+            <BatikMotif size={140} draw variant="latohan" />
+          </div>
+          <div class="absolute -right-4 top-2 text-indigo/60">
+            <BatikMotif size={96} draw variant="truntum" />
+          </div>
         </div>
       </div>
     </div>
@@ -142,7 +145,7 @@ const KECAMATAN = [
           [...KECAMATAN, ...KECAMATAN].map((k) => (
             <span class="data-figure mx-5 inline-flex items-center gap-5 text-sm text-ink-soft">
               {k}
-              <span class="inline-block h-1 w-1 rounded-full bg-soga"></span>
+              <span class="inline-block h-1 w-1 rounded-full bg-merah"></span>
             </span>
           ))
         }
@@ -153,7 +156,7 @@ const KECAMATAN = [
   <!-- ============ FAKTA SINGKAT ============ -->
   <section class="border-b border-rule bg-paper-sunken">
     <div class="container-page grid grid-cols-2 gap-x-8 gap-y-6 py-10 md:grid-cols-4">
-      {FACTS.map((f, i) => <div data-reveal style={`--i:${i}`}><StatBlock label={f.label} value={f.value} note={f.note} /></div>)}
+      {FACTS.map((f, i) => <div data-reveal style={`--i:${i}`}><StatBlock label={f.label} value={f.value} note={f.note} count={f.count} /></div>)}
     </div>
   </section>
 
@@ -175,7 +178,7 @@ const KECAMATAN = [
             <div class:list={['shrink-0 transition-transform duration-500 group-hover:rotate-[8deg] motion-reduce:transition-none motion-reduce:group-hover:rotate-0', s.ink]}>
               <BatikMotif size={72} variant={s.motif} />
             </div>
-            <div class="flex flex-col gap-2 border-t border-rule pt-4 transition-colors duration-200 group-hover:border-soga">
+            <div class="flex flex-col gap-2 border-t border-rule pt-4 transition-colors duration-200 group-hover:border-ink">
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="m-0 font-display text-2xl font-semibold text-ink">{t(s.key, lang)}</h3>
                 <span class="data-figure text-xs text-ink-soft">{s.count}</span>

@@ -91,14 +91,15 @@ const albums = await getLocalized('galeri', lang);
 <!-- Lightbox: <dialog> native memberi focus-trap, Esc, dan top-layer gratis -->
 <dialog
   id="lightbox"
-  class="m-auto max-h-[92vh] w-[min(94vw,72rem)] rounded-card border border-rule bg-paper-raised p-0 backdrop:bg-ink/70"
+  aria-label={t('galeri.title', lang)}
+  class="m-auto max-h-[92vh] w-[min(94vw,72rem)] rounded-card border border-rule bg-paper-raised p-0 backdrop:bg-scrim/75"
 >
   <div class="flex items-center justify-between border-b border-rule px-4 py-3">
     <p id="lb-caption" class="m-0 truncate text-sm text-ink-soft"></p>
     <button
       type="button"
       id="lb-close"
-      class="rounded-control border border-rule p-1.5 text-ink-soft transition-colors hover:border-soga hover:text-ink"
+      class="rounded-control border border-rule p-1.5 text-ink-soft transition-colors hover:border-ink hover:text-ink"
       aria-label={t('galeri.close', lang)}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
@@ -115,14 +116,24 @@ const albums = await getLocalized('galeri', lang);
 </dialog>
 
 <script>
-  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
-  const img = document.getElementById('lb-img') as HTMLImageElement | null;
-  const cap = document.getElementById('lb-caption');
-  const closeBtn = document.getElementById('lb-close');
-  let lastFocus: HTMLElement | null = null;
+  const close = () => {
+    const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+    const img = document.getElementById('lb-img') as HTMLImageElement | null;
+    dlg?.close();
+    if (img) img.src = '';
+  };
 
-  if (dlg && img) {
+  function bindLightbox() {
+    const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+    const img = document.getElementById('lb-img') as HTMLImageElement | null;
+    const cap = document.getElementById('lb-caption');
+    if (!dlg || !img) return;
+    const closeBtn = document.getElementById('lb-close');
+    let lastFocus: HTMLElement | null = null;
+
     document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach((btn) => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = 'true';
       btn.addEventListener('click', () => {
         lastFocus = btn;
         img.src = btn.dataset.full || '';
@@ -132,15 +143,18 @@ const albums = await getLocalized('galeri', lang);
       });
     });
 
-    const close = () => {
-      dlg.close();
-      img.src = '';
-    };
-    closeBtn?.addEventListener('click', close);
-    // Klik di luar panel menutup
-    dlg.addEventListener('click', (e) => {
-      if (e.target === dlg) close();
-    });
-    dlg.addEventListener('close', () => lastFocus?.focus());
+    if (!dlg.dataset.bound) {
+      dlg.dataset.bound = 'true';
+      closeBtn?.addEventListener('click', close);
+      // Klik di luar panel menutup
+      dlg.addEventListener('click', (e) => {
+        if (e.target === dlg) close();
+      });
+      dlg.addEventListener('close', () => lastFocus?.focus());
+    }
   }
+
+  // DOM berganti tiap navigasi client-side, sehingga listener harus dipasang ulang.
+  bindLightbox();
+  document.addEventListener('astro:page-load', bindLightbox);
 </script>

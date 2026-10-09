@@ -7,46 +7,89 @@
 
 ## Status: SELESAI & LIVE ✅
 
-Galeri terisi, cover & koordinat dilengkapi, worker lama dibersihkan. Working tree git
-berisi perubahan yang siap di-commit (lihat §Git).
+Galeri terisi, cover & koordinat dilengkapi, worker lama dibersihkan. Redesign "Tinta & Tanah"
+selesai. Working tree git berisi perubahan yang siap di-commit (lihat riwayat `git log`).
 
 | Metrik | Nilai |
 |---|---|
 | Halaman terbangun | **74** |
 | Artikel konten | **54** (27 judul × 2 bahasa) |
-| Album galeri | **6** (12 berkas id+en), **37 foto** |
+| Album galeri | **6** (12 berkas id+en), **36 foto** |
 | Foto (Wikimedia Commons) | **52** berkas (51 entri `credits.json`) |
 | Judul ber-cover | **19** dari 27 |
 | Destinasi ber-koordinat | **5** dari 10 |
 | `astro check` | **0 error / 0 warning / 0 hint** |
 | Impeccable design lint | **0 anti-pattern** |
 | Playwright smoke test | **13/13 lulus** |
+| Playwright kontras WCAG AA | **901 pasangan, 0 gagal** (6 halaman × terang/gelap) |
+| Playwright interaksi & ketahanan | **11/11 lulus** (lintas navigasi, reduced-motion, tanpa JS) |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
 | Versi Cloudflare aktif | `31cf7996-ff72-438c-8311-a9a2eb419199` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev
 **Repo:** https://github.com/zzdree/jelajah-rembang
 
+Berkas uji kini: `tests/smoke.spec.ts` (asli), `tests/contrast.spec.ts` (kontras nyata dari
+computed style), `tests/interactions.spec.ts` (regresi lintas navigasi), `tests/resilience.spec.ts`
+(reduced-motion + tanpa JS). Total **29** uji, semuanya lulus.
+
 ---
 
-## Redesign "Nyala Pesisir" (SELESAI 9 Okt 2026)
+## Redesign "Tinta & Tanah" (SELESAI 9 Okt 2026)
 
-Palet & gerak diperbarui atas permintaan pengguna ("warna masih aneh, mau lebih menarik
-dan banyak animasi"). Dikerjakan dengan skill **antislop** + **ui-ux-pro-max**.
+Permintaan pengguna berlanjut: *"kurang suka palette warnanya, mau flat minimalism, banyak
+animasi, palette clean dan menarik."* Dikerjakan dengan skill **antislop** + **ui-ux-pro-max**.
+Revisi ini **menggantikan** percobaan sebelumnya ("Nyala Pesisir", maroon + krem) yang ditolak.
 
-- **Palet baru:** tiga tinta dinaikkan kroma/kecerahan agar jernih. Merah Lasem jadi
-  `oklch(52% 0.19 27)` (`#be2323`), indigo `oklch(41% 0.115 264)`, soga `oklch(53% 0.108 70)`.
-  Kertas lebih netral hangat (kroma 0.008). **Semua kontras WCAG AA dihitung** (lihat DESIGN.md).
-- **Dial:** ENERGY 3 / RHYTHM 3 / MOTION 3 (dulu MOTION 1).
-- **Sistem gerak** (`src/styles/global.css`): `[data-reveal]` (scroll reveal + stagger `--i`),
-  `[data-underline]` (judul), `.canting-draw` (motif), `.float-soft` (hero), `.marquee-track`
-  (pita 14 kecamatan), dan **Astro View Transitions** (`<ClientRouter />` di BaseLayout).
-- **Pita kecamatan** di hero: memperkenalkan 14 kecamatan sebagai konten nyata (bukan ornamen).
-- Pengendali reveal: `<script>` di `BaseLayout.astro` (IntersectionObserver + `astro:page-load`).
-- **Tanpa JS** → kelas `.js` tidak ada → semua konten tampil (tidak ada yang tersembunyi).
-- **`prefers-reduced-motion`** → semua animasi mati, konten langsung terlihat (terverifikasi).
-- `ui-ux-pro-max` menyarankan "Aurora UI / sky-blue"; **ditolak** karena itu default AI slop
-  yang melawan identitas batik Lasem.
+- **Palet baru (flat minimalism / Swiss):** satu aksen **terracotta** `#c2410c` + netral
+  near-black. Kertas putih bersih `#ffffff` (bukan krem), inset `#f5f5f4`. Peran lama
+  `indigo`/`soga` menjadi netral (`#18181b`/`#52525b`). **Semua kontras WCAG AA dihitung**
+  (terang: ink 17,72 · soft 7,73 · aksen 5,18; gelap: 19,06 · 7,76 · 8,79).
+- **Tipografi:** **Bodoni Moda dilepas.** Satu grotesk (**Hanken Grotesk**) untuk display
+  **dan** body; Martian Mono tetap untuk data. Font OG → Hanken 400/600/700.
+- **Radius tajam:** kontrol 2px, kartu 4px. **Bug `rounded-pill` diperbaiki** (token hilang →
+  badge `DestinasiCard` & bahan `KulinerDetailPage` kini benar-benar pil).
+- **Flat:** glassmorphism header dihapus (solid + garis bawah); bayangan kartu dihapus; satu
+  bayangan tersisa hanya untuk popup Leaflet (terdokumentasi DESIGN.md §Elevation).
+- **Sistem gerak** (`src/styles/global.css`): `[data-reveal]` (+ `clip` mask),
+  `[data-underline]`, **`[data-count]`** (counter angka `Intl.NumberFormat`; SSR = nilai final),
+  **`[data-parallax]`** (hero, ≥768px, listener dibersihkan di `astro:before-swap`),
+  `.canting-draw`, `.float-soft`, `.marquee-track`, dan **Astro View Transitions**.
+- **Bug diperbaiki:** masker `clip-path: inset(0 0 100% 0)` dulu dipasang pada elemen yang
+  diobservasi IntersectionObserver → luas irisan nol → **judul hero tertinggal di opacity 0**
+  (tidak terlihat). Kini masker di elemen anak (`[data-reveal-clip-inner]`). Terverifikasi:
+  `is-visible`, opacity 1, IO ratio 1.
+- **Tanpa JS** → kelas `.js` tidak ada → semua konten tampil (nilai statistik = final).
+- **`prefers-reduced-motion`** → reveal langsung, counter = nilai final, tanpa parallax/marquee.
+- `ui-ux-pro-max` menyarankan "Glassmorphism / biru #2563EB / Poppins"; **ditolak** (default AI slop).
+
+**Pelajaran penting:** linter Impeccable **buta pada glassmorphism/bayangan/gradien di
+`.astro`/`.css`** (hanya membaca `.html`). "lint 0" **bukan** bukti flat. Audit manual:
+`grep -rn "shadow\|backdrop-blur\|repeating-" src/`.
+
+---
+
+## Bug interaksi lintas halaman (DITEMUKAN & DIPERBAIKI 9 Okt 2026)
+
+Redesign tadi hanya diuji dengan **memuat penuh setiap halaman**, sehingga kelas bug yang hanya
+muncul saat **navigasi client-side** lolos tanpa terdeteksi. Ditemukan lewat pengujian browser
+(klik tautan → verifikasi interaksi masih hidup). Lima bug nyata, semuanya sekarang dijaga uji
+regresi `tests/interactions.spec.ts`:
+
+| # | Gejala | Akar masalah | Perbaikan |
+|---|---|---|---|
+| 1 | Peta kosong (0 tile, 0 marker) setelah kembali ke `/peta` | skrip modul hanya berjalan sekali; DOM berganti saat navigasi | `initMap()` dipasang ulang di `astro:page-load` |
+| 2 | Lightbox galeri tidak membuka setelah navigasi | sama | `bindLightbox()` dipasang ulang + penanda `dataset.bound` |
+| 3 | Menu seluler mati setelah navigasi | sama | `bindMenu()` dipasang ulang |
+| 4 | Tema kembali **light** setelah navigasi | ClientRouter menyalin atribut `<html>` dari dokumen baru; `data-theme` selalu `light` | sumber kebenaran `localStorage`; pulihkan di `astro:before-swap` |
+| 5 | Counter menampilkan **angka negatif** (`-23.699`) | timestamp rAF bisa mendahului `performance.now()` | clamp `p` ke `[0,1]` |
+
+Plus dua perbaikan kuatifikasi: observer ganda (`initReveal`/`initCount` dipanggil langsung
+**dan** didengarkan dari `astro:page-load`), dan penanda guard `dataset.x = ''` yang *falsy*
+sehingga listener terpasang dua kali (peta: *"Map container is already initialized"*).
+
+**Cara menguji supaya kelas bug ini tidak terulang:** jangan puas dengan `page.goto()`.
+Selalu klik tautan, lalu verifikasi interaksi masih hidup.
 
 ---
 
@@ -103,7 +146,7 @@ petilasan-sunan-bonang, klenteng-cu-an-kiong, embung-lodan) belum ada koordinat 
 
 Tiap halaman kini punya gambar Open Graph 1200×630 sendiri, dirender **saat build**
 (satori → SVG → sharp → JPEG) oleh `src/lib/og.ts` + endpoint statis
-`src/pages/og/[...slug].ts`. Total **86 berkas** di `dist/og/` (~2,4 MB, ~23 KB/berkas).
+`src/pages/og/[...slug].ts`. Total **86 berkas** di `dist/og/` (~2,2 MB, rata-rata ~25 KB/berkas).
 
 - Varian **foto-forward** untuk halaman ber-cover (foto di kanan, judul di kiri).
 - Varian **teks + motif batik** (garis SVG, bukan emoji) untuk halaman tanpa cover.
@@ -211,6 +254,32 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 13/13
 12. **`image` prop `BaseHead`/`BaseLayout` sudah dihapus.** OG kini selalu otomatis; jangan
     tambah `image={...}` lagi.
 
+13. **Skrip modul `.astro` hanya berjalan SEKALI.** View Transitions mengganti DOM setiap
+    navigasi, jadi listener yang dipasang di badan skrip mati setelah pindah halaman.
+    Gejala yang pernah terjadi: menu seluler, toggle tema, lightbox galeri, dan peta mati
+    setelah navigasi. Selalu pasang ulang lewat `astro:page-load` (juga dipakai untuk
+    memulihkan elemen yang baru dibuat), dan beri penanda guard di elemen (bukan variabel
+    modul, karena modul tidak ikut di-scope ulang).
+
+14. **`astro:page-load` juga menyala saat muat awal.** Jangan panggil `initX()` langsung
+    *dan* mendengarkan event itu: IntersectionObserver jadi ganda dan memperebutkan elemen.
+    Cukup `addEventListener` saja.
+
+15. **Penanda guard harus berisi string tak-kosong.** `el.dataset.bound = ''` itu *falsy*,
+    sehingga `if (el.dataset.bound) return;` tak pernah menyala. Akibat nyata: tombol memberi
+    dua listener → satu klik membuka lalu langsung menutup panel (tampak seperti "tombol rusak"),
+    dan peta melempar **"Map container is already initialized"**. Pakai `'true'`.
+
+16. **View Transitions menimpa atribut `<html>`.** ClientRouter menyalin atribut dari dokumen
+    baru dan hanya mempertahankan `data-astro-transition*`; `data-theme` karena itu selalu
+    kembali `light` meski pengguna memilih gelap dan `localStorage` sudah benar. Sumber
+    kebenaran harus `localStorage`/preferensi OS, bukan DOM. Pulihkan di `astro:before-swap`
+    supaya tidak ada kedipan terang.
+
+17. **Timestamp `requestAnimationFrame` bisa mendahului `performance.now()`** saat frame
+    pertama. Counter yang memakai `(now - start)` menghasilkan angka **negatif** (`-23.699`).
+    Clamp ke `Math.max(0, …)`.
+
 ---
 
 ## Keputusan yang sudah diambil (jangan diubah tanpa alasan)
@@ -220,8 +289,8 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 13/13
 | Astro, bukan Next.js | Situs 100% konten; Astro = HTML statis, nol JS default, paling cepat |
 | Cloudflare Workers static assets, bukan Pages | Panduan Cloudflare 2026 untuk proyek baru |
 | Tanpa database | Konten = berkas Markdown di repo |
-| Tanpa framework UI | 3 island vanilla TS cukup; bundle tetap kecil |
-| Font Bodoni Moda/Hanken Grotesk/Martian Mono | Fraunces ada di daftar larangan Impeccable; tiga ini tidak |
+| Tanpa framework UI | 4 island vanilla TS cukup; bundle tetap kecil |
+| Font Hanken Grotesk + Martian Mono | Satu grotesk untuk display & body (disiplin Swiss); Bodoni Moda **dilepas** pada redesign "Tinta & Tanah". Fraunces ada di daftar larangan Impeccable |
 | Nama "Jelajah Rembang" | Dipilih pengguna; folder & repo sudah konsisten |
 | Foto Wikimedia Commons | Lisensi bebas + atribusi; mudah diganti foto asli nanti |
 | Galeri tematik-warisan (6 album) | Sejalan dengan posisi "arsip hidup", bukan galeri generik |

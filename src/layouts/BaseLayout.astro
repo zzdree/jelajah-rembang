@@ -22,7 +22,11 @@ const metaDescription = description ?? t('site.description', lang);
 ---
 
 <!doctype html>
-<html lang={HTML_LANG[lang]} data-theme="light">
+<!-- `data-theme` sengaja TIDAK di-SSR. View Transitions menyalin seluruh atribut
+     <html> dari dokumen baru saat navigasi (swap-functions.js), jadi nilai statis
+     akan menimpa pilihan tema pengguna. Skrip is:inline di BaseHead menetapkannya
+     sebelum paint; ThemeToggle menyinkronkan ulang tiap `astro:page-load`. -->
+<html lang={HTML_LANG[lang]}>
   <head>
     <BaseHead
       lang={lang}
@@ -41,7 +45,9 @@ const metaDescription = description ?? t('site.description', lang);
     <SiteFooter lang={lang} />
     <script>
       // Pengendali reveal: elemen [data-reveal] muncul saat masuk viewport.
-      // Berjalan di navigasi awal dan tiap perpindahan halaman (View Transitions).
+      // `astro:page-load` menyala SEKALI saat muat awal dan sekali tiap perpindahan
+      // halaman, jadi cukup dengarkan itu; memanggil initReveal() langsung akan
+      // membuat IntersectionObserver ganda memperebutkan elemen yang sama.
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       function initReveal() {
@@ -64,8 +70,43 @@ const metaDescription = description ?? t('site.description', lang);
         els.forEach((el) => io.observe(el));
       }
 
-      initReveal();
       document.addEventListener('astro:page-load', initReveal);
+
+      // Parallax halus hero: hanya ≥768px, mati di reduced-motion, listener
+      // dibersihkan tiap perpindahan halaman agar tidak menumpuk.
+      const small = window.matchMedia('(max-width: 767px)');
+      let raf = 0;
+      let onScroll: (() => void) | null = null;
+
+      function initParallax() {
+        const layer = document.querySelector<HTMLElement>('[data-parallax]');
+        if (!layer || layer.dataset.parallaxOn || reduced.matches || small.matches) return;
+        layer.dataset.parallaxOn = 'true';
+        onScroll = () => {
+          if (raf) return;
+          raf = requestAnimationFrame(() => {
+            raf = 0;
+            const y = Math.min(window.scrollY, 600);
+            layer.style.transform = `translate3d(0, ${y * 0.1}px, 0)`;
+          });
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+
+      function cleanupParallax() {
+        if (onScroll) window.removeEventListener('scroll', onScroll);
+        if (raf) cancelAnimationFrame(raf);
+        document
+          .querySelectorAll<HTMLElement>('[data-parallax]')
+          .forEach((el) => delete el.dataset.parallaxOn);
+        onScroll = null;
+        raf = 0;
+      }
+
+      // `astro:page-load` menyala sekali saat muat awal dan tiap perpindahan halaman;
+      // cukup itu (memanggil initParallax() langsung akan memasang listener ganda).
+      document.addEventListener('astro:page-load', initParallax);
+      document.addEventListener('astro:before-swap', cleanupParallax);
     </script>
   </body>
 </html>

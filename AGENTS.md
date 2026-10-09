@@ -51,10 +51,14 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
    `MapIsland.astro`, `ThemeToggle.astro`, `GaleriPage.astro`).
 
 4. **Patuhi `DESIGN.md`.** Jalankan `npm run lint:design` — target **0 anti-pattern**.
-   Dilarang: Inter/font sistem, teks abu di atas warna, `#000`/`#fff` murni, kartu
-   bersarang, grid kartu identik untuk semua seksi, eyebrow di atas setiap judul,
-   gradient text, glassmorphism, border garis-samping >1px, bayangan offset keras,
-   easing bounce, emoji sebagai ikon.
+   Dilarang: Inter/font sistem, teks abu di atas warna, kartu bersarang, grid kartu identik
+   untuk semua seksi, eyebrow di atas setiap judul, gradient text, **glassmorphism /
+   `backdrop-blur`** (termasuk header), border garis-samping >1px, bayangan pada kartu
+   (hanya overlay sejati seperti popup Leaflet), easing bounce, emoji sebagai ikon.
+   Catatan: **linter buta pada glassmorphism/bayangan/gradien di `.astro`/`.css`** (hanya
+   membaca `.html`), jadi "lint 0" **bukan** bukti flat. Audit manual:
+   `grep -rn "shadow\|backdrop-blur\|repeating-" src/`. Putih murni `#ffffff` **diperbolehkan**
+   (ini kertas flat, bukan krem); yang dilarang adalah `#000` murni sebagai tinta.
 
 5. **Setiap perintah yang menyentuh jaringan WAJIB prefix IPv4-first** (IPv6 mati di
    laptop dev ini):
@@ -78,10 +82,28 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
    `BaseHead.astro` menebak URL dari `Astro.url.pathname`; jangan hard-code.
 
 10. **Gerak punya sistem sendiri (MOTION 3).** Animasi memakai kelas `[data-reveal]`,
-    `[data-underline]`, `.canting-draw`, `.float-soft`, `.marquee-track` dari `global.css`,
-    digerakkan `<script>` di `BaseLayout.astro`. Kelas `.js` (dipasang di `BaseHead`) mengaktifkan
-    reveal; **tanpa JS konten tetap tampil**. **Semua animasi wajib mati di
+    `[data-underline]`, `[data-count]`, `[data-parallax]`, `.canting-draw`, `.float-soft`,
+    `.marquee-track` dari `global.css`, digerakkan `<script>` di `BaseLayout.astro`
+    (counter di `StatBlock.astro`). Kelas `.js` (dipasang di `BaseHead`) mengaktifkan reveal;
+    **tanpa JS konten tetap tampil** (nilai final ada di SSR). **Semua animasi wajib mati di
     `prefers-reduced-motion`.** Detail & alasan tiap gerak ada di DESIGN.md §Motion.
+    ⚠️ **Jangan pasang `clip-path: inset(…100%…)` / `transform: scale(0)` pada elemen yang
+    diobservasi IntersectionObserver**: luas irisannya jadi nol sehingga reveal tak pernah
+    menyala (judul hero pernah tertinggal di opacity 0). Taruh masker di elemen **anak**
+    (lihat `[data-reveal='clip'] > [data-reveal-clip-inner]`).
+    ⚠️ **Skrip modul hanya berjalan sekali**, tetapi View Transitions mengganti DOM setiap
+    navigasi: listener jadi mati jika tidak dipasang ulang lewat `astro:page-load`
+    (menu seluler, toggle tema, lightbox galeri, dan peta sempat mati setelah navigasi).
+    ⚠️ **`astro:page-load` juga menyala saat muat awal**, jadi jangan memanggil `initX()`
+    langsung *dan* mendengarkan event itu (observer ganda memperebutkan elemen yang sama).
+    ⚠️ Penanda guard **harus berisi string tak-kosong**: `el.dataset.bound = ''` itu *falsy*,
+    sehingga `if (el.dataset.bound) return;` tak pernah menyala dan listener terpasang dua
+    kali (panel langsung tertutup lagi, peta melempar "container is already initialized").
+    ⚠️ Timestamp `requestAnimationFrame` bisa mendahului `performance.now()` saat mulai; clamp
+    `p` ke `[0,1]` agar counter tak pernah menampilkan angka negatif.
+    ⚠️ **Uji lintas navigasi, bukan sekadar muat halaman**: bug ini tak terlihat kalau
+    setiap pengecekan memuat ulang penuh. Pola uji: klik tautan → verifikasi interaksi masih
+    hidup (menu, tema, lightbox, peta).
 
 ---
 

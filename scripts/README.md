@@ -21,6 +21,9 @@ di satori), karena itu ada `scripts/fonts/*.ttf`.
 
 Regenerasi font (bila ubah muka huruf):
 ```bash
-npm install -D wawoff2 @fontsource/bodoni-moda @fontsource/hanken-grotesk
+npm install -D wawoff2 @fontsource/hanken-grotesk @fontsource/martian-mono
 node scripts/build-fonts.mjs
 ```
+
+> Muka huruf OG: **Hanken Grotesk** (400/600/700) untuk judul & teks, **Martian Mono** untuk
+> data. Bodoni Moda sudah dilepas pada redesign "Tinta & Tanah" (9 Okt 2026).

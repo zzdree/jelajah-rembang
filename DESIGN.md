@@ -1,54 +1,57 @@
 ---
 schemaVersion: 2
-name: Kain Tiga Negeri
-description: Sistem desain untuk situs profil Kabupaten Rembang — sehelai kain batik tulis Lasem di atas kertas pesisir yang hangat.
+name: Tinta & Tanah
+description: Sistem desain untuk situs profil Kabupaten Rembang — flat minimalism Swiss: kertas putih, satu aksen terracotta, tipografi grotesk tunggal.
 
 colors:
-  # --- Tiga tinta (the three negeri) — revisi "Nyala Pesisir", 9 Okt 2026 ---
-  merah-lasem: 'oklch(52% 0.19 27)'
-  merah-lasem-deep: 'oklch(44% 0.175 27)'
-  indigo-lasem: 'oklch(41% 0.115 264)'
-  soga: 'oklch(53% 0.108 70)'
+  # --- Satu aksen ---
+  merah-lasem: '#c2410c'
+  merah-lasem-deep: '#9a3412'
+
+  # --- Netral (menggantikan peran lama indigo & soga) ---
+  indigo-lasem: '#18181b'
+  soga: '#52525b'
 
   # --- Permukaan terang ---
-  paper: 'oklch(97.5% 0.008 82)'
-  paper-raised: 'oklch(99% 0.004 82)'
-  paper-sunken: 'oklch(94.5% 0.011 80)'
-  ink: 'oklch(23% 0.022 56)'
-  ink-soft: 'oklch(44% 0.022 58)'
-  rule: 'oklch(88% 0.014 76)'
-  focus: 'oklch(55% 0.16 264)'
+  paper: '#ffffff'
+  paper-raised: '#ffffff'
+  paper-sunken: '#f5f5f4'
+  ink: '#18181b'
+  ink-soft: '#52525b'
+  rule: '#e4e4e7'
+  focus: '#c2410c'
+  scrim: '#09090b'
 
-  # --- Permukaan gelap ("Malam Lasem") ---
-  paper-dark: 'oklch(15.5% 0.013 60)'
-  paper-dark-raised: 'oklch(20% 0.015 60)'
-  paper-dark-sunken: 'oklch(12% 0.011 60)'
-  ink-dark: 'oklch(94% 0.012 78)'
-  ink-soft-dark: 'oklch(74% 0.016 72)'
-  rule-dark: 'oklch(30% 0.016 62)'
-  merah-lasem-dark: 'oklch(70% 0.17 28)'
-  indigo-lasem-dark: 'oklch(74% 0.115 260)'
-  soga-dark: 'oklch(78% 0.11 74)'
+  # --- Permukaan gelap ---
+  paper-dark: '#09090b'
+  paper-dark-raised: '#18181b'
+  paper-dark-sunken: '#060607'
+  ink-dark: '#fafafa'
+  ink-soft-dark: '#a1a1aa'
+  rule-dark: '#27272a'
+  merah-lasem-dark: '#fb923c'
+  indigo-lasem-dark: '#fafafa'
+  soga-dark: '#a1a1aa'
 
 typography:
   display:
-    fontFamily: 'Bodoni Moda Variable'
-    fontSize: 'clamp(2.75rem, 6vw, 4.5rem)'
-    fontWeight: 600
-    lineHeight: 1.04
-    letterSpacing: '-0.02em'
+    fontFamily: 'Hanken Grotesk Variable'
+    fontSize: 'clamp(3rem, 9vw, 6.5rem)'
+    fontWeight: 700
+    lineHeight: 0.93
+    letterSpacing: '-0.03em'
   h1:
-    fontFamily: 'Bodoni Moda Variable'
+    fontFamily: 'Hanken Grotesk Variable'
     fontSize: 'clamp(2rem, 4.5vw, 3rem)'
-    fontWeight: 600
-    lineHeight: 1.1
-    letterSpacing: '-0.02em'
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: '-0.03em'
   h2:
-    fontFamily: 'Bodoni Moda Variable'
+    fontFamily: 'Hanken Grotesk Variable'
     fontSize: '1.75rem'
-    fontWeight: 600
-    lineHeight: 1.18
-    letterSpacing: '-0.01em'
+    fontWeight: 700
+    lineHeight: 1.14
+    letterSpacing: '-0.02em'
   h3:
     fontFamily: 'Hanken Grotesk Variable'
     fontSize: '1.25rem'
@@ -69,7 +72,7 @@ typography:
     fontSize: '0.75rem'
     fontWeight: 600
     lineHeight: 1.4
-    letterSpacing: '0.06em'
+    letterSpacing: '0.08em'
   data:
     fontFamily: 'Martian Mono Variable'
     fontSize: '0.875rem'
@@ -82,16 +85,16 @@ typography:
     lineHeight: 1.4
 
 rounded:
-  control: '8px'
-  card: '14px'
+  control: '2px'
+  card: '4px'
   hairline: '2px'
-  pill: '999px'
+  pill: '9999px'
 
 spacing:
   unit: '0.25rem'
   section: 'clamp(4.5rem, 9vw, 8rem)'
   content: '72rem'
-  prose: '46rem'
+  prose: '68ch'
 
 components:
   button-primary:
@@ -112,171 +115,180 @@ components:
     textColor: '{colors.ink}'
 ---
 
-# Kain Tiga Negeri
+# Tinta & Tanah
 
-Sistem desain untuk situs profil **Kabupaten Rembang**. North Star: *sehelai kain batik tulis Lasem yang dibentangkan di atas kertas pesisir yang hangat.*
+Sistem desain untuk situs profil **Kabupaten Rembang**. North Star: *halaman kertas putih
+tempat satu tinta terracotta menandai apa yang penting, dan semua sisanya adalah ruang.*
 
 ## Overview
 
-Identitas Rembang adalah tumbukan yang spesifik: **Batik Tiga Negeri** — tiga negeri dalam satu kain (merah Lasem, biru Pekalongan, soga Solo) — yang dijahit dari sinkretisme Tionghoa–Jawa di sebuah pesisir yang bekerja. Situs ini harus terasa seperti **mengamati sehelai kain**, bukan seperti menjelajahi template pariwisata.
+Revisi 9 Okt 2026 menggantikan palet hangat "Nyala Pesisir" dengan **flat minimalism / Swiss
+style**: netral jernih, satu aksen, tipografi grotesk tunggal, tanpa gradien, tanpa
+glassmorphism, tanpa bayangan. Perubahan ini menjawab permintaan pengguna agar situs terasa
+"clean dan menarik", bukan hangat-kusam.
 
-Lima gagasan yang mengikat seluruh keputusan visual:
+Lima gagasan yang mengikat keputusan visual:
 
-1. **Tiga tinta, satu dasar.** Merah Lasem (*getih pitik*), indigo wedel, dan soga kulit tingi adalah satu-satunya warna jenuh, dan mereka berperilaku seperti zat warna — muncul sebagai *tinta* di atas kertas, tidak pernah sebagai bidang besar atau gradasi.
-2. **Kertas pesisir hangat, bukan putih.** Dasar halaman adalah kertas yang hangat seperti pasir yang diputihkan matahari. Kartu adalah kertas yang sama, diangkat sedikit dan diberi garis rambut — bukan kotak putih di atas abu-abu.
-3. **Suara pers untuk sejarah.** Didone berkontras tinggi membawa judul — mengacu pada pers Jawa era Kartini dan surat-suratnya. Register editorial, hanya untuk tampilan.
-4. **Geometri kain adalah ornamen.** Motif batik (Latohan, Watu Pecah, kisi Lokchan) hadir sebagai **geometri garis yang digambar sendiri** — SVG, garis, dan gerak — tidak pernah sebagai tekstur foto atau "latar pola batik" yang diulang di belakang teks.
-5. **Tionghoa–Jawa adalah isi, bukan kostum.** Tanpa palet "restoran Tionghoa" merah-emas, tanpa emoji naga, tanpa kaligrafi palsu. Sinkretisme tampil dalam *struktur* — klenteng ↔ masjid ↔ wihara dalam satu rute, Cheng Ho bersebelahan dengan Sunan Bonang dalam garis waktu.
+1. **Satu aksen, bukan tiga tinta.** Terracotta (`merah-lasem`) adalah satu-satunya warna
+   jenuh. Ia menandai aksi dan identitas; tak ada warna jenuh kedua yang bersaing.
+2. **Kertas putih, bukan krem.** Dasar halaman adalah putih bersih. Pemisahan permukaan
+   dilakukan lewat **langkah tonal** (`paper` / `paper-sunken`) dan **garis rambut 1px**, bukan
+   lewat bayangan atau latar berwarna.
+3. **Suara Swiss untuk arsip.** Satu keluarga grotesk (Hanken Grotesk) membawa judul dan prosa.
+   Hierarki dibangun dari **bobot dan ukuran**, bukan dari pergantian muka huruf.
+4. **Geometri kain adalah ornamen.** Motif batik (Kawung, Truntum, Latohan) hadir sebagai
+   **geometri garis SVG yang digambar sendiri** — bukan tekstur foto, bukan pola yang diulang
+   di belakang teks.
+5. **Tionghoa–Jawa adalah isi, bukan kostum.** Tanpa palet merah-emas, tanpa emoji naga,
+   tanpa kaligrafi palsu. Sinkretisme tampil dalam *struktur* (klenteng ↔ masjid ↔ wihara).
 
-Mode pengunjung: **Read** (utama) untuk semua artikel; **Experience** untuk galeri dan peta.
-
-Tema terang adalah utama — ini adegan baca arsip di siang hari di pesisir. Tema gelap ("Malam Lasem") adalah tema kedua yang sungguhan, bukan terang yang dibalik: arang hangat, bukan hitam, dan ketiga tinta *naik* kecerahan alih-alih didesaturasi.
+Tema terang adalah utama. Tema gelap adalah tema kedua yang sungguhan (arang netral, bukan
+hangat), dengan aksen yang *naik* kecerahan. Keduanya dikendalikan token yang sama.
 
 ## Colors
 
-Semua warna dinyatakan dalam OKLCH. Tidak ada `#000` atau `#fff` di mana pun — bahkan teks tergelap adalah `oklch(24% 0.024 58)`.
+Flat minimalism: **satu aksen + netral**. Nilai dinyatakan dalam heks untuk sinkron 1:1 dengan
+`src/styles/global.css`. Putih murni `#ffffff` **diperbolehkan** (ini flat paper, bukan krem).
 
-### Tiga tinta (peran jenuh — maksimum 10% dari viewport)
+### Aksen (peran jenuh — maksimum ~8% dari viewport)
 
-| Token | Nilai (terang) | Nilai (gelap) | Peran |
+| Token | Terang | Gelap | Peran |
 |---|---|---|---|
-| `merah-lasem` | `oklch(52% 0.19 27)` | `oklch(70% 0.17 28)` | **Aksi utama & identitas.** Tombol utama, item nav aktif, pin peta kategori pantai. |
-| `indigo-lasem` | `oklch(41% 0.115 264)` | `oklch(74% 0.115 260)` | **Identitas & data.** Judul seksi, tautan, pin religi, fokus ring. |
-| `soga` | `oklch(53% 0.108 70)` | `oklch(78% 0.11 74)` | **Aksen ketiga.** Garis, label kecil, pin kategori alam. |
+| `merah-lasem` | `#c2410c` | `#fb923c` | **Aksen tunggal.** Tombol utama, item nav aktif, tautan aksi, pin peta, cincin fokus. |
+| `merah-lasem-deep` | `#9a3412` | `#fdba74` | Hover/active aksen (putih di atasnya 7,31:1). |
 
-> **Revisi "Nyala Pesisir" (9 Okt 2026).** Kroma & kecerahan tiga tinta dinaikkan agar
-> terbaca jernih, bukan kusam. Merah Lasem jadi merah sungguhan (`#be2323`), bukan maroon
-> kecoklatan; kertas digeser lebih netral hangat (kroma turun dari 0.011 ke 0.008) supaya
-> tidak terlihat kekuningan berlumpur. Semua pasangan teks/latar **dihitung** dan lolos
-> WCAG AA: `merah` 5,65:1 · `indigo` 8,36:1 · `soga` 5,03:1 · `ink-soft` 7,27:1 di atas
-> kertas; teks tombol di atas merah 5,90:1.
+### Netral (menggantikan peran lama `indigo` & `soga`)
+
+| Token | Terang | Gelap | Peran |
+|---|---|---|---|
+| `indigo-lasem` | `#18181b` (= ink) | `#fafafa` | Tautan & judul "identitas" jadi near-black (konvensi Swiss). |
+| `soga` | `#52525b` (= ink-soft) | `#a1a1aa` | Label kecil, garis hover, motif, pin kategori. |
 
 ### Permukaan & teks
 
 | Peran | Terang | Gelap |
 |---|---|---|
-| `--paper` (dasar halaman) | `oklch(97.5% 0.008 82)` | `oklch(15.5% 0.013 60)` |
-| `--paper-raised` (kartu) | `oklch(99% 0.004 82)` | `oklch(20% 0.015 60)` |
-| `--paper-sunken` (inset, kroma peta) | `oklch(94.5% 0.011 80)` | `oklch(12% 0.011 60)` |
-| `--ink` (teks utama) | `oklch(23% 0.022 56)` | `oklch(94% 0.012 78)` |
-| `--ink-soft` (teks sekunder) | `oklch(44% 0.022 58)` | `oklch(74% 0.016 72)` |
-| `--rule` (garis rambut) | `oklch(88% 0.014 76)` | `oklch(30% 0.016 62)` |
-| `--focus` (cincin fokus) | `oklch(55% 0.16 264)` | `oklch(74% 0.115 260)` |
+| `--paper` (dasar halaman) | `#ffffff` | `#09090b` |
+| `--paper-raised` (kartu) | `#ffffff` | `#18181b` |
+| `--paper-sunken` (inset, seksi) | `#f5f5f4` | `#060607` |
+| `--ink` (teks utama) | `#18181b` | `#fafafa` |
+| `--ink-soft` (teks sekunder) | `#52525b` | `#a1a1aa` |
+| `--rule` (garis rambut) | `#e4e4e7` | `#27272a` |
+| `--focus` (cincin fokus) | `#c2410c` | `#fb923c` |
+
+> `--scrim` (veil overlay lightbox) selalu gelap `#09090b` di kedua tema: veil harus
+> menggelapkan, bukan ikut berbalik terang seperti `--ink` di mode gelap.
+
+> **Kontras (dihitung, WCAG AA).** Terang: `ink` 17,72:1 · `ink-soft` 7,73:1 · aksen 5,18:1 di
+> atas putih; putih di atas aksen 5,18:1; putih di atas `merah-lasem-deep` 7,31:1.
+> Gelap: `ink` 19,06:1 · `ink-soft` 7,76:1 · aksen 8,79:1. Semua lolos.
 
 ### Aturan pakai
 
-- Tinta jenuh **≤10% dari viewport**. Ia menandai aksi, item nav aktif, identitas sebuah seksi, dan pin peta — tidak lebih.
-- **Jangan pernah** menaruh teks abu di atas permukaan berwarna. `--ink-soft` di-tint dari rona kertas; di atas tombol merah, teks sekunder men-tint dari merah, bukan dari abu.
-- **Satu** warna aksi utama per tampilan. `merah-lasem` adalah aksi; indigo dan soga adalah *identitas dan data*, bukan CTA yang bersaing.
-- Kartu dipisahkan oleh **langkah tonal + garis rambut 1px**, tidak pernah garis **dan** bayangan lebar sekaligus (jebakan *ghost card*).
+- Aksen jenuh **≤ ~8% viewport**. Ia menandai aksi & identitas, tidak lebih.
+- **Jangan** menaruh teks abu di atas permukaan beraksen.
+- **Satu** aksi utama per tampilan; jangan ada dua CTA aksen bersaing.
+- Kartu dipisahkan **garis rambut 1px** saja (tanpa bayangan, tanpa border **dan** bayangan).
 
 ## Typography
 
-Tiga muka huruf, masing-masing satu tugas. Tidak ada yang masuk daftar larangan font Impeccable.
+**Satu keluarga grotesk** untuk display dan prosa: **Hanken Grotesk Variable**. **Martian Mono**
+tetap untuk data/label angka. Bodoni Moda **dilepas** pada revisi ini (Swiss murni: satu suara).
 
 | Peran | Muka huruf | Alasan |
 |---|---|---|
-| **Display** | **Bodoni Moda** (variabel) | Didone berkontras tinggi. Struktur garis-rambutnya adalah "suara pers" — era Kartini dicetak dalam Didone. Terbaca sebagai *arsip*, bukan sebagai *startup*. |
-| **Body / UI** | **Hanken Grotesk** (variabel) | Grotesk humanis yang hangat dengan aperture terbuka. Menahan prosa Indonesia yang panjang dan label UI kecil. |
-| **Data** | **Martian Mono** (variabel) | **Hanya** untuk koordinat peta, angka ketinggian, tabel luas/demografi, dan angka tabular. Ini pemakaian data yang sah, bukan mono sebagai kostum. Tidak pernah menyetel judul atau label. |
+| **Display + Body** | **Hanken Grotesk** (variabel) | Grotesk humanis, aperture terbuka. Satu suara untuk judul & prosa = disiplin Swiss; menahan prosa Indonesia panjang. |
+| **Data** | **Martian Mono** (variabel) | Hanya untuk angka tabular, koordinat, label data. Bukan kostum mono, bukan heading. |
 
-Skala (semua komponen mendarat pada satu langkah):
+Skala:
 
 ```
-display  clamp(2.75rem, 6vw, 4.5rem)   lh 1.04   tracking -0.02em   Bodoni Moda 600
-h1       clamp(2rem, 4.5vw, 3rem)      lh 1.10   tracking -0.02em   Bodoni Moda 600
-h2       1.75rem                        lh 1.18   tracking -0.01em   Bodoni Moda 600
-h3       1.25rem                        lh 1.30                      Hanken Grotesk 600
-body     1rem                           lh 1.65   measure 68ch       Hanken Grotesk 400
-lead     1.125rem                       lh 1.60                      Hanken Grotesk 400
-label    0.75rem                        lh 1.40   tracking 0.06em    Hanken Grotesk 600 (huruf besar, hemat)
+display  clamp(3rem, 9vw, 6.5rem)       lh 0.93   tracking -0.03em   Hanken 700   (judul hero)
+h1       clamp(2rem, 4.5vw, 3rem)      lh 1.05   tracking -0.03em   Hanken 700
+h2       1.75rem                        lh 1.14   tracking -0.02em   Hanken 700
+h3       1.25rem                        lh 1.30   tracking -0.01em   Hanken 600
+body     1rem                           lh 1.65   measure 68ch       Hanken 400
+lead     1.125rem                       lh 1.60                      Hanken 400
+label    0.75rem                        lh 1.40   tracking 0.08em    Hanken 600 (huruf besar, hemat)
 data     0.875rem                       lh 1.40                      Martian Mono 400 (tabular-nums)
-2xs      0.625rem                       lh 1.40                      Hanken Grotesk 600 (metadata mikro)
+2xs      0.625rem                       lh 1.40                      Hanken 600 (metadata mikro)
 ```
 
-Disiplin yang ditegakkan:
+> `display` hanya untuk judul hero (`HomePage.astro`); `h1` adalah judul halaman biasa.
 
-- Measure body **65–75ch** (`--measure-prose: 68ch`). Kolom prosa dibatasi; hanya hero dan galeri yang full-bleed.
-- **Lebih banyak ruang di atas judul daripada di bawah** (`--space-before-heading: 2.75rem`, `--space-after-heading: 0.875rem`).
-- Batas bawah tracking display **−0.04em**; kita di −0.02em.
-- Tanpa gradient text. Penekanan hanya lewat bobot atau ukuran.
-- Tanpa eyebrow/kicker di atas setiap judul.
+Disiplin: measure body **65–75ch**; **lebih banyak ruang di atas judul daripada di bawah**;
+tanpa gradient text; penekanan hanya lewat bobot/ukuran; tanpa eyebrow di atas setiap judul.
 
 ## Layout
 
-- Lebar konten `72rem` (publik), `46rem` (prosa).
-- Gutter `clamp(1.25rem, 4vw, 3rem)`.
+- Lebar konten `72rem` (publik), `68ch` (prosa). Gutter `clamp(1.25rem, 4vw, 3rem)`.
 - Irama seksi vertikal `clamp(4.5rem, 9vw, 8rem)`.
-- Grid memakai `minmax()` dan `auto-fit`, bukan kolom kaku.
-- Setiap halaman indeks memakai tata letak yang **berbeda secara struktural**: sejarah = garis waktu vertikal; budaya = dua kolom berkode tinta; kuliner = daftar padat mengutamakan gambar; destinasi = hibrida peta + kartu. Tidak pernah satu grid kartu identik untuk semua.
+- Grid `minmax()` / `auto-fit`; setiap halaman indeks **berbeda secara struktural** (sejarah =
+  garis waktu vertikal; budaya = dua kolom; kuliner = daftar padat mengutamakan gambar;
+  destinasi = hibrida peta + kartu). Tidak pernah satu grid kartu identik untuk semua seksi.
 
-## Motion — "Nyala Pesisir"
+## Motion — dial ENERGY 3 / RHYTHM 3 / MOTION 3
 
-Dial situs ini: **ENERGY 3 / RHYTHM 3 / MOTION 3.** Gerak adalah bagian dari identitas
-(pesisir yang bekerja, canting yang menari), bukan hiasan. Tapi setiap animasi punya
-tujuan yang bisa ditulis satu baris, dan **semua mati total di bawah `prefers-reduced-motion`**.
+Gerak punya tujuan yang bisa ditulis satu baris, dan **semua mati total** di
+`prefers-reduced-motion`. Tanpa JavaScript, konten tampil apa adanya (kelas `.js` tidak ada).
 
-| Gerak | Tujuan (R-31) | Implementasi |
+| Gerak | Tujuan | Implementasi |
 |---|---|---|
-| **Reveal saat scroll** | Menuntun mata mengikuti urutan baca; mencegah "tembok teks" | `[data-reveal]` + IntersectionObserver; stagger via `--i` |
-| **Stagger berjenjang** | Menyatakan hierarki dalam satu kelompok (kartu, stat) | `transition-delay: calc(var(--i) * 90ms)` |
-| **Underline tumbuh** | Menandai judul halaman sebagai titik masuk | `[data-underline]::after` skala-X dari kiri |
-| **Canting Draw** | Momen khas: motif batik menggambar dirinya sekali | `stroke-dashoffset` 1100ms |
-| **Float lembut** | Satu aksen hidup di hero; motif terasa bernapas | `float-soft` 7s, **hanya di hero** |
-| **Pita kecamatan** | Memperkenalkan 14 kecamatan sebagai konten nyata, bukan ornamen | `marquee` 38s, jeda saat hover |
-| **Transisi halaman** | Menjaga kontinuitas antar navigasi (Astro View Transitions) | `::view-transition-*` |
+| **Reveal saat scroll** | Menuntun mata mengikuti urutan baca | `[data-reveal]` + IntersectionObserver |
+| **Stagger berjenjang** | Menyatakan hierarki dalam satu kelompok | `transition-delay: calc(var(--i) * 80ms)` |
+| **Reveal mask (clip)** | Judul hero muncul dari bawah | `[data-reveal="clip"]` (clip-path) |
+| **Underline tumbuh** | Menandai judul sebagai titik masuk | `[data-underline]::after` skala-X |
+| **Canting Draw** | Motif batik menggambar dirinya sekali | `stroke-dashoffset` 1100ms |
+| **Float lembut** | Satu aksen hidup di hero | `float-soft` 7s, hanya hero |
+| **Counter angka** | Statistik "terisi" saat terlihat | `[data-count]`, `Intl.NumberFormat` |
+| **Parallax hero** | Kedalaman halus saat scroll | `[data-parallax]`, rAF, hanya ≥768px |
+| **Pita kecamatan** | 14 kecamatan sebagai konten nyata | `marquee` 38s, jeda saat hover |
+| **Transisi halaman** | Kontinuitas antar navigasi | Astro View Transitions |
 
-Dosis & pagar: gerak **tidak** untuk semua elemen (hero berbicara, elemen pendukung tenang);
-tanpa loop tak berujung selain pita & float yang disengaja; **nol** bounce/elastic (kurva
-`--ease-out-expo` / `--ease-out-quint` saja). Tanpa JavaScript, seluruh konten tampil
-apa adanya (kelas `.js` tidak ada → tidak ada elemen tersembunyi).
+Pagar: gerak tidak untuk semua elemen; **nol** bounce/elastic (`--ease-out-expo` /
+`--ease-out-quint` saja); listener parallax dibersihkan di `astro:before-swap`.
 
 ## Elevation & Depth
 
-Kedalaman dideklarasikan sekali.
-
-- **Diam:** garis rambut 1px `--rule` + satu langkah tonal. Tanpa bayangan.
-- **Mengambang** (kontrol peta, lightbox, nav seluler): bayangan lembut ber-offset — `0 10px 30px -12px oklch(24% 0.024 58 / 0.35)`.
-- Tidak pernah glow ber-offset-nol, tidak pernah bayangan blok ber-offset keras, tidak pernah garis **dan** bayangan lebar bersamaan.
+- **Diam:** garis rambut 1px `--rule` + satu langkah tonal. **Tanpa bayangan.**
+- **Mengambang:** hanya untuk **overlay sejati** (popup/kontrol peta pihak ketiga). Satu
+  bayangan terdokumentasi: `0 10px 30px -12px color-mix(in oklch, var(--ink) 35%, transparent)`.
+- Tidak pernah glow, tidak pernah garis **dan** bayangan lebar bersamaan.
 
 ## Shapes
 
-- Radius: kontrol `8px`, kartu `14px`, pil `999px`.
-- Kartu tetap 12–16px — tanpa pembulatan berlebihan.
+- Radius **tajam**: kontrol `2px`, kartu `4px`, pil `9999px` (badge saja).
 - Garis rambut 1px sebagai pemisah; **tanpa** border garis-samping >1px.
 - Motif batik sebagai geometri garis SVG: `stroke` 1–2px, `fill: none`, warna tinta.
 
 ## Components
 
-- **Button utama** — latar `merah-lasem`, teks `paper-raised`, radius `control`. Keadaan: hover (gelapkan ke `merah-lasem-deep`), active, focus-visible (cincin `--focus`), disabled (opasitas 0.5 + kursor not-allowed).
-- **Card** — latar `paper-raised`, teks `ink`, radius `card`, border 1px `rule`. Empat varian berbeda per tipe konten (sejarah/budaya/kuliner/destinasi) — berbagi token, berbeda struktur informasi.
-- **Nav link** — teks `ink-soft`, 0.875rem; aktif = `merah-lasem` + garis bawah 2px.
-- **Stat block** — `Martian Mono`, angka tabular, label kecil di atas nilai.
-- **Figure** — `<figure>` + `<figcaption>`, gambar `<Image>` dengan rasio terkunci.
-- **Timeline** (sejarah) — penanda era + tahun dalam `Martian Mono`, garis vertikal `rule`.
-- **Callout** — latar `paper-sunken`, border kiri 1px `soga` (bukan 4px).
+- **Button utama** — latar `merah-lasem`, teks putih, radius `control` (2px). Hover → `merah-lasem-deep`; focus-visible → cincin `--focus`.
+- **Card** — latar `paper-raised` (= putih), radius `card` (4px), border 1px `rule`. Tanpa bayangan.
+- **Nav link** — `ink-soft` 0.875rem; aktif = `merah-lasem`.
+- **Stat block** — `Martian Mono`, angka tabular, label kecil di atas nilai; mendukung counter.
+- **Figure** — `<figure>` + `<figcaption>`, `<Image>` rasio terkunci.
+- **Timeline** (sejarah) — penanda era + tahun `Martian Mono`, garis vertikal `rule`.
+- **Callout** — latar `paper-sunken`, border kiri 1px `soga`.
 
 ## Do's and Don'ts
 
 **Lakukan:**
 
-- Tint setiap netral dari rona kertas/soga. Tidak ada abu murni.
-- Jaga measure prosa di 65–75ch.
-- Gunakan langkah tonal + garis rambut untuk memisahkan permukaan.
-- Beri lebih banyak ruang di atas judul daripada di bawah.
+- Pakai **satu** aksen; sisanya netral. Aksen menandai aksi, bukan dekorasi.
+- Pisahkan permukaan dengan langkah tonal + garis rambut 1px.
+- Jaga measure prosa 65–75ch; beri lebih banyak ruang di atas judul.
 - Tema permukaan browser: `::selection`, `caret-color`, scrollbar, `:focus-visible`.
-- Biarkan gerak mengikuti sistem di bagian **Motion** (ENERGY 3 / RHYTHM 3 / MOTION 3), bukan ditumpuk tanpa alasan.
+- Ikuti sistem gerak di bagian **Motion**; semua mati di `prefers-reduced-motion`.
 
 **Jangan:**
 
-- Jangan pakai Inter, Roboto, sistem default, atau font yang ada di daftar larangan Impeccable (termasuk Fraunces, Plus Jakarta Sans, Space Grotesk, Geist).
-- Jangan taruh teks abu di atas warna.
-- Jangan pakai `#000`/`#fff` murni.
-- Jangan sarangkan kartu di dalam kartu.
-- Jangan pakai grid kartu identik untuk semua seksi.
-- Jangan pasang eyebrow/kicker di atas setiap judul.
-- Jangan pakai penanda seksi bernomor, gradient text, glassmorphism.
-- Jangan pakai border garis-samping >1px atau bayangan offset keras.
-- Jangan pakai easing bounce/elastic.
-- Jangan pakai emoji sebagai ikon; jangan pakai mono sebagai kostum.
+- Jangan pakai Inter, Roboto, sistem default, atau font larangan Impeccable (Fraunces, Plus Jakarta Sans, Space Grotesk, Geist).
+- Jangan pakai **glassmorphism / `backdrop-blur`** di mana pun (header termasuk). Linter tidak menangkap ini; jaga manual.
+- Jangan pakai gradien, termasuk pola bergaris berulang (`repeating-linear-gradient`).
+- Jangan taruh teks abu di atas warna beraksen.
+- Jangan sarangkan kartu di dalam kartu; jangan grid kartu identik untuk semua seksi.
+- Jangan pasang eyebrow/kicker di atas setiap judul; jangan gradient text.
+- Jangan pakai bayangan pada kartu; hanya overlay sejati yang boleh mengambang.
+- Jangan pakai easing bounce/elastic; jangan pakai emoji sebagai ikon; jangan pakai mono sebagai kostum.
 - Jangan pakai foto stok pantai daerah lain dan menyebutnya "Pantai Karang Jahe".

@@ -99,12 +99,7 @@ const legendKinds = [...new Set(points.map((p) => p.kind))];
     href: string;
   }
 
-  const el = document.getElementById('rembang-map');
-  if (el) {
-    const points: MapPoint[] = JSON.parse(el.dataset.points || '[]');
-    const center: [number, number] = JSON.parse(el.dataset.center || '[-6.75,111.35]');
-    const zoom = Number(el.dataset.zoom || '10');
-
+  function mount(el: HTMLElement, points: MapPoint[], center: [number, number], zoom: number) {
     const KIND_COLOR: Record<string, string> = {
       pantai: 'var(--merah-lasem)',
       museum: 'var(--soga)',
@@ -127,10 +122,10 @@ const legendKinds = [...new Set(points.map((p) => p.kind))];
       });
     }
 
+    // Memuat hanya saat masuk viewport, dan hanya di halaman ini.
     const io = new IntersectionObserver(async (entries) => {
       if (!entries.some((e) => e.isIntersecting)) return;
       io.disconnect();
-
       const L = (await import('leaflet')).default;
       const map = L.map(el, { scrollWheelZoom: false, attributionControl: true }).setView(center, zoom);
 
@@ -154,6 +149,21 @@ const legendKinds = [...new Set(points.map((p) => p.kind))];
 
     io.observe(el);
   }
+
+  function initMap() {
+    const el = document.getElementById('rembang-map');
+    if (!el || el.dataset.mapOn) return;
+    el.dataset.mapOn = 'true';
+    const points: MapPoint[] = JSON.parse(el.dataset.points || '[]');
+    const center: [number, number] = JSON.parse(el.dataset.center || '[-6.75,111.35]');
+    const zoom = Number(el.dataset.zoom || '10');
+    mount(el, points, center, zoom);
+  }
+
+  // Peta hanya hidup di /peta, tetapi navigasi client-side tetap mengganti DOM,
+  // jadi mount diulang setiap kali halaman masuk.
+  initMap();
+  document.addEventListener('astro:page-load', initMap);
 </script>
 
 <style>
@@ -168,8 +178,8 @@ const legendKinds = [...new Set(points.map((p) => p.kind))];
   :global(.leaflet-popup-content-wrapper) {
     background: var(--paper-raised);
     color: var(--ink);
-    border-radius: var(--radius-control);
-    box-shadow: 0 10px 30px -12px oklch(24% 0.024 58 / 0.35);
+    border-radius: var(--radius-card);
+    box-shadow: 0 10px 30px -12px color-mix(in oklch, var(--ink) 35%, transparent);
   }
   :global(.leaflet-popup-tip) {
     background: var(--paper-raised);

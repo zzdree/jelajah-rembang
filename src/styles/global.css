@@ -1,38 +1,42 @@
 @import 'tailwindcss';
 
 /* Font self-hosted (tidak ada permintaan ke pihak ketiga) */
-@import '@fontsource-variable/bodoni-moda';
 @import '@fontsource-variable/hanken-grotesk';
 @import '@fontsource-variable/martian-mono';
 
 /* ==========================================================================
-   Kain Tiga Negeri — token sistem desain
-   Sumber kebenaran: DESIGN.md. Ubah di sana lebih dulu, lalu di sini.
-   Palet "Nyala Pesisir" (revisi 9 Okt 2026): tiga tinta dinaikkan kroma &
-   kecerahan agar jernih (bukan kusam); kertas digeser lebih netral hangat.
-   Semua pasangan teks/latar lolos WCAG AA (dihitung, lihat DESIGN.md).
+   Tinta & Tanah — token sistem desain (revisi "Flat Minimalism", 9 Okt 2026)
+   Sumber kebenaran: DESIGN.md. Ubah di sana lebih dulu, lalu di sini (byte-sinkron).
+   Swiss/editorial: satu aksen (terracotta), sisanya netral. Flat: tanpa gradien,
+   tanpa glass, tanpa soft shadow. Semua pasangan teks/latar lolos WCAG AA.
    ========================================================================== */
 
 :root {
-  /* --- Tiga tinta (peran jenuh) --- */
-  --merah-lasem: oklch(52% 0.19 27); /* #be2323 */
-  --merah-lasem-deep: oklch(44% 0.175 27);
-  --indigo-lasem: oklch(41% 0.115 264); /* #294688 */
-  --soga: oklch(53% 0.108 70); /* #935f13 */
+  /* --- Satu aksen --- */
+  --merah-lasem: #c2410c; /* terracotta */
+  --merah-lasem-deep: #9a3412;
+
+  /* --- Netral (menggantikan peran lama indigo & soga) --- */
+  --indigo-lasem: #18181b; /* = ink */
+  --soga: #52525b; /* = ink-soft */
 
   /* --- Permukaan & teks (terang) --- */
-  --paper: oklch(97.5% 0.008 82); /* #f9f6f1 */
-  --paper-raised: oklch(99% 0.004 82);
-  --paper-sunken: oklch(94.5% 0.011 80);
-  --ink: oklch(23% 0.022 56); /* #251a13 */
-  --ink-soft: oklch(44% 0.022 58);
-  --rule: oklch(88% 0.014 76);
-  --focus: oklch(55% 0.16 264);
+  --paper: #ffffff;
+  --paper-raised: #ffffff;
+  --paper-sunken: #f5f5f4;
+  --ink: #18181b;
+  --ink-soft: #52525b;
+  --rule: #e4e4e7;
+  --focus: #c2410c;
+  /* Veil overlay (scrim): SELALU gelap, sengaja tidak dibalik oleh tema.
+     Memakai --ink akan menerang di mode gelap (--ink = #fafafa). */
+  --scrim: #09090b;
 
   /* --- Skala & irama --- */
-  --radius-control: 8px;
-  --radius-card: 14px;
+  --radius-control: 2px;
+  --radius-card: 4px;
   --radius-hairline: 2px;
+  --radius-pill: 9999px;
   --measure-prose: 68ch;
   --content-width: 72rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
@@ -43,26 +47,27 @@
   /* --- Gerak --- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-fast: 180ms;
-  --dur: 320ms;
-  --dur-slow: 620ms;
+  --dur-fast: 160ms;
+  --dur: 300ms;
+  --dur-slow: 600ms;
 
   color-scheme: light;
 }
 
 [data-theme='dark'] {
-  --merah-lasem: oklch(70% 0.17 28); /* #f66e60 */
-  --merah-lasem-deep: oklch(78% 0.15 28);
-  --indigo-lasem: oklch(74% 0.115 260); /* #80abf3 */
-  --soga: oklch(78% 0.11 74); /* #e1ad63 */
+  --merah-lasem: #fb923c;
+  --merah-lasem-deep: #fdba74;
 
-  --paper: oklch(15.5% 0.013 60); /* #100b07 */
-  --paper-raised: oklch(20% 0.015 60);
-  --paper-sunken: oklch(12% 0.011 60);
-  --ink: oklch(94% 0.012 78);
-  --ink-soft: oklch(74% 0.016 72);
-  --rule: oklch(30% 0.016 62);
-  --focus: oklch(74% 0.115 260);
+  --indigo-lasem: #fafafa;
+  --soga: #a1a1aa;
+
+  --paper: #09090b;
+  --paper-raised: #18181b;
+  --paper-sunken: #060607;
+  --ink: #fafafa;
+  --ink-soft: #a1a1aa;
+  --rule: #27272a;
+  --focus: #fb923c;
 
   color-scheme: dark;
 }
@@ -72,7 +77,7 @@
    ========================================================================== */
 
 @theme inline {
-  --font-display: 'Bodoni Moda Variable', ui-serif, Georgia, serif;
+  --font-display: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-data: 'Martian Mono Variable', ui-monospace, monospace;
 
@@ -87,10 +92,12 @@
   --color-soga: var(--soga);
   --color-rule: var(--rule);
   --color-focus: var(--focus);
+  --color-scrim: var(--scrim);
 
   --radius-control: var(--radius-control);
   --radius-card: var(--radius-card);
   --radius-hairline: var(--radius-hairline);
+  --radius-pill: var(--radius-pill);
 
   /* Langkah tipe tambahan (di bawah 'label') */
   --text-2xs: 0.625rem;
@@ -130,28 +137,29 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
     text-wrap: balance;
   }
 
   h1 {
     font-size: clamp(2rem, 4.5vw, 3rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
   h2 {
     font-size: 1.75rem;
-    line-height: 1.18;
-    letter-spacing: -0.01em;
+    line-height: 1.14;
+    letter-spacing: -0.02em;
   }
 
   h3 {
     font-family: var(--font-body);
     font-size: 1.25rem;
+    font-weight: 600;
     line-height: 1.3;
-    letter-spacing: 0;
+    letter-spacing: -0.01em;
   }
 
   /* Lebih banyak ruang di atas judul daripada di bawah */
@@ -171,7 +179,7 @@
 
   a {
     color: inherit;
-    text-decoration-color: color-mix(in oklch, var(--indigo-lasem) 45%, transparent);
+    text-decoration-color: color-mix(in oklch, var(--ink) 40%, transparent);
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
   }
@@ -196,12 +204,12 @@
 
   /* --- Permukaan browser, di-tema dari palet --- */
   ::selection {
-    background: color-mix(in oklch, var(--merah-lasem) 24%, transparent);
+    background: color-mix(in oklch, var(--merah-lasem) 22%, transparent);
     color: var(--ink);
   }
 
   :root {
-    caret-color: var(--indigo-lasem);
+    caret-color: var(--merah-lasem);
     accent-color: var(--merah-lasem);
   }
 
@@ -212,7 +220,7 @@
   }
 
   * {
-    scrollbar-color: var(--soga) var(--paper-sunken);
+    scrollbar-color: var(--ink-soft) var(--paper-sunken);
   }
 
   ::-webkit-scrollbar {
@@ -225,13 +233,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in oklch, var(--soga) 70%, var(--rule));
-    border-radius: 999px;
+    background: var(--ink-soft);
+    border-radius: var(--radius-pill);
     border: 3px solid var(--paper-sunken);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--soga);
+    background: var(--ink);
   }
 }
 
@@ -259,7 +267,7 @@
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.4;
 }
@@ -276,23 +284,14 @@
   border-color: var(--rule);
 }
 
-/* ==========================================================================
-   Motif identitas — "Kisi Canting"
-   Kisi diagonal tipis yang meniru tarikan canting di atas kain. Dipakai
-   sebagai penanda seksi & penggaris, BUKAN latar penuh halaman (R-07).
-   ========================================================================== */
-
+/* Penanda seksi: satu garis aksen solid (flat, bukan pola) */
 .canting-rule {
-  height: 8px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    color-mix(in oklch, var(--soga) 55%, transparent) 0 1.5px,
-    transparent 1.5px 9px
-  );
+  height: 2px;
+  background: var(--merah-lasem);
 }
 
 /* ==========================================================================
-   Sistem gerak — ENERGY 3 / RHYTHM 3 / MOTION 3
+   Sistem gerak — MOTION 3
    Semua animasi mati total di bawah prefers-reduced-motion (R-19).
    Tanpa JavaScript (kelas `.js` tidak ada), konten tampil apa adanya (R-27).
    ========================================================================== */
@@ -300,11 +299,11 @@
 /* --- Scroll reveal + stagger --- */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(24px);
   transition:
     opacity var(--dur-slow) var(--ease-out-expo),
     transform var(--dur-slow) var(--ease-out-expo);
-  transition-delay: calc(var(--i, 0) * 90ms);
+  transition-delay: calc(var(--i, 0) * 80ms);
   will-change: opacity, transform;
 }
 
@@ -314,25 +313,38 @@
 
 .js [data-reveal='clip'] {
   transform: none;
+  transition: opacity var(--dur) var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+/* Masker clip-path HARUS di anak, bukan elemen yang diobservasi: elemen ber-clip
+   `inset(0 0 100% 0)` punya luas irisan nol, sehingga IntersectionObserver tidak
+   pernah menyalakannya (judul hero akan tertinggal di opacity 0). */
+.js [data-reveal='clip'] > [data-reveal-clip-inner] {
+  display: block;
   clip-path: inset(0 0 100% 0);
-  transition:
-    clip-path 900ms var(--ease-out-quint),
-    opacity var(--dur) var(--ease-out-expo);
-  transition-delay: calc(var(--i, 0) * 90ms);
+  transition: clip-path 900ms var(--ease-out-quint);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.js [data-reveal='clip'].is-visible > [data-reveal-clip-inner] {
+  clip-path: inset(0 0 0 0);
 }
 
 .js [data-reveal='scale'] {
-  transform: scale(0.94);
+  transform: scale(0.95);
   transition:
     opacity var(--dur) var(--ease-out-expo),
     transform var(--dur-slow) var(--ease-out-quint);
-  transition-delay: calc(var(--i, 0) * 70ms);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 
 .js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
-  clip-path: inset(0 0 0 0);
+  /* Lepas petunjuk kompositor setelah reveal; kalau tidak, puluhan lapisan
+     tetap dipromosikan di seluruh halaman (boros memori/GPU). */
+  will-change: auto;
 }
 
 /* --- Judul: garis aksen tumbuh dari kiri --- */
@@ -345,20 +357,20 @@
   content: '';
   position: absolute;
   left: 0;
-  bottom: -0.08em;
-  height: 0.08em;
+  bottom: -0.06em;
+  height: 0.07em;
   width: 100%;
   background: var(--merah-lasem);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 780ms var(--ease-out-quint) 220ms;
+  transition: transform 760ms var(--ease-out-quint) 200ms;
 }
 
 .js [data-underline].is-visible::after {
   transform: scaleX(1);
 }
 
-/* --- Hero: motif batik menggambar dirinya --- */
+/* --- Motif batik menggambar dirinya --- */
 @keyframes canting-draw {
   to {
     stroke-dashoffset: 0;
@@ -410,13 +422,20 @@
   animation-play-state: paused;
 }
 
+/* --- Parallax hero: digerakkan JS, hanya ≥768px --- */
+@media (min-width: 768px) {
+  [data-parallax] {
+    will-change: transform;
+  }
+}
+
 /* --- Transisi halaman (Astro View Transitions) --- */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) {
-    animation: vt-out 240ms var(--ease-out-expo) both;
+    animation: vt-out 220ms var(--ease-out-expo) both;
   }
   ::view-transition-new(root) {
-    animation: vt-in 420ms var(--ease-out-expo) both;
+    animation: vt-in 400ms var(--ease-out-expo) both;
   }
   @keyframes vt-out {
     to {
@@ -437,6 +456,10 @@
   .js [data-reveal] {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .js [data-reveal='clip'] > [data-reveal-clip-inner] {
     clip-path: none;
     transition: none;
   }
@@ -457,5 +480,9 @@
   .float-soft,
   .marquee-track {
     animation: none;
+  }
+
+  [data-parallax] {
+    transform: none !important;
   }
 }

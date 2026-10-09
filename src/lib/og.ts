@@ -15,14 +15,14 @@ export { ogSlugFor } from './og-slug';
 export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
 
-/** Warna dari DESIGN.md (nilai OKLCH didekati ke heks untuk satori). */
+/** Warna dari DESIGN.md "Tinta & Tanah" (heks, sinkron 1:1). */
 const C = {
-  paper: '#F6F1E7',
-  ink: '#2A2620',
-  soft: '#6B6154',
-  merah: '#8C2B2B',
-  soga: '#7A5C33',
-  rule: '#DED4C0',
+  paper: '#ffffff',
+  sunken: '#f5f5f4',
+  ink: '#18181b',
+  soft: '#52525b',
+  accent: '#c2410c',
+  rule: '#e4e4e7',
 };
 
 // Saat prerender, proses berjalan dari root proyek; bundel berada di dist/,
@@ -33,9 +33,9 @@ let fontsCache: Parameters<typeof satori>[1]['fonts'] | null = null;
 function fonts() {
   if (!fontsCache) {
     fontsCache = [
-      { name: 'Bodoni Moda Variable', data: readFileSync(`${FONT_DIR}bodoni-600.ttf`), weight: 600, style: 'normal' },
       { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-400.ttf`), weight: 400, style: 'normal' },
       { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-600.ttf`), weight: 600, style: 'normal' },
+      { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-700.ttf`), weight: 700, style: 'normal' },
     ];
   }
   return fontsCache;
@@ -59,7 +59,7 @@ const ellipse = (w: number, h: number, extra: Record<string, unknown>) => ({
       width: `${w}px`,
       height: `${h}px`,
       borderRadius: '9999px',
-      border: `2px solid ${C.soga}`,
+      border: `2px solid ${C.soft}`,
       opacity: 0.45,
       ...extra,
     },
@@ -85,7 +85,7 @@ const motif = {
             width: '20px',
             height: '20px',
             borderRadius: '9999px',
-            border: `2px solid ${C.merah}`,
+            border: `2px solid ${C.accent}`,
             opacity: 0.7,
           },
         },
@@ -100,7 +100,7 @@ function eyebrowRow(text: string) {
     props: {
       style: { display: 'flex', alignItems: 'center', gap: '16px' },
       children: [
-        { type: 'div', props: { style: { width: '40px', height: '3px', backgroundColor: C.merah } } },
+        { type: 'div', props: { style: { width: '40px', height: '3px', backgroundColor: C.accent } } },
         {
           type: 'div',
           props: {
@@ -111,7 +111,7 @@ function eyebrowRow(text: string) {
               fontWeight: 600,
               letterSpacing: '3px',
               textTransform: 'uppercase',
-              color: C.merah,
+              color: C.accent,
             },
             children: text,
           },
@@ -133,7 +133,7 @@ function footerRow() {
         paddingTop: '26px',
       },
       children: [
-        { type: 'div', props: { style: { display: 'flex', fontFamily: 'Bodoni Moda Variable', fontSize: '28px', color: C.ink }, children: 'Jelajah Rembang' } },
+        { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
         { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '18px', color: C.soft }, children: 'Rembang, Jawa Tengah' } },
       ],
     },
@@ -184,9 +184,9 @@ function textLayout({ eyebrow, title, lead }: OgProps) {
                 props: {
                   style: {
                     display: 'flex',
-                    fontFamily: 'Bodoni Moda Variable',
+                    fontFamily: 'Hanken Grotesk Variable',
                     fontSize: `${titleSize(title)}px`,
-                    fontWeight: 600,
+                    fontWeight: 700,
                     lineHeight: 1.06,
                     color: C.ink,
                     maxWidth: '740px',
@@ -241,9 +241,9 @@ function photoLayout(props: OgProps, dataUri: string) {
                       props: {
                         style: {
                           display: 'flex',
-                          fontFamily: 'Bodoni Moda Variable',
+                          fontFamily: 'Hanken Grotesk Variable',
                           fontSize: `${titleSize(title)}px`,
-                          fontWeight: 600,
+                          fontWeight: 700,
                           lineHeight: 1.06,
                           color: C.ink,
                         },
@@ -262,7 +262,7 @@ function photoLayout(props: OgProps, dataUri: string) {
                   ].filter(Boolean),
                 },
               },
-              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Bodoni Moda Variable', fontSize: '28px', color: C.ink }, children: 'Jelajah Rembang' } },
+              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
             ],
           },
         },

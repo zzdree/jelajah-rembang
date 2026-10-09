@@ -5,8 +5,17 @@ interface Props {
   note?: string;
   /** Angka besar yang ditonjolkan. */
   emphasis?: boolean;
+  /**
+   * Bila diisi (angka telanjang), nilai dianimasikan naik saat masuk viewport.
+   * `value` tetap sumber kebenaran: SSR, tanpa-JS, dan reduced-motion menampilkannya.
+   * Jangan isi untuk string berformat (mis. "1.036,70 km²", "±62,5 km").
+   */
+  count?: number;
+  locale?: string;
+  decimals?: number;
 }
-const { label, value, note, emphasis = false } = Astro.props;
+const { label, value, note, emphasis = false, count, locale = 'id-ID', decimals = 0 } = Astro.props;
+const countable = count !== undefined;
 ---
 
 <div class="flex flex-col gap-1.5 border-t border-rule pt-4">
@@ -16,8 +25,62 @@ const { label, value, note, emphasis = false } = Astro.props;
       'font-data tabular-nums leading-tight text-ink',
       emphasis ? 'text-2xl font-medium' : 'text-lg',
     ]}
+    data-count={countable ? String(count) : undefined}
+    data-count-locale={countable ? locale : undefined}
+    data-count-decimals={countable ? String(decimals) : undefined}
+    data-count-final={countable ? value : undefined}
   >
     {value}
   </span>
   {note && <span class="text-xs text-ink-soft">{note}</span>}
 </div>
+
+<script>
+  // Counter angka: naik saat elemen masuk viewport. Aman tanpa JS (nilai final sudah
+  // ada di DOM) dan mati di reduced-motion. `data-count-final` menjamin frame terakhir
+  // persis sama dengan SSR.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function initCount() {
+    const els = document.querySelectorAll<HTMLElement>('[data-count]:not([data-count-done])');
+    if (!els.length) return;
+    if (reduce.matches) {
+      els.forEach((el) => el.setAttribute('data-count-done', ''));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const el = e.target as HTMLElement;
+          io.unobserve(el);
+          el.setAttribute('data-count-done', '');
+          const target = Number(el.dataset.count);
+          const dec = Number(el.dataset.countDecimals ?? 0);
+          const fmt = new Intl.NumberFormat(el.dataset.countLocale || 'id-ID', {
+            minimumFractionDigits: dec,
+            maximumFractionDigits: dec,
+          });
+          const start = performance.now();
+          const dur = 1100;
+          const step = (now: number) => {
+            // `now` datang dari requestAnimationFrame dan bisa sedikit mendahului
+            // `start`; clamp ke 0 agar eased tidak pernah negatif.
+            const p = Math.min(1, Math.max(0, (now - start) / dur));
+            const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic, tanpa bounce
+            el.textContent = fmt.format(Math.round(target * eased));
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = el.dataset.countFinal || fmt.format(target);
+          };
+          requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.4 },
+    );
+    els.forEach((el) => io.observe(el));
+  }
+
+  // `astro:page-load` menyala saat muat awal maupun tiap perpindahan halaman,
+  // jadi tidak perlu memanggil initCount() langsung (itu akan menggandakan observer).
+  document.addEventListener('astro:page-load', initCount);
+</script>

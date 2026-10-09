@@ -23,9 +23,7 @@ const altHref = localizePath(neutral, lang === 'id' ? 'en' : 'id');
 const current = neutral === '/' ? '/' : neutral.replace(/\/$/, '');
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-rule bg-paper/90 backdrop-blur-sm supports-[backdrop-filter]:bg-paper/75"
->
+<header class="sticky top-0 z-40 border-b border-rule bg-paper">
   <div class="container-page flex h-16 items-center justify-between gap-4">
     <!-- Identitas -->
     <a href={localizePath('/', lang)} class="group flex items-center gap-2.5" aria-label={t('site.name', lang)}>
@@ -83,7 +81,7 @@ const current = neutral === '/' ? '/' : neutral.replace(/\/$/, '');
       <button
         type="button"
         data-menu-toggle
-        class="inline-flex items-center justify-center rounded-control border border-rule p-2 text-ink-soft transition-colors hover:border-soga hover:text-ink lg:hidden"
+        class="inline-flex items-center justify-center rounded-control border border-rule p-2 text-ink-soft transition-colors hover:border-ink hover:text-ink lg:hidden"
         aria-label={t('nav.open', lang)}
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -138,12 +136,20 @@ const current = neutral === '/' ? '/' : neutral.replace(/\/$/, '');
 </header>
 
 <script>
-  const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
-  btn?.addEventListener('click', () => {
-    if (!panel) return;
-    const open = panel.hidden;
-    panel.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
-  });
+  function bindMenu() {
+    const btn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+    if (!btn || !panel || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
+    btn.addEventListener('click', () => {
+      const open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  // Panel seluler ganti DOM saat navigasi client-side, sehingga listener harus
+  // dipasang ulang; `astro:page-load` sudah menutup muat awal + tiap perpindahan.
+  bindMenu();
+  document.addEventListener('astro:page-load', bindMenu);
 </script>

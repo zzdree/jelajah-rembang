@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Greenfield. Astro 7 (output statis, zero-JS by default) + Tailwind CSS v4 (plugin `@tailwindcss/vite`, token di `@theme`) + TypeScript strict. Deploy ke Cloudflare (static assets). Konten via Astro Content Collections (MDX). Tidak ada framework UI klien — interaktivitas hanya tiga island kecil (`MapIsland` Leaflet, `Lightbox` `<dialog>`, `ThemeToggle`).
+Greenfield. Astro 7 (output statis, zero-JS by default) + Tailwind CSS v4 (plugin `@tailwindcss/vite`, token di `@theme`) + TypeScript strict. Deploy ke Cloudflare (static assets). Konten via Astro Content Collections (MDX). Tidak ada framework UI klien — interaktivitas hanya empat island kecil (`MapIsland` Leaflet, `Lightbox` `<dialog>`, `ThemeToggle`, pengendali reveal/counter/parallax di `BaseLayout`).
 
 ## Users
 
@@ -66,4 +66,4 @@ Riset terverifikasi (Pemkab Rembang, BPS Rembang Dalam Angka, jurnal warisan bud
 
 ## Accessibility & Inclusion
 
-Target WCAG 2.2 AA. Kontras teks ≥4.5:1 (body) dan ≥3:1 (teks besar). Navigasi keyboard penuh. Fokus terlihat jelas. `prefers-reduced-motion` mematikan satu-satunya animasi. Semua gambar punya `alt` bermakna; peta punya padanan daftar teks.
+Target WCAG 2.2 AA. Kontras teks ≥4.5:1 (body) dan ≥3:1 (teks besar). Navigasi keyboard penuh. Fokus terlihat jelas. `prefers-reduced-motion` mematikan **seluruh** sistem gerak (reveal, mask judul, counter angka, parallax, marquee, canting draw, transisi halaman). Semua gambar punya `alt` bermakna; peta punya padanan daftar teks.
