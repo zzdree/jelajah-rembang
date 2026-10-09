@@ -14,7 +14,7 @@ Live: `https://jelajah-rembang.zzdree.workers.dev`
 | Styling | **Tailwind CSS v4** via `@tailwindcss/vite` (token di `@theme`) |
 | Bahasa | TypeScript strict |
 | Konten | Astro Content Collections (Markdown/MDX) |
-| Font | Self-hosted via `@fontsource` (Newsreader serif display, Hanken Grotesk body, Martian Mono data) |
+| Font | Self-hosted via `@fontsource` (Hanken Grotesk sans, Martian Mono data) |
 | Peta | Leaflet 1.9 + OpenStreetMap (tanpa API key) |
 | Deploy | Cloudflare (static assets) |
 | Uji | Playwright (smoke), `astro check`, Impeccable design linter |
@@ -46,7 +46,7 @@ src/
 │   └── pages/               # badan halaman (dipakai ulang id & en)
 ├── layouts/BaseLayout.astro
 ├── lib/{i18n,content}.ts
-├── styles/global.css        # token desain "Arsip Pesisir"
+├── styles/global.css        # token desain "Pesisir Segar"
 └── pages/                   # rute id (root) + en/ (prefix)
 ```
 
@@ -90,25 +90,23 @@ Menambah artikel:
 
 ---
 
-## Sistem desain — "Arsip Pesisir"
+## Sistem desain — "Pesisir Segar"
 
-Hangat & editorial, seperti arsip pesisir: **kertas tua** `#F4EDE0`, **tinta cokelat** `#231A14`,
-tiga warna batik Lasem (merah bata `#A3302A`, wedel indigo `#2C3E63`, soga tanah `#7C5A2A`) +
-**emas langka** `#96630C` (drop-cap, tanda arsip, `::selection`). Tema gelap = arang hangat
-`#1A1512`, bukan hitam dingin.
+Segar & pesisir: **kertas putih bersih** `#FFFFFF`, **tinta biru-arang** `#132029`, tiga warna
+aksen pesisir (merah Lasem `#C1272D`, teal laut `#0E6E7D`, indigo wedel `#1E3A8A`). **Tanpa
+coklat/sepia, tanpa emas.** Tema gelap = arang biru `#0E1418`.
 
-Dua suara tipografi: **Newsreader** (serif) untuk judul/hero/judul kartu, **Hanken Grotesk** untuk
-prosa & UI, **Martian Mono** untuk angka tabular. Foto dibingkai **lempeng arsip** (1px border +
-langkah tonal, tanpa bayangan); artikel punya drop-cap emas.
+**Satu keluarga sans**: **Hanken Grotesk** untuk judul & prosa/UI (hierarki dari bobot + tracking),
+**Martian Mono** untuk angka tabular. Foto dibingkai **garis rambut 1px** tanpa bayangan.
 
 Sumber kebenaran token: **`DESIGN.md`** (frontmatter YAML + prosa). Konteks produk: **`PRODUCT.md`**.
 
 Aturan inti: tanpa Inter/font sistem, tanpa teks abu di atas warna, tanpa `#000` murni, tanpa
-glassmorphism/bayangan kartu, tanpa kartu bersarang, tanpa grid kartu identik, kontras body
-≥4.5:1 (semua pasangan token lolos AA di kedua tema, dijaga `tests/contrast.spec.ts`),
-measure 65–75ch, sistem gerak **MOTION 3** (reveal, stagger, mask judul, underline, counter
-angka, parallax hero, pita kecamatan, transisi halaman) yang semuanya mati di
-`prefers-reduced-motion`.
+coklat/emas, tanpa glassmorphism/bayangan kartu, tanpa kartu bersarang, tanpa grid kartu identik,
+kontras body ≥4.5:1 (semua pasangan token lolos AA di kedua tema, dijaga
+`tests/contrast.spec.ts`), measure 65–75ch, sistem gerak **MOTION 3** (reveal, stagger, mask
+judul, underline, counter angka, parallax hero, pita kecamatan, transisi halaman) yang semuanya
+mati di `prefers-reduced-motion`.
 
 ---
 

@@ -23,7 +23,7 @@ Menyediakan satu kanal digital terpadu yang memperkenalkan Kabupaten Rembang —
 
 ## Positioning
 
-Bukan situs pariwisata generik. Ini **arsip hidup** sebuah daerah pesisir dengan warisan akulturasi langka (Jawa–Tionghoa–Arab–kolonial). Nada: editorial, tenang, terpercaya — seperti buku meja tamu warisan budaya, bukan brosur wisata. Identitas visualnya ("Arsip Pesisir") mengikuti rasa itu: kertas tua hangat, tinta cokelat, serif display, foto berbingkai lempeng arsip.
+Bukan situs pariwisata generik. Ini **arsip hidup** sebuah daerah pesisir dengan warisan akulturasi langka (Jawa–Tionghoa–Arab–kolonial). Nada: editorial, tenang, terpercaya — seperti buku meja tamu warisan budaya, bukan brosur wisata. Identitas visualnya ("Pesisir Segar") mengikuti rasa itu: kertas putih bersih, tinta biru-arang, tiga warna pesisir (merah Lasem, teal laut, indigo wedel), tipografi sans yang tegas.
 
 ## Operating Context
 

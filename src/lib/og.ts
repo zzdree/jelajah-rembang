@@ -15,15 +15,15 @@ export { ogSlugFor } from './og-slug';
 export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
 
-/** Warna dari DESIGN.md "Arsip Pesisir" (heks, sinkron 1:1). */
+/** Warna dari DESIGN.md "Pesisir Segar" (heks, sinkron 1:1). */
 const C = {
-  paper: '#f4ede0',
-  sunken: '#ebe1d0',
-  ink: '#231a14',
-  soft: '#5c4a3a',
-  accent: '#a3302a',
-  gold: '#96630c',
-  rule: '#dccfb8',
+  paper: '#ffffff',
+  sunken: '#f4f6f8',
+  ink: '#132029',
+  soft: '#4a5a63',
+  accent: '#c1272d',
+  teal: '#0e6e7d',
+  rule: '#d8dee3',
 };
 
 // Saat prerender, proses berjalan dari root proyek; bundel berada di dist/,
@@ -34,11 +34,7 @@ let fontsCache: Parameters<typeof satori>[1]['fonts'] | null = null;
 function fonts() {
   if (!fontsCache) {
     fontsCache = [
-      // Display serif (judul & wordmark OG)
-      { name: 'Newsreader Variable', data: readFileSync(`${FONT_DIR}newsreader-400.ttf`), weight: 400, style: 'normal' },
-      { name: 'Newsreader Variable', data: readFileSync(`${FONT_DIR}newsreader-600.ttf`), weight: 600, style: 'normal' },
-      { name: 'Newsreader Variable', data: readFileSync(`${FONT_DIR}newsreader-700.ttf`), weight: 700, style: 'normal' },
-      // Body sans (eyebrow, lead, teks kecil)
+      // Satu keluarga sans (judul, wordmark, body OG)
       { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-400.ttf`), weight: 400, style: 'normal' },
       { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-600.ttf`), weight: 600, style: 'normal' },
       { name: 'Hanken Grotesk Variable', data: readFileSync(`${FONT_DIR}hanken-700.ttf`), weight: 700, style: 'normal' },
@@ -139,7 +135,7 @@ function footerRow() {
         paddingTop: '26px',
       },
       children: [
-        { type: 'div', props: { style: { display: 'flex', fontFamily: 'Newsreader Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
+        { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
         { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '18px', color: C.soft }, children: 'Rembang, Jawa Tengah' } },
       ],
     },
@@ -190,7 +186,7 @@ function textLayout({ eyebrow, title, lead }: OgProps) {
                 props: {
                   style: {
                     display: 'flex',
-                    fontFamily: 'Newsreader Variable',
+                    fontFamily: 'Hanken Grotesk Variable',
                     fontSize: `${titleSize(title)}px`,
                     fontWeight: 700,
                     lineHeight: 1.06,
@@ -247,7 +243,7 @@ function photoLayout(props: OgProps, dataUri: string) {
                       props: {
                         style: {
                           display: 'flex',
-                          fontFamily: 'Newsreader Variable',
+                          fontFamily: 'Hanken Grotesk Variable',
                           fontSize: `${titleSize(title)}px`,
                           fontWeight: 700,
                           lineHeight: 1.06,
@@ -268,7 +264,7 @@ function photoLayout(props: OgProps, dataUri: string) {
                   ].filter(Boolean),
                 },
               },
-              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Newsreader Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
+              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Hanken Grotesk Variable', fontSize: '28px', fontWeight: 700, color: C.ink }, children: 'Jelajah Rembang' } },
             ],
           },
         },

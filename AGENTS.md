@@ -57,16 +57,15 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
    (hanya overlay sejati seperti popup Leaflet), easing bounce, emoji sebagai ikon.
    Catatan: **linter buta pada glassmorphism/bayangan/gradien di `.astro`/`.css`** (hanya
    membaca `.html`), jadi "lint 0" **bukan** bukti flat. Audit manual:
-   `grep -rn "shadow\|backdrop-blur\|repeating-" src/`. Kertas bersih **diperbolehkan**
-   (palet aktif memakai kertas tua hangat `#F4EDE0`); yang dilarang adalah `#000` murni
-   sebagai tinta.
-   **Tipografi (revisi "Arsip Pesisir", 9 Okt 2026):** serif display **Newsreader**
-   (`--font-display`) kini **diperbolehkan dan menjadi kebijakan** untuk `h1/h2/h3` dan judul
-   kartu (register arsip/sejarah); Hanken Grotesk tetap untuk prosa & UI, Martian Mono untuk
-   data. Linter Impeccable menandai "single font families"; sistem dua suara ini memperbaiki
-   lint. Nama token warna tetap apa adanya (mis. `--indigo-lasem` kini bernilai biru wedel,
-   bukan indigo) supaya 277 pemakaian kelas Tailwind tidak perlu di-rename — jangan ganti
-   nama, hanya nilai.
+   `grep -rn "shadow\|backdrop-blur\|repeating-" src/`. Kertas **putih bersih** `#ffffff`
+   adalah dasar palet aktif; yang dilarang adalah `#000` murni sebagai tinta.
+   **Tipografi (revisi "Pesisir Segar", 9 Okt 2026):** **satu keluarga sans** —
+   Hanken Grotesk (`--font-display` **dan** `--font-body`) untuk judul & prosa/UI; Martian
+   Mono untuk data. Judul dibedakan lewat **bobot + tracking**, bukan ganti muka huruf.
+   Serif display (Newsreader) **sudah dilepas**; jangan pasang lagi. Nama token warna tetap
+   apa adanya (mis. `--soga` kini bernilai **teal laut** `#0e6e7d`, bukan coklat) supaya
+   pemakaian kelas Tailwind tidak perlu di-rename — jangan ganti nama, hanya nilai.
+   **Dilarang**: kertas krem, tinta coklat, emas/oker (arah "Arsip Pesisir" yang ditolak).
 
 5. **Setiap perintah yang menyentuh jaringan WAJIB prefix IPv4-first** (IPv6 mati di
    laptop dev ini):
@@ -185,7 +184,7 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test          # semua lulus
 **Bukti sebelum klaim.** Jangan bilang "sudah beres" tanpa menjalankan perintah di atas.
 `tests/contrast.spec.ts` adalah gerbang kontras objektif: ia berjalan di 6 halaman × terang/gelap,
 menelusuri setiap elemen teks dan **gagal** bila rasio <4,5 (atau <3 untuk teks besar). Palet
-"Arsip Pesisir" divalidasi di sana, jadi pasangan warna baru wajib lulus uji itu.
+"Pesisir Segar" divalidasi di sana, jadi pasangan warna baru wajib lulus uji itu.
 `tests/live.spec.ts` menargetkan URL **live** (bukan preview) — jalankan hanya bila memang
 memverifikasi produksi.
 

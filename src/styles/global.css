@@ -1,36 +1,35 @@
 @import 'tailwindcss';
 
 /* Font self-hosted (tidak ada permintaan ke pihak ketiga) */
-@import '@fontsource-variable/newsreader';
 @import '@fontsource-variable/hanken-grotesk';
 @import '@fontsource-variable/martian-mono';
 
 /* ==========================================================================
-   Arsip Pesisir — token sistem desain (revisi "Warm Editorial", 9 Okt 2026)
+   Pesisir Segar — token sistem desain (revisi "Fresh Coastal", 9 Okt 2026)
    Sumber kebenaran: DESIGN.md. Ubah di sana lebih dulu, lalu di sini (byte-sinkron).
-   Hangat & editorial: kertas tua, tinta cokelat, tiga warna batik (Lasem bata,
-   wedel indigo, soga tanah) + emas langka. Serif display (Newsreader) untuk judul.
+   SEGAR & BERSIH: kertas PUTIH murni, tinta biru-arang, tiga warna aksen pesisir
+   (merah Lasem bata, teal laut, indigo wedel). TANPA coklat/sepia, TANPA emas.
+   Satu keluarga sans (Hanken Grotesk) untuk display & body; Martian Mono untuk data.
    Flat: tanpa gradien, tanpa glass, tanpa soft shadow. Semua pasangan lolos AA.
    ========================================================================== */
 
 :root {
-  /* --- Tiga warna batik + emas langka --- */
-  --merah-lasem: #a3302a; /* Lasem bata */
-  --merah-lasem-deep: #8a2320;
-  --indigo-lasem: #2c3e63; /* wedel pesisir */
-  --soga: #7c5a2a; /* soga tanah */
-  --gold: #96630c; /* aksen langka: drop-cap, tanda arsip */
+  /* --- Tiga warna aksen pesisir (segar, saturasi tinggi) --- */
+  --merah-lasem: #c1272d; /* Lasem bata */
+  --merah-lasem-deep: #9c1c22;
+  --indigo-lasem: #1e3a8a; /* wedel: biru batik indigo */
+  --soga: #0e6e7d; /* teal laut (peran "soga" lama) */
 
-  /* --- Permukaan & teks (terang, kertas tua hangat) --- */
-  --paper: #f4ede0;
-  --paper-raised: #fbf7ef;
-  --paper-sunken: #ebe1d0;
-  --ink: #231a14; /* tinta cokelat */
-  --ink-soft: #5c4a3a;
-  --rule: #dccfb8;
-  --focus: #a3302a;
+  /* --- Permukaan & teks (terang, kertas putih bersih) --- */
+  --paper: #ffffff;
+  --paper-raised: #ffffff;
+  --paper-sunken: #f4f6f8;
+  --ink: #132029; /* biru-arang, bukan coklat */
+  --ink-soft: #4a5a63;
+  --rule: #d8dee3;
+  --focus: #c1272d;
   /* Veil overlay (scrim): SELALU gelap, sengaja tidak dibalik oleh tema. */
-  --scrim: #231a14;
+  --scrim: #132029;
 
   /* --- Skala & irama --- */
   --radius-control: 2px;
@@ -55,21 +54,20 @@
 }
 
 [data-theme='dark'] {
-  --merah-lasem: #e4796b;
-  --merah-lasem-deep: #f09b8e;
+  --merah-lasem: #f0716f;
+  --merah-lasem-deep: #f79b99;
 
-  --indigo-lasem: #8fa9d8;
-  --soga: #cfa268;
-  --gold: #e0b24a;
+  --indigo-lasem: #93a7f0;
+  --soga: #5fc9d6;
 
-  --paper: #1a1512; /* arang hangat, bukan hitam dingin */
-  --paper-raised: #241e19;
-  --paper-sunken: #12100d;
-  --ink: #f2e9d9; /* gading hangat */
-  --ink-soft: #b9a78f;
-  --rule: #3a3129;
-  --focus: #e4796b;
-  --scrim: #12100d;
+  --paper: #0e1418; /* arang biru, bukan hitam dingin */
+  --paper-raised: #172026;
+  --paper-sunken: #080c0f;
+  --ink: #eef3f5; /* putih sejuk */
+  --ink-soft: #9fb0b8;
+  --rule: #2a363d;
+  --focus: #f0716f;
+  --scrim: #080c0f;
 
   color-scheme: dark;
 }
@@ -79,7 +77,7 @@
    ========================================================================== */
 
 @theme inline {
-  --font-display: 'Newsreader Variable', ui-serif, Georgia, serif;
+  --font-display: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-data: 'Martian Mono Variable', ui-monospace, monospace;
 
@@ -92,7 +90,6 @@
   --color-merah-deep: var(--merah-lasem-deep);
   --color-indigo: var(--indigo-lasem);
   --color-soga: var(--soga);
-  --color-gold: var(--gold);
   --color-rule: var(--rule);
   --color-focus: var(--focus);
   --color-scrim: var(--scrim);
@@ -147,22 +144,22 @@
 
   h1 {
     font-size: clamp(2rem, 4.5vw, 3rem);
-    line-height: 1.1;
-    letter-spacing: -0.015em;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
   }
 
   h2 {
     font-size: 1.75rem;
-    line-height: 1.18;
-    letter-spacing: -0.01em;
+    line-height: 1.16;
+    letter-spacing: -0.016em;
   }
 
   h3 {
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 600;
-    line-height: 1.32;
-    letter-spacing: -0.005em;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
   }
 
   /* Lebih banyak ruang di atas judul daripada di bawah */
@@ -207,8 +204,8 @@
 
   /* --- Permukaan browser, di-tema dari palet --- */
   ::selection {
-    /* Emas arsip: aksen langka yang hanya muncul saat teks dipilih. */
-    background: color-mix(in oklch, var(--gold) 26%, transparent);
+    /* Merah Lasem: aksen saat teks dipilih. */
+    background: color-mix(in oklch, var(--merah-lasem) 24%, transparent);
     color: var(--ink);
   }
 
@@ -294,23 +291,11 @@
   background: var(--merah-lasem);
 }
 
-/* Lempeng arsip: foto dibingkai seperti ditempel di kertas tua */
+/* Lempeng bersih: foto dibingkai garis rambut tipis (tanpa bayangan). */
 @utility frame-plate {
   border: 1px solid var(--rule);
   background: var(--paper-raised);
   padding: 0.5rem;
-}
-
-/* Drop-cap arsip: huruf pertama serif besar berwarna emas. Dipakai hemat
-   (hanya paragraf pertama artikel, lewat kelas .prose-dropcap). */
-.prose-dropcap > p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 3.4em;
-  line-height: 0.78;
-  padding-inline-end: 0.08em;
-  color: var(--gold);
 }
 
 /* ==========================================================================

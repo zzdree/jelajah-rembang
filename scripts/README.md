@@ -21,10 +21,10 @@ di satori), karena itu ada `scripts/fonts/*.ttf`.
 
 Regenerasi font (bila ubah muka huruf):
 ```bash
-npm install -D wawoff2 @fontsource/newsreader @fontsource/hanken-grotesk @fontsource/martian-mono
+npm install -D wawoff2 @fontsource/hanken-grotesk @fontsource/martian-mono
 node scripts/build-fonts.mjs
 ```
 
-> Muka huruf OG: **Newsreader** (serif, 400/600/700) untuk judul & wordmark, **Hanken Grotesk**
-> untuk teks, **Martian Mono** untuk data. Newsreader ditambahkan pada redesign
-> "Arsip Pesisir" (9 Okt 2026); Bodoni Moda sudah dilepas sejak "Tinta & Tanah".
+> Muka huruf OG: **Hanken Grotesk** (400/600/700) untuk judul, wordmark, dan teks;
+> **Martian Mono** untuk data. Newsreader (serif) sudah dilepas pada redesign "Pesisir Segar"
+> (9 Okt 2026); Bodoni Moda dilepas lebih awal.

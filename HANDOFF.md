@@ -7,9 +7,9 @@
 
 ## Status: SELESAI & LIVE ✅
 
-Konten lengkap, galeri terisi, cover & koordinat dilengkapi. Redesign terakhir
-**"Arsip Pesisir"** (hangat + editorial + serif) menggantikan "Tinta & Tanah".
-Sudah **di-commit & di-push** (`424af36`, docs `c7c0da0`) dan **di-deploy** (`dee20f5f`).
+Konten lengkap, galeri terisi, cover & koordinat dilengkapi. Palet aktif **"Pesisir Segar"**
+(putih bersih + tiga warna pesisir + satu keluarga sans), menggantikan "Arsip Pesisir" yang
+ditolak pengguna sebagai "masih coklat". Sudah **di-commit & di-push** dan **di-deploy**.
 
 | Metrik | Nilai |
 |---|---|
@@ -37,86 +37,72 @@ produksi — hanya jalankan bila memang menguji live).
 
 ---
 
-## Redesign "Arsip Pesisir" (SELESAI 9 Okt 2026) — palet AKTIF
+## Palet "Pesisir Segar" (AKTIF, 9 Okt 2026) — menggantikan "Arsip Pesisir"
 
-Pengguna **menolak** palet "Tinta & Tanah" di bawah: *"color palette jelek sih, tema nya jelek
-banget, kurang untuk website pengenalan sejarah gini"*. Akar masalah terverifikasi: palet itu
-persis **default "Museum/Gallery" bawaan tool `ui-ux-pro-max`** (`#18181B` + `#FAFAFA`), yaitu
-flat minimalism Swiss yang **dingin** — default AI, bukan identitas Rembang.
+Pengguna menilai "Arsip Pesisir" **"masih coklat"**: *"mana ini kok color pallete masih coklat,
+katamu baru dan freshhh?"*. Akar masalah **struktural, bukan bug**: kertas `#f4ede0` = **krem**,
+`--ink #231a14` = **coklat gelap**, `--soga #7c5a2a` = **coklat tanah** → seluruh halaman memang
+sepia. Bukan cache (live sudah `cf-cache-status: HIT` dengan token baru), bukan belum deploy.
 
-**Jadi riset dulu, baru rombak.** Riset situs warisan nyata + arahan tool yang sama
-(**Editorial Grid / Magazine**, **Scroll-Triggered Storytelling**, **serif display + sans body**)
-menghasilkan arah yang dipilih pengguna: **A. Arsip Pesisir**.
-
-**Palet (kontras dihitung, semua lolos AA di kedua tema):**
+**Perbaikan: buang seluruh keluarga coklat + emas, ganti putih bersih + aksen saturasi tinggi.**
 
 | Token | Terang | Gelap | Peran |
 |---|---|---|---|
-| `--merah-lasem` | `#A3302A` | `#E4796B` | Aksen utama (Lasem bata) |
-| `--merah-lasem-deep` | `#8A2320` | `#F09B8E` | Hover aksen |
-| `--indigo-lasem` | `#2C3E63` | `#8FA9D8` | Wedel pesisir (tautan, judul identitas) |
-| `--soga` | `#7C5A2A` | `#CFA268` | Soga tanah (label, garis, motif, pin) |
-| **`--gold`** (baru) | `#96630C` | `#E0B24A` | Aksen **langka**: drop-cap, tanda arsip, `::selection` |
-| `--paper` | `#F4EDE0` | `#1A1512` | Kertas tua hangat / arang hangat |
-| `--paper-raised` | `#FBF7EF` | `#241E19` | Kartu, lempeng foto |
-| `--paper-sunken` | `#EBE1D0` | `#12100D` | Seksi inset |
-| `--ink` | `#231A14` | `#F2E9D9` | Teks utama (tinta cokelat / gading hangat) |
-| `--ink-soft` | `#5C4A3A` | `#B9A78F` | Teks sekunder |
-| `--rule` | `#DCCFB8` | `#3A3129` | Garis rambut |
-| `--scrim` | `#231A14` | (tak dibalik) | Veil lightbox, **selalu gelap** |
+| `--merah-lasem` | `#C1272D` | `#F0716F` | Aksen utama (Lasem bata) |
+| `--merah-lasem-deep` | `#9C1C22` | `#F79B99` | Hover aksen |
+| `--indigo-lasem` | `#1E3A8A` | `#93A7F0` | Wedel: indigo batik |
+| `--soga` | `#0E6E7D` | `#5FC9D6` | **Teal laut** (nama token lama, nilai baru) |
+| `--paper` | `#FFFFFF` | `#0E1418` | Kertas putih bersih / arang biru |
+| `--paper-raised` | `#FFFFFF` | `#172026` | Kartu |
+| `--paper-sunken` | `#F4F6F8` | `#080C0F` | Seksi inset |
+| `--ink` | `#132029` | `#EEF3F5` | Teks utama (biru-arang) |
+| `--ink-soft` | `#4A5A63` | `#9FB0B8` | Teks sekunder |
+| `--rule` | `#D8DEE3` | `#2A363D` | Garis rambut |
+| `--scrim` | `#132029` | `#080C0F` | Veil lightbox (selalu gelap) |
 
-Rasio terverifikasi (terang): ink 14,67 · soft 7,23 · lasem 5,99 · wedel 9,13 · soga 5,38 ·
-gold 5,20; (gelap): ink 15,03 · soft 7,75 · lasem 6,25 · wedel 7,62 · soga 7,78 · gold 9,17.
-Rasio bilangan desimal: `1.05/(L1+0.05) - 1`.
+**Token `--gold` DIHAPUS.** Emas yang lolos kontras AA selalu jatuh ke oker kecoklatan
+(`#9a6b00`, kontras 4,69) — jadi mustahil "segar" sekaligus AA. Tanda aksen kini `merah-lasem`.
 
-**Strategi: swap NILAI saja, nama token dipertahankan.** 277 pemakaian kelas Tailwind
-(`text-ink-soft`, `border-rule`, …) tetap valid; **nol rename → nol risiko regresi kelas**.
-Hanya **satu token baru** (`--gold` + `--color-gold`).
+Kontras terverifikasi: terang ink 16,58 · soft 7,16 · merah 5,84 · wedel 10,36 · teal 5,92;
+gelap ink 16,59 · soft 8,28 · merah 6,45 · wedel 7,97 · teal 9,55. Semua lolos AA.
 
-**Tipografi (dua suara):** **Newsreader Variable** (serif) untuk display (`h1/h2/h3`, judul
-kartu), Hanken Grotesk untuk prosa & UI, Martian Mono untuk data. Impeccable menandai
-"single font families" sebagai anti-pattern — ini memperbaiki lint. Metrik serif:
-h1 lh 1,1 / ls −0,015em; h2 lh 1,18 / −0,01em; h3 weight 600, lh 1,32.
+**Tipografi: SATU keluarga sans.** Newsreader (serif) dilepas; **Hanken Grotesk** kini
+`--font-display` **dan** `--font-body`. Judul dibedakan lewat **bobot 700 + tracking rapat**
+(display -0.035em, h1 -0.022em, h2 -0.016em, h3 -0.01em), bukan ganti muka huruf. Metrik
+line-height lebih ketat untuk sans (display 0.94, h1 1.08, h2 1.16, h3 1.30). Linter Impeccable
+**tidak** punya aturan "satu keluarga font" (yang ada: *Overused font* — Inter/Roboto/Fraunces/
+Geist/Plus Jakarta/Space Grotesk — dan *font di luar DESIGN.md*); Hanken Grotesk tidak masuk
+daftar terlarang, jadi lint tetap 0.
 
-**Perlakuan editorial "arsip":**
-- `Figure.astro` & sampul `ArticleHeader.astro` jadi **lempeng arsip**: `frame-plate`
-  (1px `border-rule` + latar `paper-raised` + padding tipis), foto di dalam. Caption serif italic.
-- `ArticleHeader` punya tanda emas pendek (`h-0.5 w-12 bg-gold`) di atas `h1`.
-- `Prose.astro` → prop `dropcap` → `.prose-dropcap` (drop-cap serif emas 3,4em);
-  blockquote serif italic + garis `--soga`.
-- `::selection` memakai `color-mix(in oklch, var(--gold) 26%, transparent)`.
-- Beranda: hero `h1` serif `clamp(3rem,9vw,6.5rem)` lh `0.98` ls `−0.01em`, masker clip.
+**Dibersihkan:** paket `@fontsource-variable/newsreader` + `@fontsource/newsreader` di-uninstall;
+`scripts/fonts/newsreader-*.ttf` dihapus; `scripts/build-fonts.mjs` hanya menyisakan 3 job Hanken;
+`src/lib/og.ts` memakai Hanken untuk semua peran + palet baru; favicon (SVG + ICO 16/32/48) ke
+putih/merah/teal; **drop-cap dihapus** (prop `dropcap` di `Prose.astro` + 4 halaman detail);
+blockquote kini border kiri 2px `soga` (teal) tanpa serif italic.
 
-**Pipeline font:** `@fontsource-variable/newsreader` (web) + `@fontsource/newsreader` (dev).
-`scripts/build-fonts.mjs` mengonversi woff2 → **TTF statis** `newsreader-{400,600,700}.ttf`
-(satori menolak variable font) diregistrasi di `src/lib/og.ts` sebagai `'Newsreader Variable'`.
-Favicon (`favicon.svg` + `favicon.ico` 16/32/48) ikut palet baru.
+**Strategi tetap: swap NILAI token, pertahankan NAMA** (nol rename → nol risiko regresi kelas).
 
-**Tiga bug tambahan ditemukan & diperbaiki saat verifikasi visual:**
-1. **Judul hero tertinggal di opacity 0.** `clip-path: inset(0 0 100% 0)` ada pada elemen yang
-   diobservasi IntersectionObserver → luas irisan nol → IO tak pernah menyala. Masker dipindah
-   ke **anak** (`[data-reveal-clip-inner]`). Terverifikasi: `is-visible`, opacity 1, IO ratio 1.
-2. **Tema gelap hilang setelah navigasi client-side.** ClientRouter menyalin semua atribut
-   `<html>` dari dokumen baru; SSR `data-theme="light"` menang. Diperbaiki dengan **tidak**
-   mengirim `data-theme` dari SSR, dan `ThemeToggle` menyinkronkan dari `localStorage`/OS di
-   `astro:page-load` + memulihkan di `astro:before-swap`.
-3. **Veil lightbox terang di mode gelap** (`backdrop:bg-ink/70` terbalik jadi nyaris putih).
-   Diganti token `--scrim` yang **tidak dibalik** tema.
+**Pipeline font:** `scripts/build-fonts.mjs` hanya menyisakan 3 job Hanken → TTF statis
+`hanken-{400,600,700}.ttf` (satori menolak variable font), diregistrasi di `src/lib/og.ts` sebagai
+`'Hanken Grotesk Variable'` untuk **semua** peran OG.
 
-Juga: `will-change: auto` setelah reveal selesai (tak lagi mem-promosikan puluhan lapisan),
-guard parallax `dataset.parallaxOn = 'true'` yang tadinya `''` (falsy), dan `--radius-pill`
-yang hilang (`rounded-pill` undefined).
-
-**Terbaru: verifikasi ulang total** setelah ada agent lain yang keliru masuk ke repo ini dan
-memicu crash. Semua gerbang dijalankan dari nol: check **0/0/0 (80 berkas)**, lint **0
-anti-pattern**, build **74 halaman**, suite **41 lulus** dengan kontras **0 gagal** di 6 halaman
-× terang/gelap (45–110 pasangan per halaman, total 848). Screenshot ditinjau di `/tmp/jr-arsip/`.
-Setelah deploy, `tests/live.spec.ts` (4 uji terhadap produksi) dijalankan ulang terhadap versi
-baru: **4 lulus**. OG spot-check (beranda, artikel ID, artikel EN) 1200×630 dengan serif Newsreader.
+**Verifikasi (9 Okt 2026):** check **0/0/0 (80 berkas)**, lint **0 temuan**, build **74 halaman**,
+suite **41 lulus**, kontras **848 pasangan, 0 gagal** (6 halaman × terang/gelap). Screenshot
+ditinjau di `/tmp/jr-segar/`.
 
 ---
 
-## Redesign "Tinta & Tanah" (SELESAI 9 Okt 2026) — DITOLAK, tinggal riwayat
+## Palet "Arsip Pesisir" (DITOLAK, tinggal riwayat)
+
+Kertas tua `#f4ede0` + tinta coklat `#231a14` + soga `#7c5a2a` + emas `#96630c`, serif Newsreader
+untuk judul. Dinilai pengguna **"masih coklat, tidak fresh"** lalu diganti "Pesisir Segar" di atas.
+Pelajaran yang bertahan: riset dulu sebelum rombak, dan **hitung kontras sebelum menulis kode**
+(emas gagal AA sebagai teks kecil — itu sebabnya sekarang dibuang). Riwayat ini juga memuat tiga
+bug interaksi yang diperbaiki (lihat bagian "Bug interaksi lintas halaman" di bawah).
+
+---
+
+## Redesign "Tinta & Tanah" (DITOLAK, tinggal riwayat)
 
 Permintaan pengguna berlanjut: *"kurang suka palette warnanya, mau flat minimalism, banyak
 animasi, palette clean dan menarik."* Dikerjakan dengan skill **antislop** + **ui-ux-pro-max**.
@@ -373,9 +359,10 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # seluruh suite l
 | Cloudflare Workers static assets, bukan Pages | Panduan Cloudflare 2026 untuk proyek baru |
 | Tanpa database | Konten = berkas Markdown di repo |
 | Tanpa framework UI | 4 island vanilla TS cukup; bundle tetap kecil |
-| Font Newsreader (display serif) + Hanken Grotesk (body) + Martian Mono (data) | Register arsip/sejarah butuh serif; satu grotesk saja terdengar datar dan memicu lint "single font families". Fraunces ada di daftar larangan Impeccable |
-| Palet "Arsip Pesisir" (kertas tua + tinta cokelat + batik Lasem) | Palet flat dingin sebelumnya ditolak pengguna sebagai "jelek & kurang untuk website sejarah". Warm editorial = register yang benar untuk situs warisan |
-| Swap nilai token, pertahankan nama | 277 pemakaian kelas Tailwind tetap valid; nol risiko regresi kelas |
+| Font Hanken Grotesk (satu keluarga sans) + Martian Mono (data) | Satu keluarga sans memberi kesan segar/modern; judul dibedakan lewat bobot+tracking. Serif Newsreader dilepas. Fraunces ada di daftar larangan Impeccable |
+| Palet "Pesisir Segar" (putih bersih + merah Lasem + teal + indigo) | Dua palet sebelumnya ditolak pengguna: flat dingin, lalu krem/coklat. Putih bersih + aksen saturasi tinggi = "fresh" yang diminta |
+| Tanpa token emas | Emas yang lolos AA selalu kecoklatan (oker); mustahil segar + AA. Tanda aksen pakai `merah-lasem` |
+| Swap nilai token, pertahankan nama | Pemakaian kelas Tailwind tetap valid; nol risiko regresi kelas. `--soga` kini bernilai teal laut |
 | Nama "Jelajah Rembang" | Dipilih pengguna; folder & repo sudah konsisten |
 | Foto Wikimedia Commons | Lisensi bebas + atribusi; mudah diganti foto asli nanti |
 | Galeri tematik-warisan (6 album) | Sejalan dengan posisi "arsip hidup", bukan galeri generik |
