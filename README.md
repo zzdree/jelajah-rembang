@@ -61,7 +61,7 @@ npm run build        # astro check + astro build → dist/
 npm run preview      # pratinjau hasil build
 npm run check        # typecheck (termasuk file .astro)
 npm run lint:design  # 60 aturan anti-slop Impeccable (target: 0)
-npm test             # smoke test Playwright
+npm test             # seluruh suite uji Playwright (41 test: smoke, kontras, interaksi, ketahanan, live)
 npm run format       # Prettier
 ```
 
