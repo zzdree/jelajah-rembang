@@ -73,20 +73,30 @@ test.describe('Interaksi bertahan lintas navigasi', () => {
     expect(src).not.toContain('data:image');
   });
 
+  // Petakan: bukti peta matang adalah marker terpasang. Tile OSM adalah aset pihak
+  // ketiga dan butuh jaringan, jadi hanya ditunggu (bukan diperkuat) supaya uji ini
+  // tidak rapuh saat paralel.
+  async function mapReady(page: import('@playwright/test').Page) {
+    await page.locator('#rembang-map').scrollIntoViewIfNeeded();
+    await expect(page.locator('.rembang-pin').first()).toBeAttached({ timeout: 15000 });
+    await expect
+      .poll(async () => page.locator('.leaflet-tile-loaded').count(), { timeout: 15000 })
+      .toBeGreaterThan(0);
+  }
+
   test('peta memasang marker lagi setelah kembali ke halaman peta', async ({ page }) => {
     await page.goto('/peta/');
-    await page.locator('#rembang-map').scrollIntoViewIfNeeded();
-    await expect(page.locator('.rembang-pin').first()).toBeAttached();
-    expect(await page.locator('.leaflet-tile-loaded').count()).toBeGreaterThan(0);
+    await mapReady(page);
+    const pinsFirst = await page.locator('.rembang-pin').count();
 
-    // Keluar lalu kembali lewat navigasi client-side.
+    // Keluar lalu kembali lewat navigasi client-side (bukan muat penuh).
     await page.goto('/');
     await page.locator('a[href="/peta/"]').first().click();
     await expect(page).toHaveURL(/\/peta\/$/);
 
-    await page.locator('#rembang-map').scrollIntoViewIfNeeded();
-    await expect(page.locator('.rembang-pin').first()).toBeAttached();
-    expect(await page.locator('.leaflet-tile-loaded').count()).toBeGreaterThan(0);
+    await mapReady(page);
+    // Jumlah pin sama: dipasang sekali, bukan tertumpuk.
+    expect(await page.locator('.rembang-pin').count()).toBe(pinsFirst);
   });
 });
 

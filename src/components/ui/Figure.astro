@@ -26,20 +26,24 @@ const {
 ---
 
 <figure class:list={['m-0', className]}>
-  <div class:list={['overflow-hidden rounded-card bg-paper-sunken', ratio]} style={ratio ? `aspect-ratio:${ratio}` : undefined}>
-    <Image
-      src={src}
-      alt={alt}
-      widths={widths}
-      sizes={sizes}
-      loading={loading}
-      decoding="async"
-      class="h-full w-full object-cover"
-    />
+  <div class="frame-plate rounded-card">
+    <div class:list={['overflow-hidden rounded-card bg-paper-sunken', ratio]} style={ratio ? `aspect-ratio:${ratio}` : undefined}>
+      <Image
+        src={src}
+        alt={alt}
+        widths={widths}
+        sizes={sizes}
+        loading={loading}
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    </div>
   </div>
   {
     caption && (
-      <figcaption class="mt-2.5 text-sm leading-relaxed text-ink-soft">{caption}</figcaption>
+      <figcaption class="mt-3 font-display text-sm italic leading-relaxed text-ink-soft">
+        {caption}
+      </figcaption>
     )
   }
 </figure>

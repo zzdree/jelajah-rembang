@@ -101,7 +101,10 @@ test.describe('Peta klien-side', () => {
     const map = page.locator('#rembang-map');
     await map.scrollIntoViewIfNeeded();
     await expect(page.locator('.rembang-pin').first()).toBeAttached({ timeout: 15000 });
-    expect(await page.locator('.leaflet-tile-loaded').count()).toBeGreaterThan(0);
+    // Tile dari tile.openstreetmap.org: aset pihak ketiga, hanya ditunggu.
+    await expect
+      .poll(async () => page.locator('.leaflet-tile-loaded').count(), { timeout: 15000 })
+      .toBeGreaterThan(0);
     // Legenda & daftar teks hadir (konten sejati, bukan hanya kanvas).
     await expect(page.getByText('Keterangan')).toBeVisible();
     await expect(page.locator('[data-menu-panel]')).toHaveCount(1);

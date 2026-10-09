@@ -6,10 +6,13 @@ const PAGES = ['/', '/galeri/', '/destinasi/', '/profil/', '/kuliner/sate-srepeh
 
 function parseRgb(s: string): { r: number; g: number; b: number; a: number } | null {
   const m = s.match(/rgba?\(([^)]+)\)/);
-  if (!m) return null;
-  const parts = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
-  if (parts.length < 3 || parts.some(Number.isNaN)) return null;
-  return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+  const raw = m?.[1];
+  if (!raw) return null;
+  const parts = raw.split(/[\s,/]+/).filter(Boolean).map(Number);
+  const [r, g, b] = parts;
+  if (r === undefined || g === undefined || b === undefined) return null;
+  if ([r, g, b].some(Number.isNaN)) return null;
+  return { r, g, b, a: parts.length > 3 ? (parts[3] ?? 1) : 1 };
 }
 function lum({ r, g, b }: { r: number; g: number; b: number }) {
   const f = (c: number) => {
@@ -39,16 +42,24 @@ for (const theme of ['light', 'dark'] as const) {
 
         const samples = await page.evaluate(() => {
           // Ambil semua elemen teks terlihat, selesaikan latar efektif naik ke atas.
+          // parseRgb didefinisikan DI DALAM evaluate: fungsi luar tak terlihat di browser.
+          const parseRgb = (s: string) => {
+            const m = s.match(/rgba?\(([^)]+)\)/);
+            const raw = m?.[1];
+            if (!raw) return null;
+            const parts = raw.split(/[\s,/]+/).filter(Boolean).map(Number);
+            const [r, g, b] = parts;
+            if (r === undefined || g === undefined || b === undefined) return null;
+            if ([r, g, b].some(Number.isNaN)) return null;
+            return { r, g, b, a: parts.length > 3 ? (parts[3] ?? 1) : 1 };
+          };
+
           const bgOf = (el: Element): string => {
             let node: Element | null = el;
             while (node) {
               const bg = getComputedStyle(node).backgroundColor;
-              const m = bg.match(/rgba?\(([^)]+)\)/);
-              if (m) {
-                const p = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
-                const a = p.length > 3 ? p[3] : 1;
-                if (a > 0.95) return bg;
-              }
+              const parsed = parseRgb(bg);
+              if (parsed && parsed.a > 0.95) return bg;
               node = node.parentElement;
             }
             return getComputedStyle(document.body).backgroundColor;

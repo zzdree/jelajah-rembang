@@ -1,6 +1,11 @@
 import wawoff from 'wawoff2';
 import { readFileSync, writeFileSync } from 'node:fs';
 const jobs = [
+  // Display serif (judul & hero) — dipakai satori untuk OG
+  ['node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff2', 'scripts/fonts/newsreader-400.ttf'],
+  ['node_modules/@fontsource/newsreader/files/newsreader-latin-600-normal.woff2', 'scripts/fonts/newsreader-600.ttf'],
+  ['node_modules/@fontsource/newsreader/files/newsreader-latin-700-normal.woff2', 'scripts/fonts/newsreader-700.ttf'],
+  // Body sans (teks OG)
   ['node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-400-normal.woff2', 'scripts/fonts/hanken-400.ttf'],
   ['node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-600-normal.woff2', 'scripts/fonts/hanken-600.ttf'],
   ['node_modules/@fontsource/hanken-grotesk/files/hanken-grotesk-latin-700-normal.woff2', 'scripts/fonts/hanken-700.ttf'],

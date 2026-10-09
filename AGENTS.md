@@ -57,8 +57,16 @@ Kalau sebuah tugas terasa butuh server, tanyakan dulu — kemungkinan besar tida
    (hanya overlay sejati seperti popup Leaflet), easing bounce, emoji sebagai ikon.
    Catatan: **linter buta pada glassmorphism/bayangan/gradien di `.astro`/`.css`** (hanya
    membaca `.html`), jadi "lint 0" **bukan** bukti flat. Audit manual:
-   `grep -rn "shadow\|backdrop-blur\|repeating-" src/`. Putih murni `#ffffff` **diperbolehkan**
-   (ini kertas flat, bukan krem); yang dilarang adalah `#000` murni sebagai tinta.
+   `grep -rn "shadow\|backdrop-blur\|repeating-" src/`. Kertas bersih **diperbolehkan**
+   (palet aktif memakai kertas tua hangat `#F4EDE0`); yang dilarang adalah `#000` murni
+   sebagai tinta.
+   **Tipografi (revisi "Arsip Pesisir", 9 Okt 2026):** serif display **Newsreader**
+   (`--font-display`) kini **diperbolehkan dan menjadi kebijakan** untuk `h1/h2/h3` dan judul
+   kartu (register arsip/sejarah); Hanken Grotesk tetap untuk prosa & UI, Martian Mono untuk
+   data. Linter Impeccable menandai "single font families"; sistem dua suara ini memperbaiki
+   lint. Nama token warna tetap apa adanya (mis. `--indigo-lasem` kini bernilai biru wedel,
+   bukan indigo) supaya 277 pemakaian kelas Tailwind tidak perlu di-rename — jangan ganti
+   nama, hanya nilai.
 
 5. **Setiap perintah yang menyentuh jaringan WAJIB prefix IPv4-first** (IPv6 mati di
    laptop dev ini):
@@ -157,10 +165,10 @@ Field khusus per koleksi: `era/year/places` (sejarah) · `category` (budaya) ·
 ```bash
 npm run dev          # server pengembangan
 npm run build        # astro check + astro build → dist/
-npm run preview      # pratinjau hasil build
+npm run preview      # pratinjau hasil build (daemonize; lihat HANDOFF §jebakan)
 npm run check        # typecheck (termasuk .astro)
 npm run lint:design  # 60 aturan anti-slop Impeccable (target 0)
-npm test             # smoke test Playwright (13 test)
+npm test             # seluruh uji Playwright (smoke, kontras, interaksi, ketahanan)
 npm run format       # Prettier
 npm run deploy       # build + wrangler deploy
 ```
@@ -171,10 +179,15 @@ npm run deploy       # build + wrangler deploy
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run check    # 0 error
 node /home/zzdree/ANDREAS/impeccable/cli/bin/cli.js detect src/   # 0 anti-pattern
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run build     # 74 halaman
-NODE_OPTIONS='--dns-result-order=ipv4first' npm test          # 13/13 lulus
+NODE_OPTIONS='--dns-result-order=ipv4first' npm test          # semua lulus
 ```
 
 **Bukti sebelum klaim.** Jangan bilang "sudah beres" tanpa menjalankan perintah di atas.
+`tests/contrast.spec.ts` adalah gerbang kontras objektif: ia berjalan di 6 halaman × terang/gelap,
+menelusuri setiap elemen teks dan **gagal** bila rasio <4,5 (atau <3 untuk teks besar). Palet
+"Arsip Pesisir" divalidasi di sana, jadi pasangan warna baru wajib lulus uji itu.
+`tests/live.spec.ts` menargetkan URL **live** (bukan preview) — jalankan hanya bila memang
+memverifikasi produksi.
 
 ---
 

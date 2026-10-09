@@ -19,6 +19,7 @@ const { title, lead, cover, coverAlt, meta = [], motif = 'kawung' } = Astro.prop
   <div class="container-page pt-10 pb-10 sm:pt-14 sm:pb-14">
     <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
       <div class="max-w-2xl">
+        <span class="mb-4 block h-0.5 w-12 bg-gold" aria-hidden="true"></span>
         <h1 class="m-0 text-balance">{title}</h1>
         {lead && <p class="mt-5 text-lg leading-relaxed text-ink-soft">{lead}</p>}
 
@@ -38,16 +39,18 @@ const { title, lead, cover, coverAlt, meta = [], motif = 'kawung' } = Astro.prop
 
       {
         cover ? (
-          <div class="overflow-hidden rounded-card bg-paper-sunken">
-            <Image
-              src={cover}
-              alt={coverAlt ?? title}
-              widths={[480, 900, 1400]}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              loading="eager"
-              fetchpriority="high"
-              class="h-full w-full object-cover"
-            />
+          <div class="frame-plate rounded-card">
+            <div class="overflow-hidden rounded-card bg-paper-sunken">
+              <Image
+                src={cover}
+                alt={coverAlt ?? title}
+                widths={[480, 900, 1400]}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                loading="eager"
+                fetchpriority="high"
+                class="h-full w-full object-cover"
+              />
+            </div>
           </div>
         ) : (
           <div class="hidden justify-end text-rule lg:flex" aria-hidden="true">

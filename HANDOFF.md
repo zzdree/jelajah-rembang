@@ -7,8 +7,9 @@
 
 ## Status: SELESAI & LIVE ✅
 
-Galeri terisi, cover & koordinat dilengkapi, worker lama dibersihkan. Redesign "Tinta & Tanah"
-selesai. Working tree git berisi perubahan yang siap di-commit (lihat riwayat `git log`).
+Konten lengkap, galeri terisi, cover & koordinat dilengkapi. Redesign terakhir
+**"Arsip Pesisir"** (hangat + editorial + serif) menggantikan "Tinta & Tanah". Working tree git
+berisi perubahan yang siap di-commit (lihat riwayat `git log`).
 
 | Metrik | Nilai |
 |---|---|
@@ -20,28 +21,107 @@ selesai. Working tree git berisi perubahan yang siap di-commit (lihat riwayat `g
 | Destinasi ber-koordinat | **5** dari 10 |
 | `astro check` | **0 error / 0 warning / 0 hint** |
 | Impeccable design lint | **0 anti-pattern** |
-| Playwright smoke test | **13/13 lulus** |
-| Playwright kontras WCAG AA | **901 pasangan, 0 gagal** (6 halaman × terang/gelap) |
-| Playwright interaksi & ketahanan | **11/11 lulus** (lintas navigasi, reduced-motion, tanpa JS) |
+| Playwright (seluruh suite) | **41 lulus** (smoke, kontras, interaksi, ketahanan) |
+| Kontras WCAG AA | **901 pasangan, 0 gagal** (6 halaman × terang/gelap) |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
 | Versi Cloudflare aktif | `31cf7996-ff72-438c-8311-a9a2eb419199` |
 
 **Live:** https://jelajah-rembang.zzdree.workers.dev
 **Repo:** https://github.com/zzdree/jelajah-rembang
 
-Berkas uji kini: `tests/smoke.spec.ts` (asli), `tests/contrast.spec.ts` (kontras nyata dari
-computed style), `tests/interactions.spec.ts` (regresi lintas navigasi), `tests/resilience.spec.ts`
-(reduced-motion + tanpa JS). Total **29** uji, semuanya lulus.
+Berkas uji: `tests/smoke.spec.ts` (asli), `tests/contrast.spec.ts` (kontras nyata dari
+computed style, 6 halaman × 2 tema), `tests/interactions.spec.ts` (regresi lintas navigasi),
+`tests/resilience.spec.ts` (reduced-motion + tanpa JS), `tests/live.spec.ts` (verifikasi
+produksi — hanya jalankan bila memang menguji live).
 
 ---
 
-## Redesign "Tinta & Tanah" (SELESAI 9 Okt 2026)
+## Redesign "Arsip Pesisir" (SELESAI 9 Okt 2026) — palet AKTIF
+
+Pengguna **menolak** palet "Tinta & Tanah" di bawah: *"color palette jelek sih, tema nya jelek
+banget, kurang untuk website pengenalan sejarah gini"*. Akar masalah terverifikasi: palet itu
+persis **default "Museum/Gallery" bawaan tool `ui-ux-pro-max`** (`#18181B` + `#FAFAFA`), yaitu
+flat minimalism Swiss yang **dingin** — default AI, bukan identitas Rembang.
+
+**Jadi riset dulu, baru rombak.** Riset situs warisan nyata + arahan tool yang sama
+(**Editorial Grid / Magazine**, **Scroll-Triggered Storytelling**, **serif display + sans body**)
+menghasilkan arah yang dipilih pengguna: **A. Arsip Pesisir**.
+
+**Palet (kontras dihitung, semua lolos AA di kedua tema):**
+
+| Token | Terang | Gelap | Peran |
+|---|---|---|---|
+| `--merah-lasem` | `#A3302A` | `#E4796B` | Aksen utama (Lasem bata) |
+| `--merah-lasem-deep` | `#8A2320` | `#F09B8E` | Hover aksen |
+| `--indigo-lasem` | `#2C3E63` | `#8FA9D8` | Wedel pesisir (tautan, judul identitas) |
+| `--soga` | `#7C5A2A` | `#CFA268` | Soga tanah (label, garis, motif, pin) |
+| **`--gold`** (baru) | `#96630C` | `#E0B24A` | Aksen **langka**: drop-cap, tanda arsip, `::selection` |
+| `--paper` | `#F4EDE0` | `#1A1512` | Kertas tua hangat / arang hangat |
+| `--paper-raised` | `#FBF7EF` | `#241E19` | Kartu, lempeng foto |
+| `--paper-sunken` | `#EBE1D0` | `#12100D` | Seksi inset |
+| `--ink` | `#231A14` | `#F2E9D9` | Teks utama (tinta cokelat / gading hangat) |
+| `--ink-soft` | `#5C4A3A` | `#B9A78F` | Teks sekunder |
+| `--rule` | `#DCCFB8` | `#3A3129` | Garis rambut |
+| `--scrim` | `#231A14` | (tak dibalik) | Veil lightbox, **selalu gelap** |
+
+Rasio terverifikasi (terang): ink 14,67 · soft 7,23 · lasem 5,99 · wedel 9,13 · soga 5,38 ·
+gold 5,20; (gelap): ink 15,03 · soft 7,75 · lasem 6,25 · wedel 7,62 · soga 7,78 · gold 9,17.
+Rasio bilangan desimal: `1.05/(L1+0.05) - 1`.
+
+**Strategi: swap NILAI saja, nama token dipertahankan.** 277 pemakaian kelas Tailwind
+(`text-ink-soft`, `border-rule`, …) tetap valid; **nol rename → nol risiko regresi kelas**.
+Hanya **satu token baru** (`--gold` + `--color-gold`).
+
+**Tipografi (dua suara):** **Newsreader Variable** (serif) untuk display (`h1/h2/h3`, judul
+kartu), Hanken Grotesk untuk prosa & UI, Martian Mono untuk data. Impeccable menandai
+"single font families" sebagai anti-pattern — ini memperbaiki lint. Metrik serif:
+h1 lh 1,1 / ls −0,015em; h2 lh 1,18 / −0,01em; h3 weight 600, lh 1,32.
+
+**Perlakuan editorial "arsip":**
+- `Figure.astro` & sampul `ArticleHeader.astro` jadi **lempeng arsip**: `frame-plate`
+  (1px `border-rule` + latar `paper-raised` + padding tipis), foto di dalam. Caption serif italic.
+- `ArticleHeader` punya tanda emas pendek (`h-0.5 w-12 bg-gold`) di atas `h1`.
+- `Prose.astro` → prop `dropcap` → `.prose-dropcap` (drop-cap serif emas 3,4em);
+  blockquote serif italic + garis `--soga`.
+- `::selection` memakai `color-mix(in oklch, var(--gold) 26%, transparent)`.
+- Beranda: hero `h1` serif `clamp(3rem,9vw,6.5rem)` lh `0.98` ls `−0.01em`, masker clip.
+
+**Pipeline font:** `@fontsource-variable/newsreader` (web) + `@fontsource/newsreader` (dev).
+`scripts/build-fonts.mjs` mengonversi woff2 → **TTF statis** `newsreader-{400,600,700}.ttf`
+(satori menolak variable font) diregistrasi di `src/lib/og.ts` sebagai `'Newsreader Variable'`.
+Favicon (`favicon.svg` + `favicon.ico` 16/32/48) ikut palet baru.
+
+**Tiga bug tambahan ditemukan & diperbaiki saat verifikasi visual:**
+1. **Judul hero tertinggal di opacity 0.** `clip-path: inset(0 0 100% 0)` ada pada elemen yang
+   diobservasi IntersectionObserver → luas irisan nol → IO tak pernah menyala. Masker dipindah
+   ke **anak** (`[data-reveal-clip-inner]`). Terverifikasi: `is-visible`, opacity 1, IO ratio 1.
+2. **Tema gelap hilang setelah navigasi client-side.** ClientRouter menyalin semua atribut
+   `<html>` dari dokumen baru; SSR `data-theme="light"` menang. Diperbaiki dengan **tidak**
+   mengirim `data-theme` dari SSR, dan `ThemeToggle` menyinkronkan dari `localStorage`/OS di
+   `astro:page-load` + memulihkan di `astro:before-swap`.
+3. **Veil lightbox terang di mode gelap** (`backdrop:bg-ink/70` terbalik jadi nyaris putih).
+   Diganti token `--scrim` yang **tidak dibalik** tema.
+
+Juga: `will-change: auto` setelah reveal selesai (tak lagi mem-promosikan puluhan lapisan),
+guard parallax `dataset.parallaxOn = 'true'` yang tadinya `''` (falsy), dan `--radius-pill`
+yang hilang (`rounded-pill` undefined).
+
+**Terbaru: verifikasi ulang total** setelah ada agent lain yang keliru masuk ke repo ini dan
+memicu crash. Semua gerbang dijalankan dari nol: check **0/0/0 (80 berkas)**, lint **0
+anti-pattern**, build **74 halaman**, suite **41 lulus** dengan kontras **0 gagal** di 6 halaman
+× terang/gelap (45–110 pasangan per halaman). Screenshot ditinjau di `/tmp/jr-arsip/`.
+
+---
+
+## Redesign "Tinta & Tanah" (SELESAI 9 Okt 2026) — DITOLAK, tinggal riwayat
 
 Permintaan pengguna berlanjut: *"kurang suka palette warnanya, mau flat minimalism, banyak
 animasi, palette clean dan menarik."* Dikerjakan dengan skill **antislop** + **ui-ux-pro-max**.
-Revisi ini **menggantikan** percobaan sebelumnya ("Nyala Pesisir", maroon + krem) yang ditolak.
+Revisi ini **menggantikan** percobaan sebelumnya ("Nyala Pesisir", maroon + krem) yang ditolak,
+lalu **sendiri ditolak** dan diganti "Arsip Pesisir" di atas. Riwayat dipertahankan sebagai
+pelajaran: apa yang berguna dari sini adalah sistem gerak **MOTION 3** dan bug yang ditemukan.
 
-- **Palet baru (flat minimalism / Swiss):** satu aksen **terracotta** `#c2410c` + netral
+- **Palet (flat minimalism / Swiss):** satu aksen **terracotta** `#c2410c` + netral
   near-black. Kertas putih bersih `#ffffff` (bukan krem), inset `#f5f5f4`. Peran lama
   `indigo`/`soga` menjadi netral (`#18181b`/`#52525b`). **Semua kontras WCAG AA dihitung**
   (terang: ink 17,72 · soft 7,73 · aksen 5,18; gelap: 19,06 · 7,76 · 8,79).
@@ -213,7 +293,7 @@ Worker lama `rembang-web` **sudah dihapus** (9 Okt 2026).
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run check     # 0 error
 node /home/zzdree/ANDREAS/impeccable/cli/bin/cli.js detect src/    # 0 anti-pattern
 NODE_OPTIONS='--dns-result-order=ipv4first' npm run build      # 74 halaman
-NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 13/13
+NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # seluruh suite lulus
 ```
 
 ---
@@ -290,7 +370,9 @@ NODE_OPTIONS='--dns-result-order=ipv4first' npm test           # 13/13
 | Cloudflare Workers static assets, bukan Pages | Panduan Cloudflare 2026 untuk proyek baru |
 | Tanpa database | Konten = berkas Markdown di repo |
 | Tanpa framework UI | 4 island vanilla TS cukup; bundle tetap kecil |
-| Font Hanken Grotesk + Martian Mono | Satu grotesk untuk display & body (disiplin Swiss); Bodoni Moda **dilepas** pada redesign "Tinta & Tanah". Fraunces ada di daftar larangan Impeccable |
+| Font Newsreader (display serif) + Hanken Grotesk (body) + Martian Mono (data) | Register arsip/sejarah butuh serif; satu grotesk saja terdengar datar dan memicu lint "single font families". Fraunces ada di daftar larangan Impeccable |
+| Palet "Arsip Pesisir" (kertas tua + tinta cokelat + batik Lasem) | Palet flat dingin sebelumnya ditolak pengguna sebagai "jelek & kurang untuk website sejarah". Warm editorial = register yang benar untuk situs warisan |
+| Swap nilai token, pertahankan nama | 277 pemakaian kelas Tailwind tetap valid; nol risiko regresi kelas |
 | Nama "Jelajah Rembang" | Dipilih pengguna; folder & repo sudah konsisten |
 | Foto Wikimedia Commons | Lisensi bebas + atribusi; mudah diganti foto asli nanti |
 | Galeri tematik-warisan (6 album) | Sejalan dengan posisi "arsip hidup", bukan galeri generik |
