@@ -24,9 +24,10 @@ berisi perubahan yang siap di-commit (lihat riwayat `git log`).
 | Playwright (seluruh suite) | **41 lulus** (smoke, kontras, interaksi, ketahanan) |
 | Kontras WCAG AA | **901 pasangan, 0 gagal** (6 halaman × terang/gelap) |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
-| Versi Cloudflare aktif | `31cf7996-ff72-438c-8311-a9a2eb419199` |
+| Versi Cloudflare aktif | `dee20f5f-c6ed-43c6-a880-2af3ade18078` |
 
-**Live:** https://jelajah-rembang.zzdree.workers.dev
+**Live:** https://jelajah-rembang.zzdree.workers.dev (deploy 9 Okt 2026 memuat **seluruh**
+perubahan commit `424af36`, termasuk drop-cap artikel)
 **Repo:** https://github.com/zzdree/jelajah-rembang
 
 Berkas uji: `tests/smoke.spec.ts` (asli), `tests/contrast.spec.ts` (kontras nyata dari
