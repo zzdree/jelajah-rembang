@@ -8,8 +8,8 @@
 ## Status: SELESAI & LIVE ✅
 
 Konten lengkap, galeri terisi, cover & koordinat dilengkapi. Redesign terakhir
-**"Arsip Pesisir"** (hangat + editorial + serif) menggantikan "Tinta & Tanah". Working tree git
-berisi perubahan yang siap di-commit (lihat riwayat `git log`).
+**"Arsip Pesisir"** (hangat + editorial + serif) menggantikan "Tinta & Tanah".
+Sudah **di-commit & di-push** (`424af36`, docs `c7c0da0`) dan **di-deploy** (`dee20f5f`).
 
 | Metrik | Nilai |
 |---|---|
@@ -22,7 +22,7 @@ berisi perubahan yang siap di-commit (lihat riwayat `git log`).
 | `astro check` | **0 error / 0 warning / 0 hint** |
 | Impeccable design lint | **0 anti-pattern** |
 | Playwright (seluruh suite) | **41 lulus** (smoke, kontras, interaksi, ketahanan) |
-| Kontras WCAG AA | **901 pasangan, 0 gagal** (6 halaman × terang/gelap) |
+| Kontras WCAG AA | **848 pasangan, 0 gagal** (6 halaman × terang/gelap) |
 | Gambar OG (per halaman) | **86** (`/og/<slug>.jpg`, 1200×630) |
 | Versi Cloudflare aktif | `dee20f5f-c6ed-43c6-a880-2af3ade18078` |
 
@@ -110,7 +110,9 @@ yang hilang (`rounded-pill` undefined).
 **Terbaru: verifikasi ulang total** setelah ada agent lain yang keliru masuk ke repo ini dan
 memicu crash. Semua gerbang dijalankan dari nol: check **0/0/0 (80 berkas)**, lint **0
 anti-pattern**, build **74 halaman**, suite **41 lulus** dengan kontras **0 gagal** di 6 halaman
-× terang/gelap (45–110 pasangan per halaman). Screenshot ditinjau di `/tmp/jr-arsip/`.
+× terang/gelap (45–110 pasangan per halaman, total 848). Screenshot ditinjau di `/tmp/jr-arsip/`.
+Setelah deploy, `tests/live.spec.ts` (4 uji terhadap produksi) dijalankan ulang terhadap versi
+baru: **4 lulus**. OG spot-check (beranda, artikel ID, artikel EN) 1200×630 dengan serif Newsreader.
 
 ---
 
